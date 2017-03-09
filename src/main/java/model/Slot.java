@@ -10,9 +10,20 @@ public class Slot {
 
     //input format 18:00
     public Slot(String start, String end){
+
+        //manipulate input (1 digit number to 2)
+        String[] parts = start.split(":");
+        String[] parts2 = end.split(":");
+        for (String s : parts)
+            if (s.length() == 1)
+                s = "0" + s;
+        for (String s : parts2)
+            if (s.length() == 1)
+                s = "0" + s;
+
         this.course = null;
-        this.startTime = start;
-        this.endTime = end;
+        this.startTime = parts[0] + ":" + parts[1];
+        this.endTime = parts2[0] + ":" + parts2[1];
 
     }
 

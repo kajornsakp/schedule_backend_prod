@@ -14,7 +14,7 @@ public class Room {
         this.capacity = size;
         days = new ArrayList<Day>();
         days.add(new Day(DayName.MONDAY));
-        days.add(new Day(DayName.THURSDAY));
+        days.add(new Day(DayName.TUESDAY));
         days.add(new Day(DayName.WEDNESDAY));
         days.add(new Day(DayName.THURSDAY));
         days.add(new Day(DayName.FRIDAY));
