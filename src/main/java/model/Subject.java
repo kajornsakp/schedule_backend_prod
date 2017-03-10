@@ -9,7 +9,7 @@ public class Subject {
     private ArrayList<Lecturer> lecturerList;
     private String dayTimePrefer;
     private String id;
-    private int expectedNumber;
+    private int expectedStudent;
 
     public Subject(String name){
         this.name = name;
@@ -33,8 +33,8 @@ public class Subject {
         this.id = number;
     }
 
-    public void setExpectedNumber(int number){
-        this.expectedNumber = number;
+    public void setExpectedStudent(int number){
+        this.expectedStudent = number;
     }
 
 
