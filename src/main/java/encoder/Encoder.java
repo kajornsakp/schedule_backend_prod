@@ -1,5 +1,7 @@
 package encoder;
 
+
+/*
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -116,3 +118,4 @@ public class Encoder {
 		return result;
 	}
 }
+*/

@@ -1,15 +1,27 @@
 package model;
 
+
+import javax.persistence.Id;
+
+import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.UUID;
 
 
+
+@Entity
 public class Subject {
     private String name;
     private ArrayList<Lecturer> lecturerList;
     private String dayTimePrefer;
-    private String id;
     private int expectedStudent;
+
+    @Id
+    private String id;
+
+
+
+
 
     public Subject(String name){
         this.name = name;

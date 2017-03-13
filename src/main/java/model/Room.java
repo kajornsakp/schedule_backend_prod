@@ -1,13 +1,24 @@
 package model;
 
+
+import javax.persistence.Id;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import java.util.ArrayList;
 
 
 
+
+@Entity
 public class Room {
     private String roomName;
     private ArrayList<Day> days;
     private int capacity;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
     public Room(String name, int size){
         this.roomName = name;
