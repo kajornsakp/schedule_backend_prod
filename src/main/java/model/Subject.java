@@ -19,10 +19,6 @@ public class Subject {
     @Id
     private String id;
 
-
-
-
-
     public Subject(String name){
         this.name = name;
         this.lecturerList = new ArrayList<Lecturer>();
@@ -66,8 +62,16 @@ public class Subject {
     public String getName(){
         return this.name;
     }
+    
+    public int getExpectedStudent()
+    {
+    	return this.expectedStudent;
+    }
 
-
+    public String getId()
+    {
+    	return this.id;
+    }
 
 
 }

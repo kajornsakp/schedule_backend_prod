@@ -1,7 +1,7 @@
 package encoder;
 
 
-/*
+
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
@@ -12,47 +12,50 @@ import model.DayName;
 import model.Room;
 import model.Slot;
 import model.Subject;
+import Controller.DataManager;
 
 public class Encoder {
 	ArrayList<Room> rooms;
 	ArrayList<Slot> slots;
+	ArrayList<Subject> subjects;
+	ArrayList<Day> days;
 	Map<DayName, String> enumDayMap;
-	    
+	DataManager dataManager;
 	public Encoder()
 	{
-		rooms = new ArrayList<>();
-		slots = new ArrayList<>();
+		initDayMapper();
+		rooms = dataManager.getRoomList();
+		slots = dataManager.getSlotList();
+		subjects = dataManager.getSubjectList();
+		days = dataManager.getDayList();
+	}
+	
+	private void initDayMapper()
+	{
 		enumDayMap = new EnumMap<DayName, String>(DayName.class);
-		enumDayMap.put(DayName.MONDAY, "1");
-		enumDayMap.put(DayName.TUESDAY, "2");
-		enumDayMap.put(DayName.WEDNESDAY, "3");
-		enumDayMap.put(DayName.THURSDAY, "4");
-		enumDayMap.put(DayName.FRIDAY, "5");
+		int value = 1;
+		// enumDayMap.put(DayName.MONDAY, "1");
+		for (DayName d : DayName.values()) {
+		     enumDayMap.put(d, Integer.toString(value));
+		     value++;
+		 }
 	}
-	public void setRooms(ArrayList<Room> r)
-	{
-		this.rooms = r;
-	}
-	public void setSlots(ArrayList<Slot> s)
-	{
-		this.slots = s;
-	}
+	
 	public String encode()
 	{
 		
 		String courseTerm;
 		String resourceTerm;
 		String innerterm;
-		String term="";
+		String term = "";
+		
+		// term is the input for SAT solver
 		term+="*(";
-		ArrayList<Subject> subjects = Subject.findAll();
-		ArrayList<Day> days = Day.findAll();
-		ArrayList<Slot> slots = Slots.findAll();
-		ArrayList<Room> rooms = Rooms.findAll();
+		
 		for(int i=0;i<subjects.size();i++)
 		{
 			courseTerm = encodeCourse(subjects,days,slots,subjects.get(i));
-			resourceTerm = encodeResource(rooms,days,slots,subjects.get(i).getStudentCount());
+			resourceTerm = encodeResource(rooms,days,slots,subjects.get(i).getExpectedStudent());
 			innerterm = "*("+courseTerm+" "+resourceTerm+")";
 			term+=innerterm+" ";
 		}
@@ -108,9 +111,9 @@ public class Encoder {
 					String day = enumDayMap.get(days.get(j).getDay());
 					// format 0ssssDtttt 
 					// format 2rrrrnnnn
-					String fit = "2"+ rooms.get(i).getID + studentCount;
+					String fit = "2"+ rooms.get(i).getId() + studentCount;
 					
-					result+="*("+"1"+rooms.get(i).getID()+day+time+" "+fit+")";
+					result+="*("+"1"+rooms.get(i).getId()+day+time+" "+fit+")";
 				}
 			}
 		}
@@ -118,4 +121,3 @@ public class Encoder {
 		return result;
 	}
 }
-*/
