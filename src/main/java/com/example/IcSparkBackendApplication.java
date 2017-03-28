@@ -13,9 +13,6 @@ import java.util.UUID;
 
 @EnableAutoConfiguration
 @SpringBootApplication
-@EntityScan(basePackages = {"model"})
-@EnableJpaRepositories("Repositories")
-@ComponentScan({"Controller.AuthenticationController"})
 public class IcSparkBackendApplication {
 
 	public static void main(String[] args) {
