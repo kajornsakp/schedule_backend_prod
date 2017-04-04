@@ -40,8 +40,8 @@ public class DataHandler {
 		return mongoOperation.findAll(User.class);
 	}
 
-	public static void createSubject(Subject s) {
-		mongoOperation.save(s);
+	public static void createSubject(List<Subject> s) {
+		s.forEach((subject) -> mongoOperation.save(subject));
 	}
 
 	public static List<Subject> getAllSubjects(){
@@ -52,8 +52,8 @@ public class DataHandler {
 		mongoOperation.remove(s);
 	}
 	
-	public static Subject editSubject(Subject s){
-		mongoOperation.findAndModify(new Query(Criteria.where("name").is(s.getName())),new Update()., Subject.class);
+	public static void editSubject(Subject s){
+		mongoOperation.findAndModify(new Query(Criteria.where("name").is(s.getName())),new Update(), Subject.class);
 		
 	}
 	
