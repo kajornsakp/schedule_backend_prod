@@ -53,7 +53,7 @@ public class DataHandler {
 	}
 	
 	public static void editSubject(Subject s){
-		mongoOperation.findAndModify(new Query(Criteria.where("name").is(s.getName())),new Update(), Subject.class);
+		Subject temp = mongoOperation.findOne(new Query(Criteria.where("id").is(s.getId())), Subject.class);
 		
 	}
 	

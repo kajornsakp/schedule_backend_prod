@@ -22,9 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by kajornsak on 2/13/2017 AD.
- */
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
