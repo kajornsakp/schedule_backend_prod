@@ -13,11 +13,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Subject {
     private String name;
     private ArrayList<Lecturer> lecturerList;
-    private DayName dayPrefer;
-    private String startTime;
-    private String endTime;
+    private String dayTimePrefer;
     private int expectedStudent;
-    private int priority;
 
     @Id
     private String id;
@@ -27,14 +24,7 @@ public class Subject {
         this.lecturerList = new ArrayList<Lecturer>();
         this.id = this.generateID();
     }
-    
-    public int getPriority(){
-    	return this.priority;
-    }
-    
-    public void setPriority(int p){
-    	this.priority = p;
-    }
+
     private String generateID(){
         UUID tempID = UUID.randomUUID();
         String[] parts = tempID.toString().split("-");
@@ -55,6 +45,8 @@ public class Subject {
         this.expectedStudent = number;
     }
 
+
+
     public void addLecturer(Lecturer l){
         this.lecturerList.add(l);
     }
@@ -63,25 +55,8 @@ public class Subject {
         this.lecturerList.remove(l);
     }
 
-    public void setDayPrefer(DayName dayTime){
-        this.dayPrefer = dayTime;
-    }
-    
-    public void setStartTime(String startTime){
-    	this.startTime = startTime;
-    }
-    
-    public void setEndTime(String endTime){
-    	this.endTime = endTime;
-    }
-    
-    public DayName getDay(){
-    	return this.dayPrefer;
-    }
-    
-    public String[] getTime(){
-    	String[] s = { this.startTime, this.endTime };
-    	return s;
+    public void setDayTimePrefer(String dayTime){
+        this.dayTimePrefer = dayTime;
     }
 
     public String getName(){
@@ -96,10 +71,6 @@ public class Subject {
     public String getId()
     {
     	return this.id;
-    }
-    
-    public String toString(){
-    	return this.getId() + " : " + this.getName() ;
     }
 
 
