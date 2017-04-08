@@ -1,4 +1,4 @@
-package model;
+package com.example.model;
 
 /**
  * Created by ShubU on 3/9/2017.
@@ -7,9 +7,9 @@ public class Slot {
     private String startTime;
     private String endTime;
     private Subject course;
-
+    private String roomName;
     //input format 18:00
-    public Slot(String start, String end){
+    public Slot(String start, String end, Subject course, String name){
 
         //manipulate input (1 digit number to 2)
         String[] parts = start.split(":");
@@ -21,7 +21,8 @@ public class Slot {
             if (s.length() == 1)
                 s = "0" + s;
 
-        this.course = null;
+        this.course = course;
+        this.roomName = name;
         this.startTime = parts[0] + ":" + parts[1];
         this.endTime = parts2[0] + ":" + parts2[1];
 
@@ -29,6 +30,10 @@ public class Slot {
 
     public void setCourse(Subject course){
         this.course = course;
+    }
+    
+    public void setRoomName(String name){
+    	this.roomName = name;
     }
 
     //input in minute
@@ -54,11 +59,19 @@ public class Slot {
     public String getEndTime() {
         return endTime;
     }
+    
+    public Subject getCourse(){
+    	return this.course;
+    }
+    
+    public String getRoomName(){
+    	return this.roomName;
+    }
 
     @Override
     public boolean equals(Object obj) {
         Slot cmp = (Slot)obj;
-        if (this.getStartTime() == cmp.getStartTime() && this.getEndTime() == cmp.getEndTime())
+        if (this.getStartTime() == cmp.getStartTime() && this.getEndTime() == cmp.getEndTime() && this.getRoomName() == cmp.getRoomName())
             return true;
         return false;
 
@@ -67,9 +80,9 @@ public class Slot {
     @Override
     public String toString(){
         if (this.course != null)
-            return this.course.getName() + " => " + this.startTime + " - " + this.endTime;
+            return this.course.getName() + "at room : " + this.getRoomName() + " => " + this.startTime + " - " + this.endTime;
         else
-            return "unknown course => " + this.startTime + " - " + this.endTime;
+            return "unknown course at room : " + this.getRoomName() + " => " + this.startTime + " - " + this.endTime;
 
 
 

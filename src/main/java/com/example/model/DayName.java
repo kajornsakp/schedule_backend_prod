@@ -1,4 +1,4 @@
-package model;
+package com.example.model;
 
 /**
  * Created by ShubU on 3/9/2017.
