@@ -15,6 +15,7 @@ import com.example.model.ExceptionSet;
 import com.example.model.Room;
 import com.example.model.Slot;
 import com.example.model.Subject;
+import com.example.model.Time;
 
 public class Generator {
 	
@@ -60,6 +61,7 @@ public class Generator {
 			}
 		});
 		
+		
 		return sortedRoom;
 	}
 	
@@ -93,14 +95,18 @@ public class Generator {
 		ArrayList<Subject> nokSubject = new ArrayList<Subject>();
 		
 		this.subjects.forEach( subject -> {
+			System.out.println("working on subject : " + subject);
 			boolean canReserve = false;
 			ArrayList<Room> roomList = this.getRoomForSubject(subject); //get room that suit for that subject
-			for (Room room : this.roomList){
-				Slot slot = new Slot(subject.getTime()[0], subject.getTime()[1], subject, room.getRoomName());
+			System.out.println("Best room order for " + subject.getName() + " is " + roomList);
+			
+			for (int i = 0 ; i < roomList.size(); i++){
+				System.out.println("trying to put in room : " + roomList.get(i).getRoomName());
+				Slot slot = new Slot(subject.getTime().getStartTime(), subject.getTime().getEndTime(), subject, roomList.get(i).getRoomName());
 				Day day = this.dayList.get(subject.getDay().get(0));
-				
 				//try to put subject on that day and that slot
 				if (day.reserveSlot(slot, this.getExceptionSetOf(subject))){
+					System.out.println("reserve slot in : " + roomList.get(i).getRoomName());
 					canReserve = true;
 					break;
 				}
@@ -112,11 +118,11 @@ public class Generator {
 	}
 	
 	public String toString(){
-		String result = "";
-		for (Entry<DayName, Day> entry : this.dayList.entrySet())
-		{
-		    result += entry.getValue().toString() + "\n";
+		String result = "\n################\n\n";
+		for (DayName dir : DayName.values()) {
+			  result += this.dayList.get(dir).toString() + "\n";
 		}
+		
 		
 		return result;
 	}
@@ -130,12 +136,16 @@ public class Generator {
 		
 		Subject math1 = new Subject("Math1");
 		Subject logic = new Subject("Logic");
-		
-		
+		//required set prefer day and time first
+		math1.setExpectedStudent(50);
+		math1.setTimePrefer(DayName.MONDAY, new Time("9:00","12:00"));
+		logic.setExpectedStudent(40);
+		logic.setTimePrefer(DayName.FRIDAY, new Time("9:00","12:00"));
 		g.addSubject(math1);
 		g.addSubject(logic);
-		//required set prefer day and time first
 		
+		
+		g.SHOWTIME();
 		System.out.println(g.toString());
 		//use g.SHOWTIME() to show ShubU magic
 		

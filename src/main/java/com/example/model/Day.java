@@ -16,7 +16,8 @@ public class Day {
 
     public boolean reserveSlot(Slot data, ExceptionSet e){
     	//contain will check vela dew gun & room dew gun clause
-        if (this.slotUsed.contains(data) || this.exceptionCheck(data, e))
+    	
+        if (this.slotUsed.contains(data) || !this.exceptionCheck(data, e))
             return false;
         this.slotUsed.add(data);
         return true;
@@ -26,8 +27,11 @@ public class Day {
     	for (Slot slot : this.slotUsed){
     		//if me vi cha tee vela trong gun law have in exception set -> fail
     		if (slot.getStartTime() == data.getStartTime() && slot.getEndTime() == data.getEndTime())
-    			if (e.have(slot.getCourse()))
+    			if (e.have(slot.getCourse())){
+    				System.out.println("Subject : " + data.getCourse().getName() + " didn't pass exception case");
+    			
     				return false;
+    			}
     	}
     	return true;
     }
@@ -42,9 +46,9 @@ public class Day {
 
     public String toString(){
         if (this.slotUsed.size() == 0)
-            return "clear day";
+            return this.getDay() + " : clear day" + "\n-------------";
 
-        String result = "Day : " + this.name + "\n";
+        String result = this.name + " : ";
         for (Slot s : slotUsed){
             result += (s.toString() + "\n");
         }

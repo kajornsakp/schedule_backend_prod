@@ -2,6 +2,7 @@ package com.example.model;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
@@ -24,6 +25,8 @@ public class Subject {
         this.name = name;
         this.lecturerList = new ArrayList<Lecturer>();
         this.id = this.generateID();
+        this.priority = 0;
+        this.timePrefered = new HashMap<DayName,ArrayList<Time>>();
     }
     
     public int getPriority(){
@@ -62,6 +65,7 @@ public class Subject {
     }
 
     public void setTimePrefer(DayName dayTime, Time time){
+    	
     	if (this.timePrefered.get(dayTime) == null){
     		ArrayList<Time> newTime = new ArrayList<Time>();
     		newTime.add(time);
@@ -81,8 +85,9 @@ public class Subject {
     	return days;
     }
     
-    public String[] getTime(){
-    	return (String[]) this.timePrefered.get(this.getDay().get(0)).toArray();
+    public Time getTime(){
+    	
+    	return this.timePrefered.get(this.getDay().get(0)).get(0);
     }
 
     public String getName(){

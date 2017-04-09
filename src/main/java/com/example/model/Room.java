@@ -47,6 +47,11 @@ public class Room {
     {
     	return this.id;
     }
+    
+    @Override
+    public String toString(){
+    	return this.roomName;
+    }
 
    
 

@@ -25,5 +25,9 @@ public class Time {
 		this.endTime = endTime;
 	}
 	
+	@Override
+	public String toString(){
+		return this.startTime + " - " + this.endTime;
+	}
 	
 }

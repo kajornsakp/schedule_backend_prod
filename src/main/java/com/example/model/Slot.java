@@ -80,7 +80,7 @@ public class Slot {
     @Override
     public String toString(){
         if (this.course != null)
-            return this.course.getName() + "at room : " + this.getRoomName() + " => " + this.startTime + " - " + this.endTime;
+            return this.course.getName() + " at room : " + this.getRoomName() + " => " + this.startTime + " - " + this.endTime;
         else
             return "unknown course at room : " + this.getRoomName() + " => " + this.startTime + " - " + this.endTime;
 
