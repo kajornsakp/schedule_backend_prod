@@ -71,8 +71,10 @@ public class Slot {
     @Override
     public boolean equals(Object obj) {
         Slot cmp = (Slot)obj;
-        if (this.getStartTime() == cmp.getStartTime() && this.getEndTime() == cmp.getEndTime() && this.getRoomName() == cmp.getRoomName())
-            return true;
+        if (this.getStartTime().equals(cmp.getStartTime()) && this.getEndTime().equals(cmp.getEndTime()) && this.getRoomName().equals(cmp.getRoomName())){
+            System.out.println("Course : " + cmp.getCourse().getName() + " conflict with : " + this.getCourse().getName());
+        	return true;
+        }
         return false;
 
     }

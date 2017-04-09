@@ -136,17 +136,31 @@ public class Generator {
 		
 		Subject math1 = new Subject("Math1");
 		Subject logic = new Subject("Logic");
+		Subject python = new Subject("Python");
+		Subject eng1 = new Subject("English1");
+		
 		//required set prefer day and time first
 		math1.setExpectedStudent(50);
 		math1.setTimePrefer(DayName.MONDAY, new Time("9:00","12:00"));
 		logic.setExpectedStudent(40);
 		logic.setTimePrefer(DayName.FRIDAY, new Time("9:00","12:00"));
+		python.setExpectedStudent(50);
+		python.setTimePrefer(DayName.WEDNESDAY, new Time("13:00","16:00"));
+		python.setPriority(10);
+		eng1.setExpectedStudent(50);
+		eng1.setTimePrefer(DayName.MONDAY,  new Time("9:00","12:00"));
+		
 		g.addSubject(math1);
 		g.addSubject(logic);
+		g.addSubject(python);
+		g.addSubject(eng1);
 		
 		
-		g.SHOWTIME();
+		ArrayList<Subject> nok = g.SHOWTIME();
 		System.out.println(g.toString());
+		System.out.println("##########################\n");
+		System.out.println("nok subject ");
+		System.out.println(nok);
 		//use g.SHOWTIME() to show ShubU magic
 		
 	}

@@ -17,8 +17,9 @@ public class Day {
     public boolean reserveSlot(Slot data, ExceptionSet e){
     	//contain will check vela dew gun & room dew gun clause
     	
-        if (this.slotUsed.contains(data) || !this.exceptionCheck(data, e))
+        if (this.slotUsed.contains(data) || !this.exceptionCheck(data, e)){
             return false;
+        }
         this.slotUsed.add(data);
         return true;
     }
