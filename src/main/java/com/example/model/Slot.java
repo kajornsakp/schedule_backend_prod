@@ -9,11 +9,11 @@ public class Slot {
     private Subject course;
     private String roomName;
     //input format 18:00
-    public Slot(String start, String end, Subject course, String name){
+    public Slot(Time time, Subject course, String name){
 
         //manipulate input (1 digit number to 2)
-        String[] parts = start.split(":");
-        String[] parts2 = end.split(":");
+        String[] parts = time.getStartTime().split(":");
+        String[] parts2 = time.getEndTime().split(":");
         for (String s : parts)
             if (s.length() == 1)
                 s = "0" + s;

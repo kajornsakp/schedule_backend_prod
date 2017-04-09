@@ -102,17 +102,20 @@ public class Generator {
 			
 			for (int i = 0 ; i < roomList.size(); i++){
 				System.out.println("trying to put in room : " + roomList.get(i).getRoomName());
-				Slot slot = new Slot(subject.getTime().getStartTime(), subject.getTime().getEndTime(), subject, roomList.get(i).getRoomName());
+				Slot slot = new Slot(subject.getTime(), subject, roomList.get(i).getRoomName());
 				Day day = this.dayList.get(subject.getDay().get(0));
 				//try to put subject on that day and that slot
 				if (day.reserveSlot(slot, this.getExceptionSetOf(subject))){
 					System.out.println("reserve slot in : " + roomList.get(i).getRoomName());
 					canReserve = true;
+					subject.subscribedDayTime(day.getDay(), subject.getTime());
 					break;
 				}
 			}
-			if (!canReserve)
+			if (!canReserve){
 				nokSubject.add(subject);
+			}
+				
 		});
 		return nokSubject;
 	}

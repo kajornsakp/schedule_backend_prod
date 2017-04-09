@@ -57,6 +57,10 @@ public class DataHandler {
 		
 	}
 	
+	public static ArrayList<Day> generateTable(){
+		
+	}
+	
 	
 
 

@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.MediaType;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.DataHandler.DataHandler;
+import com.example.model.Day;
 import com.example.model.Subject;
 
 @RestController
@@ -27,6 +29,11 @@ public class ScheduleController {
 	@RequestMapping(value = "/removeSubject", method = RequestMethod.DELETE, consumes= "application/json")
 	public void deleteSubject(Subject s){
 		DataHandler.deleteSubject(s);
+	}
+	
+	@RequestMapping(value = "/generate", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ArrayList<Day> generateTimetable(){
+		return DataHandler.generateTable();
 	}
 	
 	

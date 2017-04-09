@@ -17,6 +17,9 @@ public class Subject {
     private Map<DayName,ArrayList<Time>> timePrefered;
     private int expectedStudent;
     private int priority;
+    private DayName subscribeDay;
+    private Time subscribeTime;
+    
 
     @Id
     private String id;
@@ -27,10 +30,16 @@ public class Subject {
         this.id = this.generateID();
         this.priority = 0;
         this.timePrefered = new HashMap<DayName,ArrayList<Time>>();
+        
     }
     
     public int getPriority(){
     	return this.priority;
+    }
+    
+    public void subscribedDayTime(DayName day, Time time){
+    	this.subscribeDay = day;
+    	this.subscribeTime = time;
     }
     
     public void setPriority(int p){
