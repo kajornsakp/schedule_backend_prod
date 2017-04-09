@@ -5,8 +5,10 @@ package com.example.model;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import org.springframework.data.mongodb.core.mapping.Document;
 
 
+@Document(collection = "Room")
 public class Room {
     private String roomName;
     private int capacity;

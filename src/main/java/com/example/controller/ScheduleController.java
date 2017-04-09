@@ -32,8 +32,8 @@ public class ScheduleController {
 	}
 	
 	@RequestMapping(value = "/generate", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ArrayList<Day> generateTimetable(){
-		return DataHandler.generateTable();
+	public ArrayList<Subject> generateTimetable(){
+		return DataHandler.generateTable(); //return list of all subjects with subscribed time
 	}
 	
 	

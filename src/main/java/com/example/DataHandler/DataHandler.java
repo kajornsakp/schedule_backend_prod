@@ -1,5 +1,6 @@
 package com.example.DataHandler;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.ApplicationContext;
@@ -9,7 +10,10 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
+import com.example.Generator;
 import com.example.config.MongoConfig;
+import com.example.model.Day;
+import com.example.model.Room;
 import com.example.model.Subject;
 import com.example.model.User;
 
@@ -57,8 +61,15 @@ public class DataHandler {
 		
 	}
 	
-	public static ArrayList<Day> generateTable(){
+	public static ArrayList<Subject> generateTable(){
+		Generator g = new Generator();
+		List<Subject> subjects = mongoOperation.findAll(Subject.class);
+		List<Room> rooms = mongoOperation.findAll(Room.class);
+		subjects.forEach(subject -> g.addSubject(subject));
+		rooms.forEach(room -> g.addRoom(room));
 		
+		ArrayList<Subject> result = g.SHOWTIME();
+		return result;
 	}
 	
 	

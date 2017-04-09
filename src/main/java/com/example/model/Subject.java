@@ -42,6 +42,12 @@ public class Subject {
     	this.subscribeTime = time;
     }
     
+    public boolean hasSubscribed(){
+    	if (this.subscribeDay == null)
+    		return false;
+    	return true;
+    }
+    
     public void setPriority(int p){
     	this.priority = p;
     }

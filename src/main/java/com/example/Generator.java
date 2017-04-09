@@ -117,7 +117,8 @@ public class Generator {
 			}
 				
 		});
-		return nokSubject;
+		ArrayList<Subject> val = new ArrayList<Subject>(this.subjects);
+		return val;
 	}
 	
 	public String toString(){
@@ -159,11 +160,16 @@ public class Generator {
 		g.addSubject(eng1);
 		
 		
-		ArrayList<Subject> nok = g.SHOWTIME();
+		ArrayList<Subject> allVicha = g.SHOWTIME();
 		System.out.println(g.toString());
-		System.out.println("##########################\n");
-		System.out.println("nok subject ");
-		System.out.println(nok);
+		
+		allVicha.forEach(s -> {
+			if (!s.hasSubscribed())
+				System.out.println("vi cha : " + s.getName() + " nok ");
+		});
+			
+		
+		
 		//use g.SHOWTIME() to show ShubU magic
 		
 	}
