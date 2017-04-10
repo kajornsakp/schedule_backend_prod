@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.PriorityQueue;
 
 import com.example.model.Day;
@@ -28,24 +26,20 @@ public class Generator {
 		this.subjects = new PriorityQueue<Subject>(11, new Comparator<Subject>(){
 			@Override
 			public int compare(Subject o1, Subject o2) {
-				
 				return o1.getPriority() - o2.getPriority();
 			}
 		});
+		
 		this.dayList = new HashMap<DayName,Day>();
 		this.roomList = new ArrayList<Room>();
 		this.exceptionSets = new ArrayList<ExceptionSet>();
-		
 		this.dayList.put(DayName.MONDAY, new Day(DayName.MONDAY));
 		this.dayList.put(DayName.TUESDAY,new Day(DayName.TUESDAY));
 		this.dayList.put(DayName.WEDNESDAY,new Day(DayName.WEDNESDAY));
 		this.dayList.put(DayName.THURSDAY,new Day(DayName.THURSDAY));
 		this.dayList.put(DayName.FRIDAY,new Day(DayName.FRIDAY));
-	
 	}
 
-	
-	
 	//generate room List that can fit in each subject
 	private ArrayList<Room> getRoomForSubject(Subject s){
 		ArrayList<Room> sortedRoom = new ArrayList<Room>();
@@ -60,8 +54,6 @@ public class Generator {
 				return o1.getCapacity() - o2.getCapacity();
 			}
 		});
-		
-		
 		return sortedRoom;
 	}
 	
@@ -70,7 +62,6 @@ public class Generator {
 			if (e.have(s))
 				return e;
 		}
-		
 		//means this subject has no exception set, return empty set
 		return new ExceptionSet();
 	}
@@ -86,8 +77,7 @@ public class Generator {
 	public void addRoom(Room r){
 		this.roomList.add(r);
 	}
-	
-	
+
 	//this will insert subject into timetable sequentially by subject's priority
 	public ArrayList<Subject> SHOWTIME(){
 		
@@ -102,20 +92,19 @@ public class Generator {
 			
 			for (int i = 0 ; i < roomList.size(); i++){
 				System.out.println("trying to put in room : " + roomList.get(i).getRoomName());
-				Slot slot = new Slot(subject.getTime(), subject, roomList.get(i).getRoomName());
-				Day day = this.dayList.get(subject.getDay().get(0));
+				Slot slot = new Slot(subject.findTime(), subject, roomList.get(i).getRoomName());
+				Day day = this.dayList.get(subject.findDay().get(0));
 				//try to put subject on that day and that slot
 				if (day.reserveSlot(slot, this.getExceptionSetOf(subject))){
 					System.out.println("reserve slot in : " + roomList.get(i).getRoomName());
 					canReserve = true;
-					subject.subscribedDayTime(day.getDay(), subject.getTime());
+					subject.subscribedDayTime(day.getDay(), subject.findTime());
 					break;
 				}
 			}
 			if (!canReserve){
 				nokSubject.add(subject);
-			}
-				
+			}		
 		});
 		ArrayList<Subject> val = new ArrayList<Subject>(this.subjects);
 		return val;
@@ -126,8 +115,6 @@ public class Generator {
 		for (DayName dir : DayName.values()) {
 			  result += this.dayList.get(dir).toString() + "\n";
 		}
-		
-		
 		return result;
 	}
 	
@@ -159,7 +146,6 @@ public class Generator {
 		g.addSubject(python);
 		g.addSubject(eng1);
 		
-		
 		ArrayList<Subject> allVicha = g.SHOWTIME();
 		System.out.println(g.toString());
 		
@@ -167,8 +153,6 @@ public class Generator {
 			if (!s.hasSubscribed())
 				System.out.println("vi cha : " + s.getName() + " nok ");
 		});
-			
-		
 		
 		//use g.SHOWTIME() to show ShubU magic
 		

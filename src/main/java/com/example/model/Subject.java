@@ -3,6 +3,7 @@ package com.example.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
@@ -21,8 +22,36 @@ public class Subject {
     private Time subscribeTime;
     
 
-    @Id
+    public Map<DayName, ArrayList<Time>> getTimePrefered() {
+		return timePrefered;
+	}
+
+	public void setTimePrefered(Map<DayName, ArrayList<Time>> timePrefered) {
+		this.timePrefered = timePrefered;
+	}
+
+	public DayName getSubscribeDay() {
+		return subscribeDay;
+	}
+
+	public void setSubscribeDay(DayName subscribeDay) {
+		this.subscribeDay = subscribeDay;
+	}
+
+	public Time getSubscribeTime() {
+		return subscribeTime;
+	}
+
+	public void setSubscribeTime(Time subscribeTime) {
+		this.subscribeTime = subscribeTime;
+	}
+
+	@Id
     private String id;
+	
+	public Subject(){
+		
+	}
 
     public Subject(String name){
         this.name = name;
@@ -31,6 +60,15 @@ public class Subject {
         this.priority = 0;
         this.timePrefered = new HashMap<DayName,ArrayList<Time>>();
         
+    }
+    
+    public Subject(String name, int priority, List<Lecturer> list, int num){
+    	this.name = name;
+        this.lecturerList = (ArrayList<Lecturer>) list;
+        this.id = this.generateID();
+        this.priority = priority;
+        this.timePrefered = new HashMap<DayName,ArrayList<Time>>();
+        this.expectedStudent = num;
     }
     
     public int getPriority(){
@@ -91,7 +129,7 @@ public class Subject {
     }
     
     
-    public ArrayList<DayName> getDay(){
+    public ArrayList<DayName> findDay(){
     	ArrayList<DayName> days = new ArrayList<DayName>();
     	for (Entry<DayName, ArrayList<Time>> entry : this.timePrefered.entrySet()){
     		if (entry.getValue() != null)
@@ -100,9 +138,9 @@ public class Subject {
     	return days;
     }
     
-    public Time getTime(){
+    public Time findTime(){
     	
-    	return this.timePrefered.get(this.getDay().get(0)).get(0);
+    	return this.timePrefered.get(this.findDay().get(0)).get(0);
     }
 
     public String getName(){

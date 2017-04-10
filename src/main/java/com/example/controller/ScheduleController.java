@@ -22,7 +22,7 @@ public class ScheduleController {
 	}
 	
 	@RequestMapping(value = "/addSubject",method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes="application/json")
-	public void addSubject(List<Subject> s){
+	public void addSubject(Subject s){
 		DataHandler.createSubject(s);
 	}
 	

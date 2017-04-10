@@ -1,19 +1,12 @@
 package com.example.controller;
 
 import com.example.DataHandler.DataHandler;
-import com.example.config.MongoConfig;
-import com.example.model.User;
-import com.example.repository.UserRepository;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
+import com.example.model.User;
+
+
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,9 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by kajornsak on 2/13/2017 AD.
- */
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {

@@ -44,8 +44,8 @@ public class DataHandler {
 		return mongoOperation.findAll(User.class);
 	}
 
-	public static void createSubject(List<Subject> s) {
-		s.forEach((subject) -> mongoOperation.save(subject));
+	public static void createSubject(Subject s) {
+		mongoOperation.save(s);
 	}
 
 	public static List<Subject> getAllSubjects(){
@@ -57,8 +57,14 @@ public class DataHandler {
 	}
 	
 	public static void editSubject(Subject s){
-		mongoOperation.findAndModify(new Query(Criteria.where("name").is(s.getName())),new Update(), Subject.class);
-		
+		Update update = new Update();
+		update.set("name",s.getName());
+		update.set("expectedStudent", s.getExpectedStudent());
+		update.set("priority", s.getPriority());
+		update.set("subscribeDay", s.getSubscribeDay());
+		update.set("subscribeTime", s.getSubscribeTime());
+		update.set("timePrefered", s.getTimePrefered());
+		mongoOperation.findAndModify(new Query(Criteria.where("name").is(s.getName())),update, Subject.class);
 	}
 	
 	public static ArrayList<Subject> generateTable(){
