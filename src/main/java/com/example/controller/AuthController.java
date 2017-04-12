@@ -2,7 +2,7 @@ package com.example.controller;
 
 import com.example.DataHandler.DataHandler;
 
-import com.example.model.User;
+import com.example.model.Account;
 
 
 import org.springframework.http.MediaType;
@@ -21,28 +21,25 @@ import java.util.List;
 public class AuthController {
 
     @RequestMapping(value = "/listUsers",method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public List<User> getUser() {
+    public List<Account> getUser() {
         return DataHandler.getAllUsers();
     }
     
     @RequestMapping(value = "/login",method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes="application/json")
-    public List<User> login(@RequestBody User req) {
-        return DataHandler.findByUser(req.getName());
+    public Account login(@RequestBody Account req) {
+    	System.out.println("authen completed returning Account object!!!");
+        return DataHandler.findByUser(req.getUsername());
     }
     
     @RequestMapping(value = "/register",method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes="application/json")
-    public boolean registerUser(@RequestBody User req) {
+    public boolean registerUser(@RequestBody Account req) {
         return DataHandler.addUser(req);
     }
     
-    @RequestMapping(value = "/deleteAll", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public List<User> deleteAll(){
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public List<Account> deleteAll(){
     	return DataHandler.deleteAllUsers();
     }
     
-    
-    
-    
-
 }
 

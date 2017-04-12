@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +23,8 @@ public class ScheduleController {
 	}
 	
 	@RequestMapping(value = "/addSubject",method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes="application/json")
-	public void addSubject(Subject s){
+	public void addSubject(@RequestBody Subject s){
+		System.out.println(s);
 		DataHandler.createSubject(s);
 	}
 	
@@ -31,7 +33,12 @@ public class ScheduleController {
 		DataHandler.deleteSubject(s);
 	}
 	
-	@RequestMapping(value = "/generate", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+	@RequestMapping(value = "/removeAll", method = RequestMethod.DELETE, consumes= "application/json")
+	public void deleteAll(){
+		DataHandler.deleteAllSubjects();
+	}
+	
+	@RequestMapping(value = "/generate", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ArrayList<Subject> generateTimetable(){
 		return DataHandler.generateTable(); //return list of all subjects with subscribed time
 	}

@@ -11,6 +11,8 @@ import java.util.UUID;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Document(collection = "Subject")
 public class Subject {
     private String name;
@@ -21,7 +23,31 @@ public class Subject {
     private DayName subscribeDay;
     private Time subscribeTime;
     
+    @Id
+    private String id;
+    
+	public Subject(){
+		
+	}
 
+    public Subject(@JsonProperty("name")String name){
+        this.name = name;
+        this.lecturerList = new ArrayList<Lecturer>();
+        this.id = this.generateID();
+        this.priority = 0;
+        this.timePrefered = new HashMap<DayName,ArrayList<Time>>();
+        
+    }
+    
+    public Subject(@JsonProperty("name") String name,@JsonProperty("priority") int priority, @JsonProperty("lecturerList") List<Lecturer> list,@JsonProperty("expectedStudent") int num){
+    	this.name = name;
+        this.lecturerList = (ArrayList<Lecturer>) list;
+        this.id = this.generateID();
+        this.priority = priority;
+        this.timePrefered = new HashMap<DayName,ArrayList<Time>>();
+        this.expectedStudent = num;
+    }
+    
     public Map<DayName, ArrayList<Time>> getTimePrefered() {
 		return timePrefered;
 	}
@@ -45,31 +71,6 @@ public class Subject {
 	public void setSubscribeTime(Time subscribeTime) {
 		this.subscribeTime = subscribeTime;
 	}
-
-	@Id
-    private String id;
-	
-	public Subject(){
-		
-	}
-
-    public Subject(String name){
-        this.name = name;
-        this.lecturerList = new ArrayList<Lecturer>();
-        this.id = this.generateID();
-        this.priority = 0;
-        this.timePrefered = new HashMap<DayName,ArrayList<Time>>();
-        
-    }
-    
-    public Subject(String name, int priority, List<Lecturer> list, int num){
-    	this.name = name;
-        this.lecturerList = (ArrayList<Lecturer>) list;
-        this.id = this.generateID();
-        this.priority = priority;
-        this.timePrefered = new HashMap<DayName,ArrayList<Time>>();
-        this.expectedStudent = num;
-    }
     
     public int getPriority(){
     	return this.priority;
@@ -157,9 +158,16 @@ public class Subject {
     	return this.id;
     }
     
+    public ArrayList<Lecturer> getLecturerList(){
+    	return this.lecturerList;
+    }
+    
     public String toString(){
     	return this.getId() + " : " + this.getName() ;
     }
+    
+    
+    
 
 
 }
