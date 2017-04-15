@@ -8,7 +8,9 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,13 +41,25 @@ public class ScheduleController {
 	}
 	
 	@RequestMapping(value = "/addSubject",method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = "application/json")
-	public void addSubject(@RequestBody Subject s) {
-		DataHandler.createSubject(s);
+	public ResponseEntity<Object> addSubject(@RequestBody Subject s) {
+		try{
+			DataHandler.createSubject(s);
+			return ResponseEntity.ok(s);
+		} catch (IllegalArgumentException e){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
+		} catch (Exception e){
+			return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(e);
+		}
 	}
 	
 	@RequestMapping(value = "/removeSubject", method = RequestMethod.DELETE, consumes= "application/json")
-	public void deleteSubject(Subject s){
-		DataHandler.deleteSubject(s);
+	public ResponseEntity<Object> deleteSubject(Subject s){
+		try{
+			DataHandler.deleteSubject(s);
+			return ResponseEntity.ok("");
+		} catch (IllegalArgumentException e){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
+		}
 	}
 	
 	@RequestMapping(value = "/removeAll", method = RequestMethod.DELETE, consumes= "application/json")

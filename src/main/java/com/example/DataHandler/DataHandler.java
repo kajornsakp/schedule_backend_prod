@@ -55,7 +55,11 @@ public class DataHandler {
 	}
 
 	public static void createSubject(Subject s) {
+		if (mongoOperation.find(new Query().addCriteria(Criteria.where("name").is(s.getName())), Subject.class) == null)	
+			throw new IllegalArgumentException("The subject is alreadyed in the system");
 		mongoOperation.save(s);
+		
+			
 	}
 
 	public static List<Subject> getAllSubjects(){
@@ -64,6 +68,8 @@ public class DataHandler {
 	
 	public static void deleteSubject(Subject s){
 		Subject subject = mongoOperation.findOne(new Query(Criteria.where("name").is(s.getName())), Subject.class);
+		if (subject == null)
+			throw new IllegalArgumentException("can't find that subject");
 		mongoOperation.remove(subject);
 	}
 	
