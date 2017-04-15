@@ -37,7 +37,6 @@ public class TokenAuthenticationService {
 	static Authentication getAuthentication(HttpServletRequest request){
 		System.out.println("getting authentication");
 		// print check request
-		
 		Enumeration params = request.getParameterNames(); 
 		while(params.hasMoreElements()){
 		 String paramName = (String)params.nextElement();

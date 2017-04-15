@@ -2,6 +2,7 @@ package com.example.DataHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -24,6 +25,14 @@ public class DataHandler {
 
 	public static List<Account> getAllUsers(){
 		return mongoOperation.findAll(Account.class);
+	}
+	
+	public static void listAllShubU(){
+		Set<String> colls = mongoOperation.getCollectionNames();
+
+		for (String s : colls) {
+			System.out.println(s);
+		}
 	}
 
 	public static Account findByUser(String name){

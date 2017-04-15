@@ -24,10 +24,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		httpSecurity.authorizeRequests()
 			.antMatchers("/").permitAll()
-			.antMatchers("/scheduleAct/*").hasRole(ADMIN)
-			.antMatchers("/lec/*").hasRole(ADMIN)
+			
 			//.antMatchers(HttpMethod.POST,"/auth/login").permitAll()
 			.antMatchers("/auth/*").permitAll()
+			.antMatchers("/scheduleAct/*").permitAll()
 			.anyRequest().authenticated()
 			.and()
 			.addFilterBefore(new JWTLoginFilter("/auth/login", authenticationManager()),
@@ -35,8 +35,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.addFilterBefore(new JWTAuthenticationFilter(),
 			UsernamePasswordAuthenticationFilter.class)
 			.csrf().disable();
-			
-
 	}
 	
 	

@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 public class MongoConfig{
     public @Bean
     MongoDbFactory mongoDbFactory() throws Exception {
-        return new SimpleMongoDbFactory(new MongoClient(), "demoSpring");
+        return new SimpleMongoDbFactory(new MongoClient(), "ICSpark");
     }
 
     public @Bean
@@ -27,3 +27,4 @@ public class MongoConfig{
 
     }
 }
+ 

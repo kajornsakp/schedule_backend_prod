@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Document(collection = "Subject")
 public class Subject {
     private String name;
-    private ArrayList<Lecturer> lecturerList;
+    private ArrayList<String> lecturerList;
     private Map<DayName,ArrayList<Time>> timePrefered;
     private int expectedStudent;
     private int priority;
@@ -30,46 +30,81 @@ public class Subject {
 		
 	}
 
-    public Subject(@JsonProperty("name")String name){
+    public Subject(String name){
         this.name = name;
-        this.lecturerList = new ArrayList<Lecturer>();
+        this.lecturerList = new ArrayList<String>();
         this.id = this.generateID();
         this.priority = 0;
         this.timePrefered = new HashMap<DayName,ArrayList<Time>>();
         
     }
     
-    public Subject(@JsonProperty("name") String name,@JsonProperty("priority") int priority, @JsonProperty("lecturerList") List<Lecturer> list,@JsonProperty("expectedStudent") int num){
+    public Subject(@JsonProperty("name") String name,@JsonProperty("priority") int priority, @JsonProperty("lecturerList") List<String> list,@JsonProperty("expectedStudent") int num){
     	this.name = name;
-        this.lecturerList = (ArrayList<Lecturer>) list;
+        this.lecturerList = (ArrayList<String>) list;
         this.id = this.generateID();
         this.priority = priority;
         this.timePrefered = new HashMap<DayName,ArrayList<Time>>();
         this.expectedStudent = num;
     }
     
-    public Map<DayName, ArrayList<Time>> getTimePrefered() {
-		return timePrefered;
+    
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	
+    public void setSubscribeDay(DayName subscribeDay) {
+		this.subscribeDay = subscribeDay;
+	}
+
+	public void setSubscribeTime(Time subscribeTime) {
+		this.subscribeTime = subscribeTime;
+	}
+
+    public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setLecturerList(ArrayList<String> lecturerList) {
+		this.lecturerList = lecturerList;
 	}
 
 	public void setTimePrefered(Map<DayName, ArrayList<Time>> timePrefered) {
 		this.timePrefered = timePrefered;
 	}
 
-	public DayName getSubscribeDay() {
-		return subscribeDay;
+	public void setPriority(int priority) {
+		this.priority = priority;
 	}
 
-	public void setSubscribeDay(DayName subscribeDay) {
-		this.subscribeDay = subscribeDay;
-	}
+	public void setExpectedStudent(int number){
+        this.expectedStudent = number;
+    }
 
-	public Time getSubscribeTime() {
+    public void setTimePrefer(DayName dayTime, Time time){
+    	
+    	if (this.timePrefered.get(dayTime) == null){
+    		ArrayList<Time> newTime = new ArrayList<Time>();
+    		newTime.add(time);
+    		this.timePrefered.put(dayTime, newTime);
+    	} else {
+    		this.timePrefered.get(dayTime).add(time);
+    	}
+    }
+    
+    public Time getSubscribeTime() {
 		return subscribeTime;
 	}
+    
+    public Map<DayName, ArrayList<Time>> getTimePrefered() {
+		return timePrefered;
+	}
 
-	public void setSubscribeTime(Time subscribeTime) {
-		this.subscribeTime = subscribeTime;
+
+	public DayName getSubscribeDay() {
+		return subscribeDay;
 	}
     
     public int getPriority(){
@@ -87,9 +122,6 @@ public class Subject {
     	return true;
     }
     
-    public void setPriority(int p){
-    	this.priority = p;
-    }
     private String generateID(){
         UUID tempID = UUID.randomUUID();
         String[] parts = tempID.toString().split("-");
@@ -102,31 +134,13 @@ public class Subject {
         return result;
     }
 
-    public void setID(String number){
-        this.id = number;
-    }
-
-    public void setExpectedStudent(int number){
-        this.expectedStudent = number;
-    }
-
-    public void addLecturer(Lecturer l){
+    
+    public void addLecturer(String l){
         this.lecturerList.add(l);
     }
 
     public void removeLecturer(Lecturer l){
         this.lecturerList.remove(l);
-    }
-
-    public void setTimePrefer(DayName dayTime, Time time){
-    	
-    	if (this.timePrefered.get(dayTime) == null){
-    		ArrayList<Time> newTime = new ArrayList<Time>();
-    		newTime.add(time);
-    		this.timePrefered.put(dayTime, newTime);
-    	} else {
-    		this.timePrefered.get(dayTime).add(time);
-    	}
     }
     
     
@@ -158,7 +172,7 @@ public class Subject {
     	return this.id;
     }
     
-    public ArrayList<Lecturer> getLecturerList(){
+    public ArrayList<String> getLecturerList(){
     	return this.lecturerList;
     }
     
