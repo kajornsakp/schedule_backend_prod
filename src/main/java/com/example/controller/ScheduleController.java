@@ -56,7 +56,7 @@ public class ScheduleController {
 	public ResponseEntity<Object> deleteSubject(Subject s){
 		try{
 			DataHandler.deleteSubject(s);
-			return ResponseEntity.ok("");
+			return ResponseEntity.ok("remove success");
 		} catch (IllegalArgumentException e){
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
 		}

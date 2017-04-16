@@ -48,6 +48,16 @@ public class DataHandler {
 			return false;
 		}
 	}
+	
+	public static Account changeAccountRole(String username, String newRole){
+		Account val = mongoOperation.findAndModify(new Query(Criteria.where("username").is(username)), new Update().set("role", newRole), Account.class);
+		if (val == null)
+			throw new IllegalArgumentException("username not found");
+		else 
+			return val;
+			
+		
+	}
 
 	public static List<Account> deleteAllUsers(){
 		mongoOperation.dropCollection("User");

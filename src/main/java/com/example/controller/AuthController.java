@@ -1,7 +1,8 @@
 package com.example.controller;
 
 import com.example.DataHandler.DataHandler;
-
+import com.example.JacksonModel.AccountWrapper;
+import com.example.JacksonModel.RoleWrapper;
 import com.example.model.Account;
 
 
@@ -32,13 +33,19 @@ public class AuthController {
     }
     
     @RequestMapping(value = "/register",method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes="application/json")
-    public boolean registerUser(@RequestBody Account req) {
-        return DataHandler.addUser(req);
+    public boolean registerUser(@RequestBody AccountWrapper req) {
+    	Account newAcc = new Account(req.getUsername(), req.getPassword(), "ADMIN");
+        return DataHandler.addUser(newAcc);
     }
     
     @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<Account> deleteAll(){
     	return DataHandler.deleteAllUsers();
+    }
+    
+    @RequestMapping(value = "/changeRole", method = RequestMethod.PUT, consumes = "application/json")
+    public Account changeRole(@RequestBody RoleWrapper wrapper){
+    	return DataHandler.changeAccountRole(wrapper.getAccountName(), wrapper.getRole());
     }
     
 }
