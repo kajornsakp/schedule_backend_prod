@@ -40,7 +40,7 @@ public class ScheduleController {
 		return DataHandler.getAllSubjects();
 	}
 	
-	@RequestMapping(value = "/addSubject",method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = "application/json")
+	@RequestMapping(value = "/addSubject",method = RequestMethod.OPTIONS, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = "application/json")
 	public ResponseEntity<Object> addSubject(@RequestBody Subject s) {
 		try{
 			DataHandler.createSubject(s);

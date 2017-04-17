@@ -26,13 +26,13 @@ public class AuthController {
         return DataHandler.getAllUsers();
     }
     
-    @RequestMapping(value = "/login",method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes="application/json")
+    @RequestMapping(value = "/login",method = RequestMethod.OPTIONS, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes="application/json")
     public Account login(@RequestBody Account req) {
     	System.out.println("authen completed returning Account object!!!");
         return DataHandler.findByUser(req.getUsername());
     }
     
-    @RequestMapping(value = "/register",method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes="application/json")
+    @RequestMapping(value = "/register",method = RequestMethod.OPTIONS, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes="application/json")
     public boolean registerUser(@RequestBody AccountWrapper req) {
     	Account newAcc = new Account(req.getUsername(), req.getPassword(), "ADMIN");
         return DataHandler.addUser(newAcc);
@@ -43,7 +43,7 @@ public class AuthController {
     	return DataHandler.deleteAllUsers();
     }
     
-    @RequestMapping(value = "/changeRole", method = RequestMethod.PUT, consumes = "application/json")
+    @RequestMapping(value = "/changeRole", method = RequestMethod.OPTIONS, consumes = "application/json")
     public Account changeRole(@RequestBody RoleWrapper wrapper){
     	return DataHandler.changeAccountRole(wrapper.getAccountName(), wrapper.getRole());
     }

@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.web.servlet.DispatcherServlet;
 
 
 @Configuration
@@ -16,6 +17,13 @@ public class MongoConfig{
     public @Bean
     MongoDbFactory mongoDbFactory() throws Exception {
         return new SimpleMongoDbFactory(new MongoClient(), "ICSpark");
+    }
+
+    @Bean
+    public DispatcherServlet dispatcherServlet(){
+        DispatcherServlet servlet = new DispatcherServlet();
+        servlet.setDispatchOptionsRequest(true);
+        return servlet;
     }
 
     public @Bean

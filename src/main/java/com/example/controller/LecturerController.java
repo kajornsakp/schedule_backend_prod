@@ -18,12 +18,12 @@ public class LecturerController {
 		return DataHandler.getAllLecturer();
 	}
 	
-	@RequestMapping(value = "/getLecturer", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
+	@RequestMapping(value = "/getLecturer", method = RequestMethod.OPTIONS, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public Lecturer getLecturer(String name){
 		return DataHandler.findLecturerByName(name);
 	}
 	
-	@RequestMapping(value = "/addLecturer", method = RequestMethod.POST, consumes= "application/json")
+	@RequestMapping(value = "/addLecturer", method = RequestMethod.OPTIONS, consumes= "application/json")
 	public void createLecturer(Lecturer lecturer){
 		DataHandler.createLecturer(lecturer);
 	}
