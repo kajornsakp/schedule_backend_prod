@@ -25,7 +25,7 @@
 	</properties>
 
 	<dependencies>
-<<<<<<< HEAD
+
         <dependency>
             <groupId>org.sat4j</groupId>
             <artifactId>org.sat4j.core</artifactId>
@@ -41,13 +41,8 @@
             <artifactId>org.sat4j.maxsat</artifactId>
             <version>2.3.1</version>
         </dependency>
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>9.4-1206-jdbc42</version>
-		</dependency>
-=======
->>>>>>> ca737f9a20e5075f38f1cce3aa96baeddbebcf8d
+
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
