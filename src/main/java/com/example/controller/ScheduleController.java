@@ -63,13 +63,13 @@ public class ScheduleController {
 		}
 	}
 	
-	@RequestMapping(value = "/removeAll", method = RequestMethod.DELETE, consumes= "application/json")
+	@RequestMapping(value = "/removeAll", method = RequestMethod.POST, consumes= "application/json")
 	public void deleteAll(){
 		DataHandler.deleteAllSubjects();
 	}
 	
 	@RequestMapping(value = "/generate", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ArrayList<Subject> generateTimetable(){
+	public String generateTimetable(){
 		return DataHandler.generateTable(); //return list of all subjects with subscribed time
 	}
 	

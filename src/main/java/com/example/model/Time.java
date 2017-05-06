@@ -4,6 +4,9 @@ public class Time {
 	private String startTime;
 	private String endTime;
 	
+	public Time(){
+	
+	}
 	public Time(String s, String e){
 		this.startTime = s;
 		this.endTime = e;

@@ -81,6 +81,7 @@ public class Generator {
 	//this will insert subject into timetable sequentially by subject's priority
 	public ArrayList<Subject> SHOWTIME(){
 		
+		/*
 		//subject that can't fit into wanted slot
 		ArrayList<Subject> nokSubject = new ArrayList<Subject>();
 		
@@ -108,6 +109,8 @@ public class Generator {
 		});
 		ArrayList<Subject> val = new ArrayList<Subject>(this.subjects);
 		return val;
+		*/
+		return new ArrayList<Subject>();
 	}
 	
 	public String toString(){
@@ -119,6 +122,7 @@ public class Generator {
 	}
 	
 	public static void main(String[] args) {
+		/*
 		Generator g = new Generator();
 		g.addRoom(new Room("IC04",50));
 		g.addRoom(new Room("IC06",40));
@@ -155,6 +159,8 @@ public class Generator {
 		});
 		
 		//use g.SHOWTIME() to show ShubU magic
+		 
+		 */
 		
 	}
 

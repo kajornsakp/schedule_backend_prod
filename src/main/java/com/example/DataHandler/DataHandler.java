@@ -95,7 +95,12 @@ public class DataHandler {
 		mongoOperation.findAndModify(new Query(Criteria.where("name").is(s.getName())),update, Subject.class);
 	}
 	
-	public static ArrayList<Subject> generateTable(){
+	public static Subject getSubjectByID(String id){
+		return mongoOperation.findOne(new Query(Criteria.where("id").is(id)), Subject.class);
+	}
+	
+	public static String generateTable(){
+		/*
 		Generator g = new Generator();
 		List<Subject> subjects = mongoOperation.findAll(Subject.class);
 		List<Room> rooms = mongoOperation.findAll(Room.class);
@@ -104,6 +109,12 @@ public class DataHandler {
 		
 		ArrayList<Subject> result = g.SHOWTIME();
 		return result;
+		*/
+		Encoder encoder = new Encoder();
+        String ans = encoder.encode();
+        Decoder decoder = new Decoder(encoder.getReverseTermMap());
+        decoder.decode(ans);
+        return "" ;
 	}
 	
 	public static void deleteAllSubjects(){

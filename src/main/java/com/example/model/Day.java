@@ -12,8 +12,12 @@ public class Day {
         this.name = name;
         slotUsed = new ArrayList<Slot>();
     }
+    
+    public void reserveSlot(Slot data){
+    	slotUsed.add(data);
+    }
 
-
+    /*
     public boolean reserveSlot(Slot data, ExceptionSet e){
     	//contain will check vela dew gun & room dew gun clause
     	
@@ -23,7 +27,9 @@ public class Day {
         this.slotUsed.add(data);
         return true;
     }
+    */
     
+    /*
     private boolean exceptionCheck(Slot data, ExceptionSet e){
     	for (Slot slot : this.slotUsed){
     		//if me vi cha tee vela trong gun law have in exception set -> fail
@@ -36,6 +42,7 @@ public class Day {
     	}
     	return true;
     }
+    */
 
     public ArrayList<Slot> getSlotUsed(){
         return this.slotUsed;
