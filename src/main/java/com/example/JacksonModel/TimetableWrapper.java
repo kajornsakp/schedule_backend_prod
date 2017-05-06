@@ -1,6 +1,5 @@
 package com.example.JacksonModel;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
 
 import java.util.ArrayList;
 
@@ -50,13 +49,10 @@ public class TimetableWrapper {
 	}
 	
 	public void addRoomOnSubject(Subject s, Room room){
-		System.out.println("subject : " + s.getName());
 		for (int j = 0; j < dayList.size();j++){
 			ArrayList<Slot> slots = dayList.get(j).getSlotUsed();
 			for (int i = 0 ; i < slots.size(); i++){
-				System.out.println("Course in slot " + slots.get(i).getCourse().getName());
 				if (slots.get(i).getCourse().getName().equals(s.getName())){
-					System.out.println("get in!!!");
 					slots.get(i).setRoom(room);
 				}
 			}	
