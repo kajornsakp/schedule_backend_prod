@@ -30,17 +30,13 @@ public class TimetableWrapper {
 	}
 	
 	public String getEndTime(Subject s, String startTime){
-		
-		System.out.println("Start time : " + startTime);
 		ArrayList<String> preferred = s.getTimePrefered();
 		for (int i = 0 ; i < preferred.size(); i++){
 			String item = preferred.get(i);
-			System.out.println("item : " + item);
-			System.out.println("item 1-6 : " + item.substring(1, 6));
 			if (item.substring(1, 6).equals(startTime))
 				return item.substring(6,item.length());
 		}
-		throw new IllegalArgumentException("perferred time does not match with start time");
+		throw new IllegalArgumentException("perfered time does not match with start time");
 	}
 	
 	public void addSubjectOn(Subject s, DayName name, String time){
@@ -54,11 +50,15 @@ public class TimetableWrapper {
 	}
 	
 	public void addRoomOnSubject(Subject s, Room room){
+		System.out.println("subject : " + s.getName());
 		for (int j = 0; j < dayList.size();j++){
 			ArrayList<Slot> slots = dayList.get(j).getSlotUsed();
 			for (int i = 0 ; i < slots.size(); i++){
-				if (slots.get(i).getCourse().equals(s))
+				System.out.println("Course in slot " + slots.get(i).getCourse().getName());
+				if (slots.get(i).getCourse().getName().equals(s.getName())){
+					System.out.println("get in!!!");
 					slots.get(i).setRoom(room);
+				}
 			}	
 		}
 	}
