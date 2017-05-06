@@ -221,7 +221,7 @@ public class Encoder {
         // format 0ssssDtttt for subject
         // format 1ssssrrrr for subject in room
 //        String subjectFormat = "0" + subj.getId() + enumDayMap.get(day) + slot.getStartTime().replaceAll("[^\\d.]", "");
-        String subjectFormat = "0" + subj.getId() + day + slot.getStartTime().replaceAll("[^\\d.]", "");
+        String subjectFormat = "0" + subj.getId() + day + slot.getStartTime().replaceAll("[^\\d.]", "")+ slot.getEndTime().replaceAll("[^\\d.]", "");
         String roomFormat = "1" + subj.getId() + room.getId();
         // term mapper maps term with integer (positive)
         // sat4j requires integer as an input for term
@@ -239,7 +239,7 @@ public class Encoder {
         for (int j = 0; j < otherSubjectList.size(); j++)  // loop to create all subject' (other subject) 'then' term
         {
             // format 0ssssDtttt for subject
-            String otherSubjFormat = "0" + otherSubjectList.get(j).getId() + day + slot.getStartTime().replaceAll("[^\\d.]", "");
+            String otherSubjFormat = "0" + otherSubjectList.get(j).getId() + day + slot.getStartTime().replaceAll("[^\\d.]", "")+ slot.getEndTime().replaceAll("[^\\d.]", "");
             if (!termMap.containsKey(otherSubjFormat)) {
                 varCount++;
                 termMap.put(otherSubjFormat, varCount);
@@ -290,7 +290,7 @@ public class Encoder {
     private String encodePossibleCourse(Subject subj, String day, Slot slot) {
         String result;
         //System.out.println("yoy"+day);
-        result = "0" + subj.getId() + day + slot.getStartTime().replaceAll("[^\\d.]", "");
+        result = "0" + subj.getId() + day + slot.getStartTime().replaceAll("[^\\d.]", "") + slot.getEndTime().replaceAll("[^\\d.]", "");
         if (!termMap.containsKey(result)) {
             varCount++;
             termMap.put(result, varCount);
