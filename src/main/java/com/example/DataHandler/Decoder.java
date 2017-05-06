@@ -2,55 +2,40 @@ package com.example.DataHandler;
 
 
 import java.util.*;
+import java.util.stream.Collectors;
 
-import com.example.model.Day;
+import com.example.JacksonModel.TimetableWrapper;
+import com.example.model.DayName;
+import com.example.model.Room;
 import com.example.model.Subject;
 
 
 public class Decoder{
     private Map<Integer, String> termMap;
-    private ArrayList<String> assignedSubject;
-    private ArrayList<String> assignedRoom;
+    
     public Decoder(Map<Integer, String> termMap) {
-        this.termMap = termMap;
-        assignedSubject =  new ArrayList<>();
-        assignedRoom = new ArrayList<>();
+        this.termMap = termMap;   
     }
 
-    public void decode(String str) {
-        System.out.println();
-        String literal;
+    public TimetableWrapper decode(String str) {
         String[] array = str.split(" "); // placeholder for literals
-        ArrayList<String> answerList = new ArrayList(Arrays.asList(array));
+        ArrayList<String> answerList = (ArrayList<String>) Arrays.asList(array).stream().map(item -> { return termMap.get(Integer.parseInt(item)); } ).collect(Collectors.toList());
+        answerList = (ArrayList<String>) answerList.stream().filter(item -> item != null).collect(Collectors.toList());
         
-        ArrayList<Day> subjectList = new ArrayList<Day>();
+        TimetableWrapper t = new TimetableWrapper();
+        ArrayList<String> datetimeAssignment =  (ArrayList<String>) answerList.stream().filter(item -> item.substring(0, 1).equals("0")).collect(Collectors.toList());
+        ArrayList<String> roomAssignment = (ArrayList<String>) answerList.stream().filter(item -> item.substring(0, 1).equals("1")).collect(Collectors.toList());
         
-        //System.out.println("last"+array[array.length-1]);
-        for (int i = 0; i < array.length - 1; i++) {
-            if (Integer.parseInt(array[i]) > 0) {
-                literal = termMap.get(Integer.parseInt(array[i]));
-                //String subjectID = literal.substring(1, 5);
-                //Subject s = DataHandler.getSubjectByID(subjectID);
-                      
-                System.out.println("test : " + literal);
-                if(literal.substring(0,1).equals("0")) // begin with '0' means datetime assignment, begin with '1' means room assignment
-                {
-                	
-                }
-            } else {
-                literal = "-" + termMap.get(Math.abs(Integer.parseInt(array[i])));
-            }
-
-//            System.out.println(literal);
-
-        }
-        System.out.println();
+        datetimeAssignment.forEach(item -> {
+        	Subject s = DataHandler.getSubjectByID(item.substring(1,5));
+        	t.addSubjectOn(s, DayName.values()[Integer.parseInt(item.substring(5, 6))], item.substring(6, item.length()));
+        });
+        roomAssignment.forEach(item -> {
+        	Subject s = DataHandler.getSubjectByID(item.substring(1,5));
+        	Room r = DataHandler.getRoomByID( item.substring(5,item.length()) );
+        	t.addRoomOnSubject(s, r);
+        });
+        return t;
     }
-
-    public void addAssignedSubject(String term)
-    {
-
-    }
-
 
 }

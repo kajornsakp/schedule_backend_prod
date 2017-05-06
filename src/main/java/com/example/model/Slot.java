@@ -5,6 +5,7 @@ public class Slot {
     private String startTime;
     private String endTime;
     private Subject course;
+    private Room room;
 
     //input format 18:00
     public Slot(String start, String end){
@@ -24,9 +25,31 @@ public class Slot {
         this.endTime = parts2[0] + ":" + parts2[1];
 
     }
+    
+    public Slot(String start){
+    	String[] parts = start.split(":");
+       
+        for (String s : parts)
+            if (s.length() == 1)
+                s = "0" + s;
 
+        this.course = null;
+        this.startTime = parts[0] + ":" + parts[1];
+       
+    }
+    
+    public void setRoom(Room room){
+    	this.room = room;
+    }
+    
+    public Room getRoom(){
+    	return this.room;
+    }
     public void setCourse(Subject course){
         this.course = course;
+    }
+    public Subject getCourse(){
+    	return this.course;
     }
 
     //input in minute

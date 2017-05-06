@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
 import com.example.Generator;
+import com.example.JacksonModel.TimetableWrapper;
 import com.example.config.MongoConfig;
 import com.example.model.Day;
 import com.example.model.Lecturer;
@@ -89,8 +90,6 @@ public class DataHandler {
 		update.set("name",s.getName());
 		update.set("expectedStudent", s.getExpectedStudent());
 		update.set("priority", s.getPriority());
-		update.set("subscribeDay", s.getSubscribeDay());
-		update.set("subscribeTime", s.getSubscribeTime());
 		update.set("timePrefered", s.getTimePrefered());
 		mongoOperation.findAndModify(new Query(Criteria.where("name").is(s.getName())),update, Subject.class);
 	}
@@ -99,7 +98,7 @@ public class DataHandler {
 		return mongoOperation.findOne(new Query(Criteria.where("id").is(id)), Subject.class);
 	}
 	
-	public static String generateTable(){
+	public static TimetableWrapper generateTable(){
 		/*
 		Generator g = new Generator();
 		List<Subject> subjects = mongoOperation.findAll(Subject.class);
@@ -113,8 +112,8 @@ public class DataHandler {
 		Encoder encoder = new Encoder();
         String ans = encoder.encode();
         Decoder decoder = new Decoder(encoder.getReverseTermMap());
-        decoder.decode(ans);
-        return "" ;
+        
+        return decoder.decode(ans); 
 	}
 	
 	public static void deleteAllSubjects(){
@@ -149,6 +148,10 @@ public class DataHandler {
 	
 	public static Room getRoom(String roomName){
 		return mongoOperation.findOne(new Query(Criteria.where("roomName").is(roomName)), Room.class);
+	}
+	
+	public static Room getRoomByID(String id){
+		return mongoOperation.findOne(new Query(Criteria.where("id").is(id)), Room.class);
 	}
 
 	public static void deleteRoom(String room) {

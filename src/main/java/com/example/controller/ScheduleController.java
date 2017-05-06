@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.DataHandler.DataHandler;
 import com.example.JacksonModel.SubjectWrapper;
+import com.example.JacksonModel.TimetableWrapper;
 import com.example.model.Day;
 import com.example.model.Subject;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -69,7 +70,7 @@ public class ScheduleController {
 	}
 	
 	@RequestMapping(value = "/generate", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public String generateTimetable(){
+	public TimetableWrapper generateTimetable(){
 		return DataHandler.generateTable(); //return list of all subjects with subscribed time
 	}
 	

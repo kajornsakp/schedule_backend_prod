@@ -99,16 +99,7 @@ public class Subject {
     	return this.priority;
     }
     
-    public void subscribedDayTime(DayName day, Time time){
-    	this.subscribeDay = day;
-    	this.subscribeTime = time;
-    }
     
-    public boolean hasSubscribed(){
-    	if (this.subscribeDay == null)
-    		return false;
-    	return true;
-    }
     
     private String generateID(){
         UUID tempID = UUID.randomUUID();
