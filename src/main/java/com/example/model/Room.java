@@ -29,6 +29,10 @@ public class Room {
         }
         return result;
     }
+    
+    public Room(){
+    	
+    }
 
     public Room(String name, int size){
         this.roomName = name;

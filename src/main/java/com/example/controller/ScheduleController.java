@@ -55,6 +55,7 @@ public class ScheduleController {
 	@RequestMapping(value = "/removeSubject", method = RequestMethod.DELETE, consumes= "application/json")
 	public ResponseEntity<Object> deleteSubject(Subject s){
 		try{
+			System.out.println("trying to delete subject");
 			DataHandler.deleteSubject(s);
 			return ResponseEntity.ok("remove success");
 		} catch (IllegalArgumentException e){
@@ -67,7 +68,7 @@ public class ScheduleController {
 		DataHandler.deleteAllSubjects();
 	}
 	
-	@RequestMapping(value = "/generate", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE})
+	@RequestMapping(value = "/generate", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ArrayList<Subject> generateTimetable(){
 		return DataHandler.generateTable(); //return list of all subjects with subscribed time
 	}

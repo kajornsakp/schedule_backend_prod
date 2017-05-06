@@ -44,12 +44,12 @@ public class AuthController {
 
     }
     
-    @RequestMapping(value = "/deleteAll", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE})
     public List<Account> deleteAll(){
     	return DataHandler.deleteAllUsers();
     }
     
-    @RequestMapping(value = "/changeRole", method = RequestMethod.OPTIONS, consumes = "application/json")
+    @RequestMapping(value = "/changeRole", method = RequestMethod.POST, consumes = "application/json")
     public Account changeRole(@RequestBody RoleWrapper wrapper){
     	return DataHandler.changeAccountRole(wrapper.getAccountName(), wrapper.getRole());
     }

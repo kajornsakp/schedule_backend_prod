@@ -123,6 +123,33 @@ public class DataHandler {
 		mongoOperation.save(lecturer);
 	}
 	
+	public static void createRoom(Room room){
+		Room find = getRoom(room.getRoomName());
+		if (find != null){
+			mongoOperation.remove(find);
+		}
+		mongoOperation.save(room);
+	}
+	
+	public static List<Room> getAllRooms(){
+		
+		return mongoOperation.findAll(Room.class);
+	}
+	
+	public static Room getRoom(String roomName){
+		return mongoOperation.findOne(new Query(Criteria.where("roomName").is(roomName)), Room.class);
+	}
+
+	public static void deleteRoom(String room) {
+		Room find = getRoom(room);
+		mongoOperation.remove(find);
+	}
+
+	public static void deleteAllRooms() {
+		mongoOperation.dropCollection("Room");
+		
+	}
+	
 	
 
 
