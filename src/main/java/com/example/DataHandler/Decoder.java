@@ -28,7 +28,8 @@ public class Decoder{
         
         datetimeAssignment.forEach(item -> {
         	Subject s = DataHandler.getSubjectByID(item.substring(1,5));
-        	t.addSubjectOn(s, DayName.values()[Integer.parseInt(item.substring(5, 6))], item.substring(6, item.length()));
+        	System.out.println("check : " + item.substring(6,item.length()));
+        	t.addSubjectOn(s, DayName.values()[Integer.parseInt(item.substring(5, 6))], item.substring(6, 10), item.substring(10, item.length()));
         });
         roomAssignment.forEach(item -> {
         	Subject s = DataHandler.getSubjectByID(item.substring(1,5));

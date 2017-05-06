@@ -28,19 +28,10 @@ public class TimetableWrapper {
 		throw new IllegalArgumentException("no day founded");
 	}
 	
-	public String getEndTime(Subject s, String startTime){
-		ArrayList<String> preferred = s.getTimePrefered();
-		for (int i = 0 ; i < preferred.size(); i++){
-			String item = preferred.get(i);
-			if (item.substring(1, 6).equals(startTime))
-				return item.substring(6,item.length());
-		}
-		throw new IllegalArgumentException("perfered time does not match with start time");
-	}
 	
-	public void addSubjectOn(Subject s, DayName name, String time){
-		String startTime = time.substring(0,2) + ":" + time.substring(2,time.length());
-		String endTime = this.getEndTime(s, startTime);
+	public void addSubjectOn(Subject s, DayName name, String sTime, String eTime){
+		String startTime = sTime.substring(0,2) + ":" + sTime.substring(2,sTime.length());
+		String endTime = sTime.substring(0,2) + ":" + sTime.substring(2,sTime.length());
 		
 		Day day = this.getDay(name);
 		Slot slot = new Slot(startTime, endTime);

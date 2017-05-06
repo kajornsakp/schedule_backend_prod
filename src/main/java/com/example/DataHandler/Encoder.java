@@ -148,7 +148,7 @@ public class Encoder {
                 System.out.println(reader.decode(problem.findModel()));
                 //decorator.admitABetterSolution();
                 reader = new WDimacsReader(decorator);
-                problem = reader.parseInstance("/Users/papaloyjr./Desktop/Y3T2/TeamProj/generator/cnfInput.txt");
+                problem = reader.parseInstance("cnfInput.txt");
                 System.out.println(problem.isSatisfiable() + ":satisfiable");
                 System.out.println(reader.decode(problem.findModel()));
             }
