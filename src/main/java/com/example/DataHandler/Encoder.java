@@ -21,7 +21,7 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.example.model.Day;
+
 //Custom import
 import com.example.model.Room;
 import com.example.model.Slot;
@@ -31,6 +31,7 @@ import com.example.model.DayName;
 /**
  * Created by Jrphapa on 4/5/2017 AD.
  */
+
 public class Encoder {
     ArrayList<Room> rooms;
    
@@ -38,7 +39,7 @@ public class Encoder {
     Map<DayName, String> enumDayMap;
     Map<String, Integer> termMap;
     Map<Integer, String> reverseTermMap;
-    DataHandler dataManager;
+    
     private int varCount; // max var
     private int clauseCount; // no. of clauses
     private final String MAX_WEIGHT = "100000000000000000";
@@ -48,15 +49,14 @@ public class Encoder {
         initDayMapper();
         termMap = new HashMap<>();
         reverseTermMap = new HashMap<>();
-        rooms = (ArrayList<Room>) dataManager.getAllRooms();
-        subjects = (ArrayList<Subject>) dataManager.getAllSubjects();
+        rooms = (ArrayList<Room>) DataHandler.getAllRooms();
+        subjects = (ArrayList<Subject>) DataHandler.getAllSubjects();
         varCount = 0;
         clauseCount = 0;
     }
 
     private void initDayMapper() {
         enumDayMap = new EnumMap<DayName, String>(DayName.class);
-        
         enumDayMap.put(DayName.MONDAY, "1");
         enumDayMap.put(DayName.TUESDAY, "2");
         enumDayMap.put(DayName.WEDNESDAY, "3");
@@ -82,13 +82,11 @@ public class Encoder {
         for (int i = 0; i < subjects.size(); i++) {
             possibleCourseCNF += subjects.get(i).getPriority() + " ";
             for (int j = 0; j < subjects.get(i).getTimePrefered().size(); j++) {
-
                 int maxFitWeight = findMaxFitWeight(subjects.get(i), rooms);
                 if (maxFitWeight != -1) // if there are some rooms that fit amount of student
                     resourceCNF += maxFitWeight + " ";
                 else // no room fits subject // weight = 100 , not assign to any room
-                    resourceCNF+= 100 + " ";
-                
+                    resourceCNF+= 100 + " ";       
                 dateTime = subjects.get(i).getTimePrefered().get(j);
                 possibleCourseCNF += encodePossibleCourse(subjects.get(i), dateTime.substring(0, 1), new Slot(dateTime.substring(1, 6), dateTime.substring(6, 11))) + " ";
                 for (int l = 0; l < rooms.size(); l++) {
@@ -100,9 +98,7 @@ public class Encoder {
                 }
                 // '0\n' is 'and'
                 resourceCNF += "0\n";
-
                 clauseCount++;
-
             }
             // '0\n' is 'and'
             possibleCourseCNF += "0\n";
@@ -126,7 +122,6 @@ public class Encoder {
         IPBSolver solver = SolverFactory.newDefault();
         solver.setTimeout(3600); // 1 hour timeout
         WeightedMaxSatDecorator decorator = new WeightedMaxSatDecorator(solver);
-        //Reader reader = new DimacsReader(solver);
         WDimacsReader reader = new WDimacsReader(decorator);
 
         String ans = "";
@@ -135,18 +130,13 @@ public class Encoder {
             IProblem problem = reader.parseInstance("cnfInput.txt");
             
             if (problem.isSatisfiable()) {
-
-                System.out.println("Satisfiable !");
-
                 ans = reader.decode(problem.findModel());
-                System.out.println(reader.decode(problem.findModel()));
-                System.out.println("Ploy's note: just ignore '-null' or 'null' (bug)");
-                System.out.println("& current solution : satisfy max clauses then max literals ");
+                //Ploy's note: just ignore '-null' or 'null' (bug)
+                //& current solution : satisfy max clauses then max literals
         
             } else {
                 System.out.println("Unsatisfiable !");
                 System.out.println(reader.decode(problem.findModel()));
-                //decorator.admitABetterSolution();
                 reader = new WDimacsReader(decorator);
                 problem = reader.parseInstance("cnfInput.txt");
                 System.out.println(problem.isSatisfiable() + ":satisfiable");
@@ -186,9 +176,6 @@ public class Encoder {
                 isAssigned = true;
             }
         }
-        // max weight = 100 - (roomCapacity - ExpectedStudent)
-        // we have 100 (or any number) to give the maximum weight for room that can fill student as much as possible (least difference value)
-
         if (isAssigned)
             return 100 - difference;
         // if no rooms fits amount of student
@@ -196,21 +183,6 @@ public class Encoder {
 
     }
 
-    private String mapDay(Day day) {
-//        if(day.getDay() == DayName.MONDAY)
-//        return "1";
-//        else if(day.getDay() == DayName.TUESDAY)
-//            return "2";
-//        else if(day.getDay() == DayName.WEDNESDAY)
-//            return "3";
-//        else if(day.getDay() == DayName.THURSDAY)
-//            return "4";
-//        else if(day.getDay() == DayName.FRIDAY)
-//            return "5";
-        return enumDayMap.get(day.getDay());
-    }
-
-    //    private String encodeCourse(ArrayList<Subject> subjects,Room room, Day day, Slot slot, Subject subj)
     private String encodeCourse(ArrayList<Subject> subjects, Room room, String day, Slot slot, Subject subj) {
         ArrayList<Subject> otherSubjectList = (ArrayList<Subject>) subjects.clone();
         otherSubjectList.remove(subj);
@@ -220,7 +192,6 @@ public class Encoder {
         String resultConstraint;
         // format 0ssssDtttt for subject
         // format 1ssssrrrr for subject in room
-//        String subjectFormat = "0" + subj.getId() + enumDayMap.get(day) + slot.getStartTime().replaceAll("[^\\d.]", "");
         String subjectFormat = "0" + subj.getId() + day + slot.getStartTime().replaceAll("[^\\d.]", "")+ slot.getEndTime().replaceAll("[^\\d.]", "");
         String roomFormat = "1" + subj.getId() + room.getId();
         // term mapper maps term with integer (positive)
@@ -279,29 +250,21 @@ public class Encoder {
             termMap.put(temp, varCount);
             reverseTermMap.put(varCount, temp);
         }
-//        if(room.getCapacity() >= subj.getExpectedStudent())
-//            result += termMap.get(temp);
         result+=termMap.get(temp);
-//        else
-//            result += "-"+termMap.get(temp); // room does not fit student amount
         return result;
     }
 
     private String encodePossibleCourse(Subject subj, String day, Slot slot) {
         String result;
-        //System.out.println("yoy"+day);
         result = "0" + subj.getId() + day + slot.getStartTime().replaceAll("[^\\d.]", "") + slot.getEndTime().replaceAll("[^\\d.]", "");
         if (!termMap.containsKey(result)) {
             varCount++;
             termMap.put(result, varCount);
             reverseTermMap.put(varCount, result);
         }
-
         return "" + termMap.get(result);
-
     }
 
-    // getter
     public Map<String, Integer> getTermMap() {
         return termMap;
     }

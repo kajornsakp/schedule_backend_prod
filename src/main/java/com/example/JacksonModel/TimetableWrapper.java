@@ -8,7 +8,6 @@ import com.example.model.DayName;
 import com.example.model.Room;
 import com.example.model.Slot;
 import com.example.model.Subject;
-import com.example.model.Time;
 
 public class TimetableWrapper {
 	private ArrayList<Day> dayList;

@@ -26,11 +26,13 @@ public class Decoder{
         ArrayList<String> datetimeAssignment =  (ArrayList<String>) answerList.stream().filter(item -> item.substring(0, 1).equals("0")).collect(Collectors.toList());
         ArrayList<String> roomAssignment = (ArrayList<String>) answerList.stream().filter(item -> item.substring(0, 1).equals("1")).collect(Collectors.toList());
         
+        //Assign date time for subject first
         datetimeAssignment.forEach(item -> {
         	Subject s = DataHandler.getSubjectByID(item.substring(1,5));
-        	System.out.println("check : " + item.substring(6,item.length()));
         	t.addSubjectOn(s, DayName.values()[Integer.parseInt(item.substring(5, 6))], item.substring(6, 10), item.substring(10, item.length()));
         });
+        
+        //Assign room to that subject in slot
         roomAssignment.forEach(item -> {
         	Subject s = DataHandler.getSubjectByID(item.substring(1,5));
         	Room r = DataHandler.getRoomByID( item.substring(5,item.length()) );
