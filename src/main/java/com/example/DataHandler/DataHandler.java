@@ -45,8 +45,7 @@ public class DataHandler {
 	}
 
 	public static void addUser(Account user) throws IllegalAccessException {
-		if (mongoOperation.find(new Query(Criteria.where("username").is(user.getUsername())),Account.class) != null)
-			throw new IllegalAccessException("this user already exist!");
+		System.out.println( (mongoOperation.find(new Query(Criteria.where("username").is(user.getUsername())),Account.class) ) );
 		mongoOperation.save(user);
 
 	}

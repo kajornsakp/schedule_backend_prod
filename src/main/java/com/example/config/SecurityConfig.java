@@ -26,14 +26,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/").permitAll()
 			
 			//.antMatchers(HttpMethod.POST,"/auth/login").permitAll()
-			.antMatchers("/auth/*").permitAll()
-			.antMatchers("/scheduleAct/*").permitAll()
-			.anyRequest().authenticated()
+			//.antMatchers("/auth/*").permitAll()
+			//.antMatchers("/scheduleAct/*").permitAll()
+			//.anyRequest().authenticated()
 			.and()
-			.addFilterBefore(new JWTLoginFilter("/auth/login", authenticationManager()),
-			UsernamePasswordAuthenticationFilter.class)
-			.addFilterBefore(new JWTAuthenticationFilter(),
-			UsernamePasswordAuthenticationFilter.class)
+			//.addFilterBefore(new JWTLoginFilter("/auth/login", authenticationManager()),
+			//UsernamePasswordAuthenticationFilter.class)
+			//.addFilterBefore(new JWTAuthenticationFilter(),
+			//UsernamePasswordAuthenticationFilter.class)
 			.csrf().disable();
 	}
 	
