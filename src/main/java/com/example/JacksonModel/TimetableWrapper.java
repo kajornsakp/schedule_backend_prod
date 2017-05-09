@@ -30,8 +30,7 @@ public class TimetableWrapper {
 	
 	public void addSubjectOn(Subject s, DayName name, String sTime, String eTime){
 		String startTime = sTime.substring(0,2) + ":" + sTime.substring(2,sTime.length());
-		String endTime = sTime.substring(0,2) + ":" + sTime.substring(2,sTime.length());
-		
+		String endTime = eTime.substring(0,2) + ":" + eTime.substring(2,eTime.length());
 		Day day = this.getDay(name);
 		Slot slot = new Slot(startTime, endTime);
 		slot.setCourse(s);

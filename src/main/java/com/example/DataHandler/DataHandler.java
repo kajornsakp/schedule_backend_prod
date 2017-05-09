@@ -109,10 +109,14 @@ public class DataHandler {
 		ArrayList<Subject> result = g.SHOWTIME();
 		return result;
 		*/
+		
+		long startTime = System.nanoTime();
 		Encoder encoder = new Encoder();
         String ans = encoder.encode();
         Decoder decoder = new Decoder(encoder.getReverseTermMap());
-        
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime) / 1000000;  //divide by 1000000 to get milliseconds.
+        System.out.println("RUN TIME = " + duration);
         return decoder.decode(ans); 
 	}
 	
