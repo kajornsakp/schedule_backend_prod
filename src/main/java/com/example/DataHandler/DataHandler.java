@@ -141,7 +141,7 @@ public class DataHandler {
 		                         
 		Update update = new Update();
 		update.set("roomName", room.getRoomName());
-		update.set("capacity", room.getCapacity())
+		update.set("capacity", room.getCapacity());
 		if (mongoOperation.findAndModify(new Query(Criteria.where("roomName").is(room.getRoomName())), update, Room.class) == null)
 			mongoOperation.save(room);
 		
