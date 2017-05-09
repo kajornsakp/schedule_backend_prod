@@ -138,15 +138,12 @@ public class DataHandler {
 	}
 	
 	public static void createRoom(Room room){
-		Room find = getRoom(room.getRoomName());
-		if (find != null){
-			Update update = new Update();
-			update.set("roomName", room.getRoomName());
-			update.set("capacity", room.getCapacity())
-			mongoOperation.findAndModify(new Query(Criteria.where("roomName").is(room.getRoomName())), update, Room.class);
-		}
-			
-		mongoOperation.save(room);
+		                         
+		Update update = new Update();
+		update.set("roomName", room.getRoomName());
+		update.set("capacity", room.getCapacity())
+		if (mongoOperation.findAndModify(new Query(Criteria.where("roomName").is(room.getRoomName())), update, Room.class) == null)
+			mongoOperation.save(room);
 		
 	}
 	
