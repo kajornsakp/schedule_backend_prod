@@ -32,6 +32,7 @@ public class TimetableWrapper {
 		String startTime = sTime.substring(0,2) + ":" + sTime.substring(2,sTime.length());
 		String endTime = eTime.substring(0,2) + ":" + eTime.substring(2,eTime.length());
 		Day day = this.getDay(name);
+		System.out.println("add " + s.getName() + " : " + day.getDay() + " at " + startTime + " - " + endTime);
 		Slot slot = new Slot(startTime, endTime);
 		slot.setCourse(s);
 		day.reserveSlot(slot);

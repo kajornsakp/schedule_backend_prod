@@ -14,6 +14,7 @@ public class Day {
     }
     
     public void reserveSlot(Slot data){
+    	
     	slotUsed.add(data);
     }
 

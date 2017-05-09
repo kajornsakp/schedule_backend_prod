@@ -65,6 +65,7 @@ public class Encoder {
     }
 
     public String encode() {
+    	long startTime = System.nanoTime();
         //reset counter
         varCount = 0;
         clauseCount = 0;
@@ -116,9 +117,13 @@ public class Encoder {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
+        
+        long endTime = System.nanoTime();
+        System.out.println("encoder takes time : " + (endTime - startTime) / 1000000);
         ////////////////////////  SAT4J  /////////////////////////////////////
 
+        
+        startTime = System.nanoTime();
         IPBSolver solver = SolverFactory.newDefault();
         solver.setTimeout(3600); // 1 hour timeout
         WeightedMaxSatDecorator decorator = new WeightedMaxSatDecorator(solver);
@@ -128,7 +133,6 @@ public class Encoder {
         // CNF filename is given on the command line
         try {
             IProblem problem = reader.parseInstance("cnfInput.txt");
-            
             if (problem.isSatisfiable()) {
                 ans = reader.decode(problem.findModel());
                 //Ploy's note: just ignore '-null' or 'null' (bug)
@@ -161,7 +165,9 @@ public class Encoder {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
+        
+        endTime = System.nanoTime();
+        System.out.println("Solver takes time : " + (endTime - startTime) / 1000000);
         return ans;
 
     }
