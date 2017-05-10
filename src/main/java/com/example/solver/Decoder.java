@@ -1,9 +1,10 @@
-package com.example.DataHandler;
+package com.example.solver;
 
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.example.DataHandler.DataHandler;
 import com.example.JacksonModel.TimetableWrapper;
 import com.example.model.DayName;
 import com.example.model.Room;

@@ -1,7 +1,8 @@
-package com.example.DataHandler;
+package com.example.solver;
 
 
 //SAT4J Dependencies
+import com.example.DataHandler.DataHandler;
 import org.sat4j.maxsat.SolverFactory;
 import org.sat4j.maxsat.WeightedMaxSatDecorator;
 import org.sat4j.maxsat.reader.WDimacsReader;
@@ -64,7 +65,7 @@ public class Encoder {
         enumDayMap.put(DayName.FRIDAY, "5");
     }
 
-    public String encode() {
+    public void encode() {
     	long startTime = System.nanoTime();
         //reset counter
         varCount = 0;
@@ -120,55 +121,7 @@ public class Encoder {
         
         long endTime = System.nanoTime();
         System.out.println("encoder takes time : " + (endTime - startTime) / 1000000);
-        ////////////////////////  SAT4J  /////////////////////////////////////
 
-        
-        startTime = System.nanoTime();
-        IPBSolver solver = SolverFactory.newDefault();
-        solver.setTimeout(3600); // 1 hour timeout
-        WeightedMaxSatDecorator decorator = new WeightedMaxSatDecorator(solver);
-        WDimacsReader reader = new WDimacsReader(decorator);
-
-        String ans = "";
-        // CNF filename is given on the command line
-        try {
-            IProblem problem = reader.parseInstance("cnfInput.txt");
-            if (problem.isSatisfiable()) {
-                ans = reader.decode(problem.findModel());
-                //Ploy's note: just ignore '-null' or 'null' (bug)
-                //& current solution : satisfy max clauses then max literals
-        
-            } else {
-                System.out.println("Unsatisfiable !");
-                System.out.println(reader.decode(problem.findModel()));
-                reader = new WDimacsReader(decorator);
-                problem = reader.parseInstance("cnfInput.txt");
-                System.out.println(problem.isSatisfiable() + ":satisfiable");
-                System.out.println(reader.decode(problem.findModel()));
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println(e);
-        } catch (ParseFormatException e) {
-            System.out.println(e);
-        } catch (IOException e) {
-            System.out.println(e);
-        } catch (ContradictionException e) {
-            System.out.println("Unsatisfiable (trivial)!");
-        } catch (TimeoutException e) {
-            System.out.println("Timeout, sorry!");
-        }
-
-        try {
-            PrintWriter out = new PrintWriter("cnfOutput.txt");
-            out.print(ans);
-            out.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        
-        endTime = System.nanoTime();
-        System.out.println("Solver takes time : " + (endTime - startTime) / 1000000);
-        return ans;
 
     }
 
