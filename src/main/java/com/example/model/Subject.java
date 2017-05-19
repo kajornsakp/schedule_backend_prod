@@ -34,7 +34,6 @@ public class Subject {
         this.id = this.generateID();
         this.priority = 0;
         this.timePrefered = new ArrayList<String>();
-        
     }
     
     public Subject(String name, int priority, List<String> list, int num){
@@ -47,11 +46,11 @@ public class Subject {
     }
     
     
-    public Subject(@JsonProperty("name") String name,@JsonProperty("priority") int priority, @JsonProperty("lecturerList") List<String> list,@JsonProperty("expectedStudent") int num
+    public Subject(@JsonProperty("id") String id, @JsonProperty("name") String name,@JsonProperty("priority") int priority, @JsonProperty("lecturerList") List<String> list,@JsonProperty("expectedStudent") int num
     		,@JsonProperty("dayPrefer") String day, @JsonProperty("startTime")String startTime, @JsonProperty("endTime") String endTime){
     	this.name = name;
         this.lecturerList = (ArrayList<String>) list;
-        this.id = this.generateID();
+        this.id = this.generateID(id);
         this.priority = priority;
         this.timePrefered = new ArrayList<String>();
         this.addTimePrefer(DayName.valueOf(day), new Time(startTime, endTime));
@@ -101,7 +100,10 @@ public class Subject {
     
     
     
-    private String generateID(){
+    private String generateID(String id){
+    	if (id != null)
+    		return id;
+    	
         UUID tempID = UUID.randomUUID();
         String[] parts = tempID.toString().split("-");
         String result = "";

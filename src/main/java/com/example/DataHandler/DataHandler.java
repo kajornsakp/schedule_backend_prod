@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.example.solver.Decoder;
 import com.example.solver.Encoder;
-import com.example.solver.Solver;
+import com.example.solver.SATSolver;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -113,7 +113,7 @@ public class DataHandler {
         long startTime = System.nanoTime();
         //Encoder encoder = new Encoder();
         // String ans = encoder.encode();
-        Solver solver = new Solver();
+        SATSolver solver = new SATSolver();
         TimetableWrapper ans = solver.solve();
         //Decoder decoder = new Decoder(encoder.getReverseTermMap());
         long endTime = System.nanoTime();

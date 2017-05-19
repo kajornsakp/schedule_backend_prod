@@ -7,6 +7,8 @@ import java.util.UUID;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 @Document(collection = "Room")
 public class Room {
@@ -17,8 +19,11 @@ public class Room {
 //    private long id;
     private String id;
     
-    private String generateID()
+    private String generateID(String id)
     {
+    	if (id != null)
+    		return id;
+    	
     	UUID tempID = UUID.randomUUID();
         String[] parts = tempID.toString().split("-");
         String result = "";
@@ -34,10 +39,10 @@ public class Room {
     	
     }
 
-    public Room(String name, int size){
+    public Room(@JsonProperty("roomName") String name, @JsonProperty("capacity") int size, @JsonProperty("id") String id){
         this.roomName = name;
         this.capacity = size;
-        this.id = generateID();
+        this.id = generateID(id);
        
     }
 

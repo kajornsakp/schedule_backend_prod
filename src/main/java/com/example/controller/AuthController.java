@@ -4,6 +4,9 @@ import com.example.DataHandler.DataHandler;
 import com.example.JacksonModel.AccountWrapper;
 import com.example.JacksonModel.RoleWrapper;
 import com.example.model.Account;
+import com.example.repository.AccountRepository;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
@@ -13,46 +16,57 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import java.util.List;
 
 
 @RestController
 @RequestMapping("/auth")
-public class AuthController {
+public class AuthController implements Controllers<Account>{
+	
+	@Autowired
+	private AccountRepository repository;
+	
 
     @RequestMapping(value = "/listUsers",method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public List<Account> getUser() {
-        return DataHandler.getAllUsers();
+    public List<Account> listAll() {
+    	return repository.findAll();
     }
     
-    @RequestMapping(value = "/login", produces = {MediaType.APPLICATION_JSON_VALUE}, consumes="application/json")
-    public Account login(@RequestBody Account req) {
-    	System.out.println("authen completed returning Account object!!!");
-        return DataHandler.findByUserandPassword(req.getUsername(), req.getPassword());
+    @RequestMapping(method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes="application/json")
+    public ResponseEntity<Object> login(@RequestBody Account req) {
+    	Account result = repository.findByUsernameAndPassword(req.getUsername(), req.getPassword());
+    	if (result == null)
+    		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("user not found!!!");
+    	return ResponseEntity.ok(result);
     }
     
-    @RequestMapping(value = "/register",method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes="application/json")
-    public  ResponseEntity<Object> registerUser(@RequestBody AccountWrapper req) {
+    @RequestMapping(value = "/register", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes="application/json")
+    public ResponseEntity<Object> create(@RequestBody Account req) {
+    	Account account = repository.findByUsername(req.getUsername());
+    	if (account != null)
+    		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("this username has already existed!!!");
     	Account newAcc = new Account(req.getUsername(), req.getPassword(), "USER");
-    	try {
-            DataHandler.addUser(newAcc);
-            return ResponseEntity.ok(newAcc);
-        } catch (IllegalAccessException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
-        }
+    	repository.save(newAcc);
+    	return ResponseEntity.ok(newAcc);
 
     }
     
-    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public List<Account> deleteAll(){
-    	return DataHandler.deleteAllUsers();
+    @RequestMapping(method = RequestMethod.DELETE, consumes="application/json")
+    public void delete(@RequestBody Account req) {
+    	repository.delete(req.getId());
     }
     
-    @RequestMapping(value = "/changeRole", method = RequestMethod.POST, consumes = "application/json")
-    public Account changeRole(@RequestBody RoleWrapper wrapper){
-    	return DataHandler.changeAccountRole(wrapper.getAccountName(), wrapper.getRole());
+    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes="application/json")
+    public void deleteAll(){
+    	repository.deleteAll();
     }
+    
+    @RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
+    public Account update(@RequestBody Account acc){
+    	return repository.save(acc);
+    	
+    }
+
     
 }
 

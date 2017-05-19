@@ -15,21 +15,33 @@ public class Account {
     String password;
     String role;
 
+    public Account() {
+    	
+    }
+    
     public Account(@JsonProperty("username") String username, @JsonProperty("password") String password, 
     		@JsonProperty("role") String role) {
         this.username = username;
         this.password = password;
         this.role = role;
     }
+    
+    public String getId() {
+		return id;
+	}
 
-    public String getUsername() {
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getUsername() {
         return this.username;
     }
-
-    public void setName(String username) {
-        this.username = username;
-    }
-
+ 
     public void setPassword(String password){
     	this.password = password;
     }
