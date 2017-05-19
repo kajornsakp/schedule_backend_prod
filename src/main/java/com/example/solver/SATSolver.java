@@ -26,13 +26,19 @@ public class SATSolver implements Solver{
 
     }
     
-    private void encode() {
-    	//leave this for code refactor later
-    }
-    
-    private void decode() {
-    	//leave this for code refactor later
-    }
+    @Override
+	public void encode() {
+		//leave it for refactor code
+		
+	}
+
+
+
+	@Override
+	public void decode() {
+		//leave it for refactor code
+		
+	}
 
     public TimetableWrapper solve() {
         this.encoder.encode();
@@ -84,4 +90,6 @@ public class SATSolver implements Solver{
 
         return decoder.decode(ans);
     }
+
+	
 }

@@ -31,7 +31,7 @@ public class Subject {
     public Subject(String name){
         this.name = name;
         this.lecturerList = new ArrayList<String>();
-        this.id = this.generateID();
+        this.id = this.generateID(null);
         this.priority = 0;
         this.timePrefered = new ArrayList<String>();
     }
@@ -39,7 +39,7 @@ public class Subject {
     public Subject(String name, int priority, List<String> list, int num){
     	this.name = name;
         this.lecturerList = (ArrayList<String>) list;
-        this.id = this.generateID();
+        this.id = this.generateID(null);
         this.priority = priority;
         this.timePrefered = new ArrayList<String>();
         this.expectedStudent = num;
