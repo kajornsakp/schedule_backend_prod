@@ -2,6 +2,7 @@ package com.example.controller;
 
 
 import com.example.model.Account;
+import com.example.model.Lecturer;
 import com.example.repository.AccountRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,7 @@ public class AuthController implements Controllers<Account>{
     	if (account != null)
     		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("this username has already existed!!!");
     	Account newAcc = new Account(req.getUsername(), req.getPassword(), "USER");
+    	newAcc.setLecturer(new Lecturer(newAcc.getFirstName() + " " + newAcc.getLastName()));
     	repository.save(newAcc);
     	return ResponseEntity.ok(newAcc);
 
