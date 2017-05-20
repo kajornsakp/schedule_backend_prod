@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.model.ExceptionSet;
 import com.example.model.Subject;
 import com.example.repository.ScheduleRepository;
 

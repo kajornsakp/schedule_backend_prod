@@ -41,12 +41,12 @@ public class Encoder {
     private final String MAX_WEIGHT = "100000000000000000";
     private final String WEIGHT = "1";
 
-    public Encoder(List<Room> list, List<Subject> list2) {
+    public Encoder(List<Room> room, List<Subject> subject) {
         initDayMapper();
         termMap = new HashMap<>();
         reverseTermMap = new HashMap<>();
-        rooms = (ArrayList<Room>) list;
-        subjects = (ArrayList<Subject>) list2;
+        rooms = (ArrayList<Room>) room;
+        subjects = (ArrayList<Subject>) subject;
         varCount = 0;
         clauseCount = 0;
     }
@@ -183,7 +183,9 @@ public class Encoder {
             courseAndResourceConstraint += "\n";
             // '\n' = 'and'
             // exception set
-            exceptionSetConstraint += MAX_WEIGHT + " " + "-" + termMap.get(subjectFormat) + " -" + termMap.get(otherSubjFormat) + " 0\n";
+            
+            if (subj.getSetOn().equals(otherSubjectList.get(j).getSetOn()))
+            	exceptionSetConstraint += MAX_WEIGHT + " " + "-" + termMap.get(subjectFormat) + " -" + termMap.get(otherSubjFormat) + " 0\n";
 
             clauseCount += 2;
         }

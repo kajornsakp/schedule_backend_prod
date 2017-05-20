@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,6 +21,9 @@ public class Subject {
     private ArrayList<String> timePrefered;
     private int expectedStudent;
     private int priority;
+    
+    @DBRef
+    private ExceptionSet setOn;
     
     @Id
     private String id;
@@ -57,7 +61,13 @@ public class Subject {
         this.expectedStudent = num;
     }
     
-    
+	public ExceptionSet getSetOn() {
+		return setOn;
+	}
+
+	public void setSetOn(ExceptionSet setOn) {
+		this.setOn = setOn;
+	}
 
 	public void setId(String id) {
 		this.id = id;

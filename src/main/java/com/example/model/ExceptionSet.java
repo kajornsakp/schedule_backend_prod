@@ -10,26 +10,26 @@ public class ExceptionSet {
 	
 	@Id
 	private String id;
-	private ArrayList<Subject> set;
-	
-	public ExceptionSet(){
-		set = new ArrayList<Subject>();
-	}
-	
-	public ExceptionSet(ArrayList<Subject> set){
-		this.set = set;
-	}
-	
-	public boolean contain(Subject s){
-		return this.set.contains(s);
-	}
-	
-	public void addSubject(Subject s){
-		this.set.add(s);
-	}
-	
-	public Subject removeSubject(Subject s){
-		return this.set.remove(this.set.indexOf(s));
+	private String setName;
+
+	public ExceptionSet(String name){
+		this.setName = name;
 	}
 
+	public String getSetName() {
+		return setName;
+	}
+
+	public void setSetName(String setName) {
+		this.setName = setName;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+	
 }
