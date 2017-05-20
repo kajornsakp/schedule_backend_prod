@@ -1,8 +1,7 @@
 package com.example.controller;
 
 import java.util.List;
-
-import javax.annotation.Generated;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.model.TimeSlot;
@@ -21,7 +21,7 @@ import com.example.solver.Solver;
 
 @RestController
 @RequestMapping("/timetable")
-public class TimetableController implements Controllers<TimeSlot>{
+public class TimetableController implements AccessController<TimeSlot>{
 
 	@Autowired
 	private TimetableRepository repository;
@@ -34,9 +34,16 @@ public class TimetableController implements Controllers<TimeSlot>{
 		return repository.save(satSolver.solve());
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+	@RequestMapping(value = "/all", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public List<TimeSlot> listAll() {
 		return repository.findAll();
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+	//input lecturer id
+	public List<TimeSlot> listFor(@RequestParam("id") String id){
+		List<TimeSlot> allSlots = repository.findAll();
+		return allSlots.stream().filter(slot -> slot.getSubject().getLecturerList().contains(id)).collect(Collectors.toList());
 	}
 
 	@RequestMapping(method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -47,23 +54,23 @@ public class TimetableController implements Controllers<TimeSlot>{
 		return ResponseEntity.ok("new time slot saved successfully!!");
 	}
 
-	@Override
+	@RequestMapping(method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public TimeSlot update(@RequestBody TimeSlot element) {
 		return repository.save(element);
 	}
 
-	@Override
+	@RequestMapping(method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public void delete(@RequestBody TimeSlot element) {
 		repository.delete(element.getId());
 		
 	}
 
-	@Override
+	@RequestMapping(value = "/all", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public void deleteAll() {
-		// TODO Auto-generated method stub
+		repository.deleteAll();
 		
 	}
 
-
+	
 
 }

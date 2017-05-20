@@ -61,10 +61,8 @@ public class AuthController implements Controllers<Account>{
     
     @RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
     public Account update(@RequestBody Account acc){
-    	return repository.save(acc);
-    	
+    	return repository.save(acc);    	
     }
 
-    
 }
 

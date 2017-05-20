@@ -2,7 +2,14 @@ package com.example.model;
 
 import java.util.ArrayList;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "ExceptionSet")
 public class ExceptionSet {
+	
+	@Id
+	private String id;
 	private ArrayList<Subject> set;
 	
 	public ExceptionSet(){
@@ -13,7 +20,7 @@ public class ExceptionSet {
 		this.set = set;
 	}
 	
-	public boolean have(Subject s){
+	public boolean contain(Subject s){
 		return this.set.contains(s);
 	}
 	

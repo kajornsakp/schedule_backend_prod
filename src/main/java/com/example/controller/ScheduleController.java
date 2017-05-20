@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,23 +14,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.model.Subject;
 import com.example.repository.ScheduleRepository;
-import com.example.repository.TimetableRepository;
-import com.example.solver.SATSolver;
-import com.example.solver.Solver;
 
 
 @RestController
 @RequestMapping("/scheduleAct")
-public class ScheduleController implements Controllers<Subject>{
+public class ScheduleController implements AccessController<Subject>{
 	
 	@Autowired
 	private ScheduleRepository repository;
-	
-	private Solver satSolver;
-	
+
 	@RequestMapping(value = "/all", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public List<Subject> listAll(){
 		return repository.findAll();
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
+	public List<Subject> listFor(String id) {
+		return repository.findAll().stream().filter(course -> course.getLecturerList().contains(id)).collect(Collectors.toList());
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = "application/json")
@@ -54,5 +55,7 @@ public class ScheduleController implements Controllers<Subject>{
 	public void deleteAll(){
 		repository.deleteAll();
 	}
+
+	
 	
 }

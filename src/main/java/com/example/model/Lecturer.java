@@ -56,6 +56,16 @@ public class Lecturer {
 		return id;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		Lecturer lecturer = (Lecturer) obj; 
+		if (lecturer.getId().equals(this.getId()))
+			return true;
+		return false;
+	}
+	
+	
+
 	
     
     
