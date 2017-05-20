@@ -1,10 +1,13 @@
 package com.example.solver;
 
-import com.example.JacksonModel.TimetableWrapper;
+
+
+import java.util.ArrayList;
+import com.example.model.TimeSlot;
 
 public interface Solver {
 	void encode();
 	void decode();
-	public TimetableWrapper solve();
+	ArrayList<TimeSlot> solve();
 	
 }

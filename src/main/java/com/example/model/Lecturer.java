@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Lecturer {
 
 	@Id
-	private long id;
+	private String id;
     private String name;
     private String info;
     private ArrayList<Subject> subjects;
@@ -51,8 +51,12 @@ public class Lecturer {
 	public void setSubjects(ArrayList<Subject> subjects) {
 		this.subjects = subjects;
 	}
-    
-    
+
+	public String getId() {
+		return id;
+	}
+
+	
     
     
     

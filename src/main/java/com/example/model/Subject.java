@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Document(collection = "Subject")
 public class Subject {
     private String name;
-    private ArrayList<String> lecturerList;
+    private ArrayList<Lecturer> lecturerList;
     private ArrayList<String> timePrefered;
     private int expectedStudent;
     private int priority;
@@ -30,15 +30,15 @@ public class Subject {
 
     public Subject(String name){
         this.name = name;
-        this.lecturerList = new ArrayList<String>();
+        this.lecturerList = new ArrayList<Lecturer>();
         this.id = this.generateID(null);
         this.priority = 0;
         this.timePrefered = new ArrayList<String>();
     }
     
-    public Subject(String name, int priority, List<String> list, int num){
+    public Subject(String name, int priority, List<Lecturer> list, int num){
     	this.name = name;
-        this.lecturerList = (ArrayList<String>) list;
+        this.lecturerList = (ArrayList<Lecturer>) list;
         this.id = this.generateID(null);
         this.priority = priority;
         this.timePrefered = new ArrayList<String>();
@@ -46,10 +46,10 @@ public class Subject {
     }
     
     
-    public Subject(@JsonProperty("id") String id, @JsonProperty("name") String name,@JsonProperty("priority") int priority, @JsonProperty("lecturerList") List<String> list,@JsonProperty("expectedStudent") int num
+    public Subject(@JsonProperty("id") String id, @JsonProperty("name") String name,@JsonProperty("priority") int priority, @JsonProperty("lecturerList") List<Lecturer> list,@JsonProperty("expectedStudent") int num
     		,@JsonProperty("dayPrefer") String day, @JsonProperty("startTime")String startTime, @JsonProperty("endTime") String endTime){
     	this.name = name;
-        this.lecturerList = (ArrayList<String>) list;
+        this.lecturerList = (ArrayList<Lecturer>) list;
         this.id = this.generateID(id);
         this.priority = priority;
         this.timePrefered = new ArrayList<String>();
@@ -68,7 +68,7 @@ public class Subject {
 		this.name = name;
 	}
 
-	public void setLecturerList(ArrayList<String> lecturerList) {
+	public void setLecturerList(ArrayList<Lecturer> lecturerList) {
 		this.lecturerList = lecturerList;
 	}
 
@@ -116,7 +116,7 @@ public class Subject {
     }
 
     
-    public void addLecturer(String l){
+    public void addLecturer(Lecturer l){
         this.lecturerList.add(l);
     }
 
@@ -138,7 +138,7 @@ public class Subject {
     	return this.id;
     }
     
-    public ArrayList<String> getLecturerList(){
+    public ArrayList<Lecturer> getLecturerList(){
     	return this.lecturerList;
     }
     

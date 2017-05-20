@@ -1,6 +1,9 @@
 package com.example.solver;
 
-import com.example.JacksonModel.TimetableWrapper;
+import com.example.model.TimeSlot;
+import com.example.repository.RoomRepository;
+import com.example.repository.ScheduleRepository;
+
 import org.sat4j.maxsat.SolverFactory;
 import org.sat4j.maxsat.WeightedMaxSatDecorator;
 import org.sat4j.maxsat.reader.WDimacsReader;
@@ -9,20 +12,26 @@ import org.sat4j.reader.ParseFormatException;
 import org.sat4j.specs.ContradictionException;
 import org.sat4j.specs.IProblem;
 import org.sat4j.specs.TimeoutException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 /**
  * Created by Jrphapa on 5/10/2017 AD.
  */
 public class SATSolver implements Solver{
+	
+	@Autowired ScheduleRepository courseRepository;
+	@Autowired RoomRepository roomRepository;
+	
     private Encoder encoder;
     private Decoder decoder;
 
     public SATSolver(){
-        this.encoder = new Encoder();
+        this.encoder = new Encoder(roomRepository.findAll(),courseRepository.findAll());
 
     }
     
@@ -32,15 +41,13 @@ public class SATSolver implements Solver{
 		
 	}
 
-
-
 	@Override
 	public void decode() {
 		//leave it for refactor code
 		
 	}
 
-    public TimetableWrapper solve() {
+    public ArrayList<TimeSlot> solve() {
         this.encoder.encode();
         this.decoder = new Decoder(encoder.getReverseTermMap());
 
