@@ -1,5 +1,6 @@
 package com.example.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,11 +11,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import com.example.DataHandler.DataHandler;
 import com.example.model.Account;
+import com.example.repository.AccountRepository;
 
 @Configuration
 public class GlobalWebConfig extends GlobalAuthenticationConfigurerAdapter{
+	@Autowired private AccountRepository repository;
 	
 	@Override
 	public void init(AuthenticationManagerBuilder auth) throws Exception {
@@ -29,7 +31,7 @@ public class GlobalWebConfig extends GlobalAuthenticationConfigurerAdapter{
 			@Override
 			public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 				System.out.println("authentication start: " + username);
-				Account user = DataHandler.findByUser(username);
+				Account user = repository.findByUsername(username);
 				if (user != null){
 					return new User(user.getUsername(), user.getPassword(), true ,true,true,true, 
 							AuthorityUtils.createAuthorityList(user.getRole()));

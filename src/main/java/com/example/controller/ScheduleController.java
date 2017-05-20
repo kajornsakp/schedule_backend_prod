@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.JacksonModel.TimetableWrapper;
 import com.example.model.Subject;
 import com.example.repository.ScheduleRepository;
+import com.example.repository.TimetableRepository;
 import com.example.solver.SATSolver;
 import com.example.solver.Solver;
 
@@ -41,7 +41,7 @@ public class ScheduleController implements Controllers<Subject>{
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public Subject update(Subject element) {
+	public Subject update(@RequestBody Subject element) {
 		return repository.save(element);
 	}
 	
@@ -54,15 +54,5 @@ public class ScheduleController implements Controllers<Subject>{
 	public void deleteAll(){
 		repository.deleteAll();
 	}
-	
-	@RequestMapping(method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public TimetableWrapper generateTimetable(){
-		satSolver = new SATSolver();
-		return satSolver.solve();
-	}
-
-	
-	
-	
 	
 }

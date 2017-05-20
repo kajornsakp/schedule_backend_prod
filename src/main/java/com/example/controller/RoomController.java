@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.DataHandler.DataHandler;
 import com.example.model.Room;
 import com.example.repository.RoomRepository;
 
@@ -46,7 +45,7 @@ public class RoomController implements Controllers<Room> {
 	
 	@RequestMapping(value = "/removeAll", method = RequestMethod.GET)
 	public void deleteAll(){
-		DataHandler.deleteAllRooms();
+		repository.deleteAll();
 	}
 
 
