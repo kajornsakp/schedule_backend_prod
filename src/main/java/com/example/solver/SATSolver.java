@@ -22,6 +22,7 @@ import java.util.ArrayList;
 /**
  * Created by Jrphapa on 5/10/2017 AD.
  */
+
 public class SATSolver implements Solver{
 	
 	@Autowired ScheduleRepository courseRepository;
