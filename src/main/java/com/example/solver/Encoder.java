@@ -2,24 +2,16 @@ package com.example.solver;
 
 
 //SAT4J Dependencies
-import com.example.DataHandler.DataHandler;
-import org.sat4j.maxsat.SolverFactory;
-import org.sat4j.maxsat.WeightedMaxSatDecorator;
-import org.sat4j.maxsat.reader.WDimacsReader;
-import org.sat4j.pb.IPBSolver;
-import org.sat4j.reader.DimacsReader;
-import org.sat4j.reader.ParseFormatException;
-import org.sat4j.reader.Reader;
-import org.sat4j.specs.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
 
 //JAVA standard Libs
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -27,6 +19,8 @@ import java.util.Map;
 import com.example.model.Room;
 import com.example.model.Slot;
 import com.example.model.Subject;
+import com.example.repository.RoomRepository;
+import com.example.repository.ScheduleRepository;
 import com.example.model.DayName;
 
 /**
@@ -34,6 +28,7 @@ import com.example.model.DayName;
  */
 
 public class Encoder {
+
     ArrayList<Room> rooms;
    
     ArrayList<Subject> subjects;
@@ -46,12 +41,12 @@ public class Encoder {
     private final String MAX_WEIGHT = "100000000000000000";
     private final String WEIGHT = "1";
 
-    public Encoder() {
+    public Encoder(List<Room> list, List<Subject> list2) {
         initDayMapper();
         termMap = new HashMap<>();
         reverseTermMap = new HashMap<>();
-        rooms = (ArrayList<Room>) DataHandler.getAllRooms();
-        subjects = (ArrayList<Subject>) DataHandler.getAllSubjects();
+        rooms = (ArrayList<Room>) list;
+        subjects = (ArrayList<Subject>) list2;
         varCount = 0;
         clauseCount = 0;
     }
