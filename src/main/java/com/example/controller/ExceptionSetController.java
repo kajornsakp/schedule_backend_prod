@@ -31,7 +31,7 @@ public class ExceptionSetController implements Controllers<ExceptionSet>{
 
 	@RequestMapping(method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = "application/json")
 	public ResponseEntity create(@RequestBody ExceptionSet element) {
-		if (repository.findBySetName(element.getSetName()) != null)
+		if (repository.findBySetNameIgnoreCase(element.getSetName()) != null)
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("exception set already existed");
 		return ResponseEntity.ok(repository.save(element));
 	}

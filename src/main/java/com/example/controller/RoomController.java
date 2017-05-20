@@ -28,7 +28,7 @@ public class RoomController implements Controllers<Room> {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Object> create(@RequestBody Room room){
-		if (repository.findByRoomName(room.getRoomName()) != null)
+		if (repository.findByRoomNameIgnoreCase(room.getRoomName()) != null)
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("room already existed");
 		return ResponseEntity.ok(repository.save(room));
 	}

@@ -36,7 +36,7 @@ public class ScheduleController implements AccessController<Subject>{
 	
 	@RequestMapping(method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = "application/json")
 	public ResponseEntity<Object> create(@RequestBody Subject s) {
-		if (repository.findByName(s.getName()) != null)
+		if (repository.findByNameIgnoreCase(s.getName()) != null)
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Course already existed!!!");
 		repository.save(s);
 		return ResponseEntity.ok("course added");
