@@ -20,7 +20,7 @@ public class Subject {
     private ArrayList<Lecturer> lecturerList;
     private ArrayList<String> timePrefered;
     private int expectedStudent;
-    private int priority;
+    private Priority priority;
     
     @DBRef
     private ExceptionSet setOn;
@@ -36,11 +36,11 @@ public class Subject {
         this.name = name;
         this.lecturerList = new ArrayList<Lecturer>();
         this.id = this.generateID(null);
-        this.priority = 0;
+        this.priority = null;
         this.timePrefered = new ArrayList<String>();
     }
     
-    public Subject(String name, int priority, List<Lecturer> list, int num){
+    public Subject(String name, Priority priority, List<Lecturer> list, int num){
     	this.name = name;
         this.lecturerList = (ArrayList<Lecturer>) list;
         this.id = this.generateID(null);
@@ -50,7 +50,7 @@ public class Subject {
     }
     
     
-    public Subject(@JsonProperty("id") String id, @JsonProperty("name") String name,@JsonProperty("priority") int priority, @JsonProperty("lecturerList") List<Lecturer> list,@JsonProperty("expectedStudent") int num
+    public Subject(@JsonProperty("id") String id, @JsonProperty("name") String name,@JsonProperty("priority") Priority priority, @JsonProperty("lecturerList") List<Lecturer> list,@JsonProperty("expectedStudent") int num
     		,@JsonProperty("dayPrefer") String day, @JsonProperty("startTime")String startTime, @JsonProperty("endTime") String endTime){
     	this.name = name;
         this.lecturerList = (ArrayList<Lecturer>) list;
@@ -86,7 +86,7 @@ public class Subject {
 		this.timePrefered = time;
 	}
 
-	public void setPriority(int priority) {
+	public void setPriority(Priority priority) {
 		this.priority = priority;
 	}
 
@@ -105,7 +105,7 @@ public class Subject {
 
 
     public int getPriority(){
-    	return this.priority;
+    	return this.priority.getValue();
     }
     
     
