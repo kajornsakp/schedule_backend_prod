@@ -6,6 +6,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Document(collection = "Lecturer")
 public class Lecturer {
 
@@ -21,7 +23,7 @@ public class Lecturer {
     	
     }
 
-    public Lecturer(String name){
+    public Lecturer(@JsonProperty("name") String name){
     	this.name = name;
     	this.info = "";
     }
