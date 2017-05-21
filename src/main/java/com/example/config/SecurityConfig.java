@@ -24,7 +24,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		httpSecurity.authorizeRequests()
 			
-			
 			//.antMatchers(HttpMethod.POST,"/auth/login").permitAll()
 		
 			.antMatchers(HttpMethod.POST,"/auth/*").permitAll()
@@ -39,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			//.antMatchers("/scheduleAct/*").permitAll()
 			.anyRequest().authenticated()
 			.and()
-			.addFilterBefore(new JWTLoginFilter("/auth/login", authenticationManager()),
+			.addFilterBefore(new JWTLoginFilter("/auth/", authenticationManager()),
 			UsernamePasswordAuthenticationFilter.class)
 			.addFilterBefore(new JWTAuthenticationFilter(),
 			UsernamePasswordAuthenticationFilter.class)

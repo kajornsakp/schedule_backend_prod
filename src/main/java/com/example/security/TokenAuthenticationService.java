@@ -32,6 +32,7 @@ public class TokenAuthenticationService {
 		res.addHeader(HEADER, TOK_PREFIX + " " + JWT);
 		res.getWriter().write("{\"" + HEADER + "\" : \"" + TOK_PREFIX + JWT + "\"}");
 		
+		
 	}
 	
 	static Authentication getAuthentication(HttpServletRequest request){
