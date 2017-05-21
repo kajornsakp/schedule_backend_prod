@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,17 +38,17 @@ public class LecturerController implements Controllers<Lecturer> {
 		return ResponseEntity.ok(repository.save(element));
 	}
 
-	@Override
+	@RequestMapping(method = RequestMethod.PUT,produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = "application/json")
 	public Lecturer update(@RequestBody Lecturer element) {
 		return repository.save(element);
 	}
 
-	@Override
+	@RequestMapping(method = RequestMethod.DELETE, consumes = "application/json")
 	public void delete(@RequestBody Lecturer element) {
 		repository.delete(element.getId());
 	}
 
-	@Override
+	@RequestMapping(value = "/all", method = RequestMethod.DELETE)
 	public void deleteAll() {
 		repository.deleteAll();
 	}
