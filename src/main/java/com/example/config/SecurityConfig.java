@@ -23,17 +23,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(HttpSecurity httpSecurity) throws Exception {
 		
 		httpSecurity.authorizeRequests()
-			.antMatchers("/").permitAll()
+			
 			
 			//.antMatchers(HttpMethod.POST,"/auth/login").permitAll()
-			//.antMatchers("/auth/*").permitAll()
+		
+			.antMatchers(HttpMethod.POST,"/auth/*").permitAll()
+			//.antMatchers("/auth/all").permitAll()
+			.antMatchers(HttpMethod.PUT, "/auth/").permitAll()
+			.antMatchers(HttpMethod.GET, "/lec/").permitAll()
+			.antMatchers(HttpMethod.PUT,"/lec/").permitAll()
+			.antMatchers(HttpMethod.GET, "/scheduleAct/").permitAll()
+			.antMatchers(HttpMethod.PUT, "/scheduleAct/").permitAll()
+			.antMatchers(HttpMethod.GET, "/timetable/").permitAll()
+			.antMatchers(HttpMethod.GET, "/timetable/all").permitAll()
 			//.antMatchers("/scheduleAct/*").permitAll()
-			//.anyRequest().authenticated()
+			.anyRequest().authenticated()
 			.and()
-			//.addFilterBefore(new JWTLoginFilter("/auth/login", authenticationManager()),
-			//UsernamePasswordAuthenticationFilter.class)
-			//.addFilterBefore(new JWTAuthenticationFilter(),
-			//UsernamePasswordAuthenticationFilter.class)
+			.addFilterBefore(new JWTLoginFilter("/auth/login", authenticationManager()),
+			UsernamePasswordAuthenticationFilter.class)
+			.addFilterBefore(new JWTAuthenticationFilter(),
+			UsernamePasswordAuthenticationFilter.class)
 			.csrf().disable();
 	}
 	

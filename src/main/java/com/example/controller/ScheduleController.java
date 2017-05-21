@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.model.ExceptionSet;
 import com.example.model.Lecturer;
 import com.example.model.Subject;
+import com.example.repository.ExceptionSetRepository;
 import com.example.repository.ScheduleRepository;
 
 
@@ -25,6 +26,9 @@ public class ScheduleController implements AccessController<Subject>{
 	
 	@Autowired
 	private ScheduleRepository repository;
+	
+	@Autowired
+	private ExceptionSetRepository exRepository;
 
 	@RequestMapping(value = "/all", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public List<Subject> listAll(){
@@ -40,6 +44,21 @@ public class ScheduleController implements AccessController<Subject>{
 	public ResponseEntity<Object> create(@RequestBody Subject s) {
 		if (repository.findByNameIgnoreCase(s.getName()) != null)
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Course already existed!!!");
+		
+		ExceptionSet set = s.getSetOn();
+		if (set != null) {
+			ExceptionSet find = exRepository.findBySetNameIgnoreCase(set.getSetName());
+			if (find != null)
+				s.setSetOn(find);
+			else {
+				ExceptionSet newSet = new ExceptionSet(set.getSetName());
+				s.setSetOn(newSet);
+				exRepository.save(newSet);
+			}
+				
+		}
+			
+			
 		repository.save(s);
 		return ResponseEntity.ok("course added");
 	}

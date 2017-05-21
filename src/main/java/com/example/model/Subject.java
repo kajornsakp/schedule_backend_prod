@@ -22,7 +22,6 @@ public class Subject {
     private int expectedStudent;
     private Priority priority;
     
-    @DBRef
     private ExceptionSet setOn;
     
     @Id

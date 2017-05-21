@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Account {
     @Id
     String id;
+    
     String username;
     String password;
     String role;
@@ -19,7 +20,7 @@ public class Account {
     String lastName;
     String email;
     
-    @DBRef
+
     Lecturer lecturer;
 
     public Account() {
@@ -31,6 +32,7 @@ public class Account {
         this.username = username;
         this.password = password;
         this.role = role;
+        
     }
     
     public String getId() {
