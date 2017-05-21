@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.model.ExceptionSet;
@@ -31,8 +32,8 @@ public class ScheduleController implements AccessController<Subject>{
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public List<Subject> listFor(Lecturer lecturer) {
-		return repository.findAll().stream().filter(course -> course.getLecturerList().contains(lecturer.getId())).collect(Collectors.toList());
+	public List<Subject> listFor(@RequestParam("id") String id) {
+		return repository.findAll().stream().filter(course -> course.getLecturerList().contains(id)).collect(Collectors.toList());
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = "application/json")
@@ -58,6 +59,8 @@ public class ScheduleController implements AccessController<Subject>{
 		repository.deleteAll();
 	}
 
+
+	
 	
 	
 }
