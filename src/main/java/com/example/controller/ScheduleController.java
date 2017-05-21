@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.model.ExceptionSet;
+import com.example.model.Lecturer;
 import com.example.model.Subject;
 import com.example.repository.ScheduleRepository;
 
@@ -30,8 +31,8 @@ public class ScheduleController implements AccessController<Subject>{
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public List<Subject> listFor(String id) {
-		return repository.findAll().stream().filter(course -> course.getLecturerList().contains(id)).collect(Collectors.toList());
+	public List<Subject> listFor(Lecturer lecturer) {
+		return repository.findAll().stream().filter(course -> course.getLecturerList().contains(lecturer.getId())).collect(Collectors.toList());
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = "application/json")

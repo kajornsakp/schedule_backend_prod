@@ -55,7 +55,7 @@ public class AuthController implements Controllers<Account>{
     	repository.delete(req.getId());
     }
     
-    @RequestMapping(value = "/deleteAll", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes="application/json")
+    @RequestMapping(value = "/all", method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes="application/json")
     public void deleteAll(){
     	repository.deleteAll();
     }
