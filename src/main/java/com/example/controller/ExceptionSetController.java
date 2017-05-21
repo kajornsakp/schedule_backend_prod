@@ -23,7 +23,7 @@ public class ExceptionSetController implements Controllers<ExceptionSet>{
 	@Autowired private ExceptionSetRepository repository;
 	
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
-	public List listAll() {
+	public List<ExceptionSet> listAll() {
 		return repository.findAll();
 	}
 

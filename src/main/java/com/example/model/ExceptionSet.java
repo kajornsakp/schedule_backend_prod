@@ -12,8 +12,8 @@ public class ExceptionSet {
 	private String id;
 	private String setName;
 
-	public ExceptionSet(@JsonProperty("setName") String name){
-		this.setName = name;
+	public ExceptionSet(@JsonProperty("setName") String setName){
+		this.setName = setName;
 	}
 
 	public String getSetName() {
