@@ -14,6 +14,7 @@ import com.example.security.JWTLoginFilter;
 
 @Configuration
 @EnableWebSecurity
+
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
@@ -25,8 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.authorizeRequests()
 			
 			//.antMatchers(HttpMethod.POST,"/auth/login").permitAll()
-			.antMatchers(HttpMethod.OPTIONS, "/*").permitAll()
-			.antMatchers(HttpMethod.OPTIONS,"/auth/*").permitAll()
+			.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+			.antMatchers(HttpMethod.OPTIONS,"/auth/**").permitAll()
 			.antMatchers(HttpMethod.POST,"/auth/*").permitAll()
 			//.antMatchers("/auth/all").permitAll()
 			.antMatchers(HttpMethod.PUT, "/auth/").permitAll()
