@@ -23,10 +23,11 @@ public class Lecturer {
     	
     }
 
-    public Lecturer(@JsonProperty("name") String name){
-    	this.name = name;
+    public Lecturer(@JsonProperty("id") String id){
+    	this.id = id;
     	this.info = "";
     }
+    
     
     public Lecturer(String name, String info){
         this.name = name;
