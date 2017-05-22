@@ -35,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.PUT, "/scheduleAct/").permitAll()
 			.antMatchers(HttpMethod.GET, "/timetable/").permitAll()
 			.antMatchers(HttpMethod.GET, "/timetable/all").permitAll()
-			
+			.antMatchers(HttpMethod.OPTIONS, "/*").permitAll()
 			.anyRequest().authenticated()
 			.and()
 			.addFilterBefore(new JWTLoginFilter("/auth/", authenticationManager()),
