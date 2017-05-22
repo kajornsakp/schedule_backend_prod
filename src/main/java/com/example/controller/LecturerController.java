@@ -36,7 +36,7 @@ public class LecturerController implements Controllers<Lecturer> {
 		if (repository.findByLecNameIgnoreCase(element.getLecName()) != null)
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("lecturer already existed");
 		element.getSubjects().forEach(subject -> {  } );
-		return ResponseEntity.ok(repository.save(element));
+		return ResponseEntity.status(HttpStatus.OK).body(repository.save(element));
 	}
 
 	

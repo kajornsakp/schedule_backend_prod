@@ -32,14 +32,9 @@ public class TokenAuthenticationService {
 				.signWith(SignatureAlgorithm.HS512, SECRET)
 				.compact();
 		res.addHeader(HEADER, TOK_PREFIX + " " + JWT);
-		
-		
-		
 		res.getWriter().write("{\n\t\"" + HEADER + "\" : \"" + TOK_PREFIX + JWT + "\",\n" + 
 					"\t\"id\" : \"" + account.getUsername() + "\"\n" +
 				"}");
-		
-		
 	}
 	
 	static Authentication getAuthentication(HttpServletRequest request){
