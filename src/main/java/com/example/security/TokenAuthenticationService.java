@@ -35,7 +35,7 @@ public class TokenAuthenticationService {
 		
 		
 		
-		res.getWriter().write("{\n\t\"" + HEADER + "\" : \"" + TOK_PREFIX + JWT + "\"\n" + 
+		res.getWriter().write("{\n\t\"" + HEADER + "\" : \"" + TOK_PREFIX + JWT + "\",\n" + 
 					"\t\"id\" : \"" + account.getUsername() + "\"\n" +
 				"}");
 		
