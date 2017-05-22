@@ -25,22 +25,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private static final String ADMIN = "ADMIN";
 	public void configure(HttpSecurity httpSecurity) throws Exception {
 		
-		httpSecurity.authorizeRequests()
+		httpSecurity.csrf().disable().authorizeRequests()
 			
-			//.antMatchers(HttpMethod.POST,"/auth/login").permitAll()
-			.requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-			.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-			.antMatchers(HttpMethod.OPTIONS,"/auth/**").permitAll()
 			.antMatchers(HttpMethod.POST,"/auth/*").permitAll()
-			//.antMatchers("/auth/all").permitAll()
 			.antMatchers(HttpMethod.PUT, "/auth/").permitAll()
 			.antMatchers(HttpMethod.GET, "/lec/").permitAll()
 			.antMatchers(HttpMethod.PUT,"/lec/").permitAll()
 			.antMatchers(HttpMethod.GET, "/scheduleAct/").permitAll()
 			.antMatchers(HttpMethod.PUT, "/scheduleAct/").permitAll()
 			.antMatchers(HttpMethod.GET, "/timetable/").permitAll()
-			.antMatchers(HttpMethod.GET, "/timetable/all").permitAll()
-			
+			.antMatchers(HttpMethod.GET, "/timetable/all").permitAll()	
 			.anyRequest().authenticated()
 			.and()
 			.addFilterBefore(new JWTLoginFilter("/auth/", authenticationManager()),
@@ -48,8 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.addFilterBefore(new JWTAuthenticationFilter(),
 			UsernamePasswordAuthenticationFilter.class)
 			.addFilterBefore(new WebSecurityCorsFilter(),
-			UsernamePasswordAuthenticationFilter.class)
-			.csrf().disable();
+			UsernamePasswordAuthenticationFilter.class);
+			
 	}
 	
 	
