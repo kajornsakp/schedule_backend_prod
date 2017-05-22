@@ -50,18 +50,8 @@ public class ScheduleController implements AccessController<Subject>{
 	public ResponseEntity<Object> create(@RequestBody Subject subject) {
 	
 		if (repository.findByNameIgnoreCase(subject.getName()) != null)
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Course already existed!!!");
-		
-		subject.setLecturerList((ArrayList<Lecturer>) subject.getLecturerList().stream().map( item -> { 
-			System.out.println("check lec name : " + item.getLecName());
-			Lecturer templ = lecRepository.findByLecNameIgnoreCase(item.getLecName());
-			System.out.println("check l : " + templ.getLecName());
-			if (templ != null)
-				return templ;
-			return lecRepository.save(new Lecturer(item.getLecName()));
-		} ).collect(Collectors.toList()));
-		System.out.println(subject.getLecturerList());
-		
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Course already existed!!!");	
+		subject.setLecturerList((ArrayList<Lecturer>) this.mapLecturer(subject.getLecturerList(), subject));	
 		ExceptionSet set = subject.getSetOn();
 		if (set != null) {
 			ExceptionSet find = exRepository.findBySetNameIgnoreCase(set.getSetName());
@@ -94,6 +84,33 @@ public class ScheduleController implements AccessController<Subject>{
 	@RequestMapping(value = "/all", method = RequestMethod.DELETE, consumes= "application/json")
 	public void deleteAll(){
 		repository.deleteAll();
+	}
+	
+	private List<Lecturer> mapLecturer(ArrayList<Lecturer> lecturerList, Subject subject){
+		return lecturerList.stream().map( item -> { 
+			Lecturer templ = lecRepository.findByLecNameIgnoreCase(item.getLecName());
+			if (templ != null) {
+				ArrayList<String> subjects;
+				if (templ.getSubjects() == null)
+					subjects = new ArrayList<String>();
+				else
+					subjects = templ.getSubjects();
+				System.out.println("check subjects : " + subjects);
+				subjects.add(subject.getName());
+				templ.setSubjects(subjects);
+				return templ;
+			}
+			Lecturer lecturer = new Lecturer(item.getLecName());
+			ArrayList<String> subjects; 
+			
+			if (lecturer.getSubjects() == null)
+				subjects = new ArrayList<String>();
+			else
+				subjects = lecturer.getSubjects();
+			subjects.add(subject.getName());
+			lecturer.setSubjects(subjects);
+			return lecRepository.save(lecturer);
+		} ).collect(Collectors.toList());
 	}
 
 

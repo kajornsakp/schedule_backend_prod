@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.model.Lecturer;
+import com.example.model.Subject;
 import com.example.repository.LecturerRepository;
+import com.example.repository.ScheduleRepository;
 
 
 @RestController
@@ -20,6 +22,7 @@ import com.example.repository.LecturerRepository;
 public class LecturerController implements Controllers<Lecturer> {
 	
 	@Autowired private LecturerRepository repository;
+	@Autowired private ScheduleRepository courseRepository;
 	
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public List<Lecturer> listAll() {
@@ -35,7 +38,12 @@ public class LecturerController implements Controllers<Lecturer> {
 	public ResponseEntity<Object> create(@RequestBody Lecturer element) {
 		if (repository.findByLecNameIgnoreCase(element.getLecName()) != null)
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("lecturer already existed");
-		element.getSubjects().forEach(subject -> {  } );
+		for (int i = 0 ; i < element.getSubjects().size(); i++) {
+			Subject s = courseRepository.findByNameIgnoreCase(element.getSubjects().get(i));
+			if (s.getName() == null)
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("subject does not existed");
+		}
+		
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(element));
 	}
 

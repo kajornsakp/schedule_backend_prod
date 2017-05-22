@@ -16,7 +16,7 @@ public class Lecturer {
     private String lecName;
     private String info;
     
-    private ArrayList<Subject> subjects;
+    private ArrayList<String> subjects;
     
     public Lecturer(){
     	
@@ -43,11 +43,11 @@ public class Lecturer {
 		this.info = info;
 	}
 
-	public ArrayList<Subject> getSubjects() {
+	public ArrayList<String> getSubjects() {
 		return subjects;
 	}
 
-	public void setSubjects(ArrayList<Subject> subjects) {
+	public void setSubjects(ArrayList<String> subjects) {
 		this.subjects = subjects;
 	}
 
