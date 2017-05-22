@@ -24,6 +24,7 @@ public class JWTAuthenticationFilter extends GenericFilterBean {
 		System.out.println("get authentication filter with request : " + request);
 		HttpServletResponse res = (HttpServletResponse) response;
 	    res.setHeader("Access-Control-Allow-Origin", "*");
+	    res.setHeader("Access-Control-Allow-Headers", "*");
 		//just to print check
 		Enumeration params = request.getParameterNames(); 
 		while(params.hasMoreElements()){
