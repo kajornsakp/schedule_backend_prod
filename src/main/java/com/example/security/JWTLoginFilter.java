@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 	public JWTLoginFilter(String url, AuthenticationManager authManager){
-		super(new AntPathRequestMatcher(url,"POST"));
+		super(new AntPathRequestMatcher(url, "POST"));
 		setAuthenticationManager(authManager);
 	}
 
@@ -28,7 +28,6 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 	public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
 			throws AuthenticationException, IOException, ServletException {
 		
-		res.addHeader("Access-Control-Allow-Origin", "*");
 		AccountCredentials creds = new ObjectMapper()
 		.readValue(req.getInputStream(), AccountCredentials.class);
 		return getAuthenticationManager().authenticate(
