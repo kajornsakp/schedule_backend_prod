@@ -35,15 +35,17 @@ public class LecturerController implements Controllers<Lecturer> {
 	public ResponseEntity<Object> create(@RequestBody Lecturer element) {
 		if (repository.findByNameIgnoreCase(element.getName()) != null)
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("lecturer already existed");
+		element.getSubjects().forEach(subject -> {  } );
 		return ResponseEntity.ok(repository.save(element));
 	}
 
-	@RequestMapping(method = RequestMethod.PUT,produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = "application/json")
+	
+	@RequestMapping(method = RequestMethod.PUT)
 	public Lecturer update(@RequestBody Lecturer element) {
 		return repository.save(element);
 	}
 
-	@RequestMapping(method = RequestMethod.DELETE, consumes = "application/json")
+	@RequestMapping(method = RequestMethod.DELETE)
 	public void delete(@RequestBody Lecturer element) {
 		repository.delete(element.getId());
 	}

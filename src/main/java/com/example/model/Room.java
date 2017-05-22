@@ -27,10 +27,15 @@ public class Room {
     	UUID tempID = UUID.randomUUID();
         String[] parts = tempID.toString().split("-");
         String result = "";
-        for (int i = 0 ; i < 4 ; i++){
-            int a = (parts[1].charAt(i) + parts[2].charAt(i)) - 30;
-            result += (char) a;
-
+        int count = 0;
+        while (count < 4){
+            int a = (parts[1].charAt(count) + parts[2].charAt(count)) - 30;
+            
+            //result += (char) a;
+            if (Character.isAlphabetic((char) a) || Character.isDefined((char) a)){
+            	result += (char) a;
+            	count++;
+            }
         }
         return result;
     }

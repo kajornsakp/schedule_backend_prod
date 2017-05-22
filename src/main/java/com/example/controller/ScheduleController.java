@@ -17,6 +17,7 @@ import com.example.model.ExceptionSet;
 import com.example.model.Lecturer;
 import com.example.model.Subject;
 import com.example.repository.ExceptionSetRepository;
+import com.example.repository.LecturerRepository;
 import com.example.repository.ScheduleRepository;
 
 
@@ -26,6 +27,9 @@ public class ScheduleController implements AccessController<Subject>{
 	
 	@Autowired
 	private ScheduleRepository repository;
+	
+	@Autowired
+	private LecturerRepository lecRepository;
 	
 	@Autowired
 	private ExceptionSetRepository exRepository;
@@ -44,6 +48,13 @@ public class ScheduleController implements AccessController<Subject>{
 	public ResponseEntity<Object> create(@RequestBody Subject s) {
 		if (repository.findByNameIgnoreCase(s.getName()) != null)
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Course already existed!!!");
+		
+		s = (Subject) s.getLecturerList().stream().map( item -> { 
+			Lecturer l = lecRepository.findByNameIgnoreCase(item.getName());
+			if (l != null)
+				return l;
+			return lecRepository.save(new Lecturer(item.getName()));
+		} );
 		
 		ExceptionSet set = s.getSetOn();
 		if (set != null) {
