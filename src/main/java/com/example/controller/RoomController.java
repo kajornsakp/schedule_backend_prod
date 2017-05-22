@@ -43,7 +43,7 @@ public class RoomController implements Controllers<Room> {
 		repository.delete(room.getId());
 	}
 	
-	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	@RequestMapping(value = "/all", method = RequestMethod.DELETE)
 	public void deleteAll(){
 		repository.deleteAll();
 	}
