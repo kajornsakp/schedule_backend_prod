@@ -35,7 +35,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 			throws AuthenticationException, IOException, ServletException {
 		res.addHeader("Access-Control-Allow-Origin", "*");
 		res.addHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,PATCH,OPTIONS");
-		res.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+		res.addHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
 		AccountCredentials creds = new ObjectMapper()
 		.readValue(req.getInputStream(), AccountCredentials.class);
 		return getAuthenticationManager().authenticate(
