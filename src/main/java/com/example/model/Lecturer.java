@@ -16,7 +16,6 @@ public class Lecturer {
     private String lecName;
     private String info;
     
-    @Transient
     private ArrayList<Subject> subjects;
     
     public Lecturer(){

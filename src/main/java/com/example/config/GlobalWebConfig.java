@@ -33,8 +33,12 @@ public class GlobalWebConfig extends GlobalAuthenticationConfigurerAdapter{
 				System.out.println("authentication start: " + username);
 				Account user = repository.findByUsername(username);
 				if (user != null){
-					return new User(user.getUsername(), user.getPassword(), true ,true,true,true, 
-							AuthorityUtils.createAuthorityList(user.getRole()));
+					if (user.getLecturer() == null)
+						return new User(user.getId(), user.getPassword(), true ,true,true,true, 
+								AuthorityUtils.createAuthorityList(user.getRole()));
+					else
+						return new User(user.getLecturer().getId(), user.getPassword(), true ,true,true,true, 
+								AuthorityUtils.createAuthorityList(user.getRole()));
 				} else {
 					throw new UsernameNotFoundException("user not found in the system");
 				}

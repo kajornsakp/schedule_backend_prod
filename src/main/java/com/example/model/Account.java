@@ -99,6 +99,11 @@ public class Account {
 		this.email = email;
 	}
     
+	
+	@Override
+	public String toString() {
+		return this.username + " : " + this.password;
+	}
     
     
 }

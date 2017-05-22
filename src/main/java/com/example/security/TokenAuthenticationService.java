@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -16,20 +17,27 @@ import static java.util.Collections.emptyList;
 import java.io.IOException;
 
 public class TokenAuthenticationService {
+	
+	
 	static final long EXPIRATIONTIME = 864_000_000;
 	static final String SECRET = "Beareater05";
 	static final String TOK_PREFIX = "naianaia";
 	static final String HEADER = "Authorization";
 	
-	static void addAuthentication(HttpServletResponse res, String username) throws IOException {
+	static void addAuthentication(HttpServletResponse res, UserDetails account) throws IOException {
 		System.out.println("adding authentication token");
 		String JWT = Jwts.builder()
-				.setSubject(username)
+				.setSubject(account.getUsername())
 				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
 				.signWith(SignatureAlgorithm.HS512, SECRET)
 				.compact();
 		res.addHeader(HEADER, TOK_PREFIX + " " + JWT);
-		res.getWriter().write("{\"" + HEADER + "\" : \"" + TOK_PREFIX + JWT + "\"}");
+		
+		
+		
+		res.getWriter().write("{\n\t\"" + HEADER + "\" : \"" + TOK_PREFIX + JWT + "\"\n" + 
+					"\t\"id\" : \"" + account.getUsername() + "\"\n" +
+				"}");
 		
 		
 	}

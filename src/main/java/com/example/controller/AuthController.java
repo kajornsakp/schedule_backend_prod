@@ -36,7 +36,7 @@ public class AuthController implements Controllers<Account>{
     
     @RequestMapping(method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes="application/json")
     public ResponseEntity<Object> login(@RequestBody Account req) {
-    	
+    	System.out.println("starting to authenticate in controller");
     	Account result = repository.findByUsernameAndPassword(req.getUsername(), req.getPassword());
     	if (result == null)
     		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("user not found!!!");
