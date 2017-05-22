@@ -4,24 +4,21 @@ package com.example.solver;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.data.mongodb.core.MongoOperations;
 
 
+import com.example.config.MongoConfig;
 import com.example.model.DayName;
 import com.example.model.Room;
 import com.example.model.Subject;
 import com.example.model.TimeSlot;
-import com.example.repository.RoomRepository;
-import com.example.repository.ScheduleRepository;
 
 
 public class Decoder{
 	
-	@Autowired
-	private ScheduleRepository repository;
-	@Autowired
-	private RoomRepository roomRepository;
-	
+
     private Map<Integer, String> termMap;
     
     public Decoder(Map<Integer, String> termMap) {
@@ -29,17 +26,22 @@ public class Decoder{
     }
 
     public ArrayList<TimeSlot> decode(String str) {
+    	
+    	
+    	ApplicationContext applicationContext = new AnnotationConfigApplicationContext(MongoConfig.class);
+    	MongoOperations mongoOperations = (MongoOperations) applicationContext.getBean("mongoTemplate");
+    	
         String[] array = str.split(" "); // placeholder for literals
         ArrayList<String> answerList = (ArrayList<String>) Arrays.asList(array).stream().map(item -> { return termMap.get(Integer.parseInt(item)); } ).collect(Collectors.toList());
         answerList = (ArrayList<String>) answerList.stream().filter(item -> item != null).collect(Collectors.toList());
-        
+        System.out.println("check answerList : " + answerList);
         ArrayList<TimeSlot> slots = new ArrayList<TimeSlot>(); 
         ArrayList<String> datetimeAssignment =  (ArrayList<String>) answerList.stream().filter(item -> item.substring(0, 1).equals("0")).collect(Collectors.toList());
         ArrayList<String> roomAssignment = (ArrayList<String>) answerList.stream().filter(item -> item.substring(0, 1).equals("1")).collect(Collectors.toList());
-        
+        System.out.println("check room Assignment : " + roomAssignment);
         //Assign date time for subject first
         datetimeAssignment.forEach(item -> {
-        	Subject subject = repository.findOne(item.substring(1,5));
+        	Subject subject = mongoOperations.findById((item.substring(1,5)),Subject.class);
         	TimeSlot slot = new TimeSlot();
         	slot.setSubject(subject);
         	slot.setStartTime(item.substring(6, 10));
@@ -55,7 +57,8 @@ public class Decoder{
         	TimeSlot subject = (TimeSlot) slots.stream().filter(element -> element.getId().equals(item.substring(1, 5)));
         	//Subject s = DataHandler.getSubjectByID(item.substring(1,5));
         	//Room r = DataHandler.getRoomByID( item.substring(5,item.length()) );
-        	subject.setRoom( roomRepository.findOne(item.substring(5,item.length())));
+        	System.out.println("check room decoder id : " + (item.substring(5,item.length())));
+        	subject.setRoom(mongoOperations.findById((item.substring(5,item.length())), Room.class));
         	//t.addRoomOnSubject(s, r);
         });
         return slots;

@@ -1,5 +1,7 @@
 package com.example.solver;
 
+import com.example.model.Room;
+import com.example.model.Subject;
 import com.example.model.TimeSlot;
 import com.example.repository.RoomRepository;
 import com.example.repository.ScheduleRepository;
@@ -18,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jrphapa on 5/10/2017 AD.
@@ -25,14 +28,13 @@ import java.util.ArrayList;
 
 public class SATSolver implements Solver{
 	
-	@Autowired ScheduleRepository courseRepository;
-	@Autowired RoomRepository roomRepository;
+
 	
     private Encoder encoder;
     private Decoder decoder;
 
-    public SATSolver(){
-        this.encoder = new Encoder(roomRepository.findAll(),courseRepository.findAll());
+    public SATSolver(List<Room> roomList, List<Subject> subjectList){
+        this.encoder = new Encoder(roomList,subjectList);
 
     }
     

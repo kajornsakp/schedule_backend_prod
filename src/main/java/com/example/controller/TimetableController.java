@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.model.TimeSlot;
+import com.example.repository.RoomRepository;
+import com.example.repository.ScheduleRepository;
 import com.example.repository.TimetableRepository;
 import com.example.solver.SATSolver;
 import com.example.solver.Solver;
@@ -25,12 +27,16 @@ public class TimetableController implements AccessController<TimeSlot>{
 
 	@Autowired
 	private TimetableRepository repository;
+	@Autowired
+	private ScheduleRepository courseRepository;
+	@Autowired
+	private RoomRepository roomRepository;
 	private Solver satSolver;
 	
 	@RequestMapping(value = "/generate", method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public List<TimeSlot> generate(){
 		repository.deleteAll();
-		satSolver = new SATSolver();
+		satSolver = new SATSolver(roomRepository.findAll(),courseRepository.findAll());
 		return repository.save(satSolver.solve());
 	}
 	

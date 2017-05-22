@@ -42,6 +42,7 @@ public class Encoder {
     private final String WEIGHT = "1";
 
     public Encoder(List<Room> room, List<Subject> subject) {
+    	System.out.println("check room : " + room);
         initDayMapper();
         termMap = new HashMap<>();
         reverseTermMap = new HashMap<>();
@@ -85,11 +86,13 @@ public class Encoder {
                 else // no room fits subject // weight = 100 , not assign to any room
                     resourceCNF+= 100 + " ";       
                 dateTime = subjects.get(i).getTimePrefered().get(j);
-                possibleCourseCNF += encodePossibleCourse(subjects.get(i), dateTime.substring(0, 1), new Slot(dateTime.substring(1, 6), dateTime.substring(6, 11))) + " ";
+                System.out.println("check datetime : " + dateTime);
+                
+                possibleCourseCNF += encodePossibleCourse(subjects.get(i), dateTime.substring(0, 1), new Slot(dateTime.substring(1, 3) + ":" + dateTime.substring(3, 5), dateTime.substring(5, 7) + ":" +dateTime.substring(7,dateTime.length()))) + " ";
                 for (int l = 0; l < rooms.size(); l++) {
                     // encode course and exceptionset
                     if(rooms.get(l).getCapacity() >= subjects.get(i).getExpectedStudent()) {
-                        courseCNF += encodeCourse(subjects, rooms.get(l), dateTime.substring(0, 1), new Slot(dateTime.substring(1, 6), dateTime.substring(6, 11)), subjects.get(i));
+                        courseCNF += encodeCourse(subjects, rooms.get(l), dateTime.substring(0, 1),  new Slot(dateTime.substring(1, 3) + ":" + dateTime.substring(3, 5), dateTime.substring(5, 7) + ":" +dateTime.substring(7,dateTime.length())), subjects.get(i));
                         resourceCNF += encodeResource(subjects.get(i), rooms.get(l)) + " ";
                     }
                 }
