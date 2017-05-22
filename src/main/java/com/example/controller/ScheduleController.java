@@ -78,7 +78,7 @@ public class ScheduleController implements AccessController<Subject>{
 		System.out.println("chekc lec list 2 : " + subject);
 		repository.save(subject);
 		
-		return ResponseEntity.ok("");
+		return ResponseEntity.status(HttpStatus.OK).body(subject);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)

@@ -40,7 +40,7 @@ public class AuthController implements Controllers<Account>{
     	Account result = repository.findByUsernameAndPassword(req.getUsername(), req.getPassword());
     	if (result == null)
     		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("user not found!!!");
-    	return ResponseEntity.ok(result);
+    	return ResponseEntity.status(HttpStatus.OK).body(result);
     }
     
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes="application/json")
