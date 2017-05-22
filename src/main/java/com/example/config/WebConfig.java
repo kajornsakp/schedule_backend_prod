@@ -12,6 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
 @EnableWebMvc
+@ComponentScan("com.example.config")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override
