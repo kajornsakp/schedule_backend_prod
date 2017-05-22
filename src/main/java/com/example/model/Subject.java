@@ -3,6 +3,7 @@ package com.example.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
@@ -108,21 +109,15 @@ public class Subject {
     
     
     private String generateID(String id){
+    	char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+
     	if (id != null)
     		return id;
-        UUID tempID = UUID.randomUUID();
-        String[] parts = tempID.toString().split("-");
         String result = "";
-        int count = 0;
-        while (count < 4){
-            int a = (parts[1].charAt(count) + parts[2].charAt(count)) - 30;
-            
-            //result += (char) a;
-            if (Character.isAlphabetic((char) a) || Character.isDigit((char) a)){
-            	result += (char) a;
-            	count++;
-            }
-        }
+        Random rand = new Random();
+        for (int i = 0; i < 4; i++)
+        	result += Character.toString(alphabet[rand.nextInt(25) + 0]);
+        
         return result;
     }
 
