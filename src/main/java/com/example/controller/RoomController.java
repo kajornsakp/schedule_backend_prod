@@ -34,8 +34,8 @@ public class RoomController implements Controllers<Room> {
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public Room update(@RequestBody Room room){
-		return repository.save(room);
+	public ResponseEntity<Object> update(@RequestBody Room room){
+		return ResponseEntity.status(HttpStatus.OK).body(repository.save(room));
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE)

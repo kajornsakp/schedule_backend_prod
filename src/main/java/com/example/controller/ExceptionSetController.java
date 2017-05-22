@@ -35,8 +35,8 @@ public class ExceptionSetController implements Controllers<ExceptionSet>{
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = "application/json")
-	public ExceptionSet update(@RequestBody ExceptionSet element) {
-		return repository.save(element);
+	public ResponseEntity<Object> update(@RequestBody ExceptionSet element) {
+		return ResponseEntity.status(HttpStatus.OK).body(repository.save(element));
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = "application/json")

@@ -48,9 +48,9 @@ public class ScheduleController implements AccessController<Subject>{
 	
 	@RequestMapping(method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = "application/json")
 	public ResponseEntity<Object> create(@RequestBody Subject subject) {
-	
 		if (repository.findByNameIgnoreCase(subject.getName()) != null)
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Course already existed!!!");	
+		
 		subject.setLecturerList((ArrayList<Lecturer>) this.mapLecturer(subject.getLecturerList(), subject));	
 		ExceptionSet set = subject.getSetOn();
 		if (set != null) {
@@ -62,18 +62,15 @@ public class ScheduleController implements AccessController<Subject>{
 				subject.setSetOn(newSet);
 				exRepository.save(newSet);
 			}
-				
 		}
-		
-		System.out.println("chekc lec list 2 : " + subject);
 		repository.save(subject);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(subject);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public Subject update(@RequestBody Subject element) {
-		return repository.save(element);
+	public ResponseEntity<Object> update(@RequestBody Subject element) {
+		return ResponseEntity.status(HttpStatus.OK).body(element);
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE, consumes= "application/json")
@@ -95,7 +92,6 @@ public class ScheduleController implements AccessController<Subject>{
 					subjects = new ArrayList<String>();
 				else
 					subjects = templ.getSubjects();
-				System.out.println("check subjects : " + subjects);
 				subjects.add(subject.getName());
 				templ.setSubjects(subjects);
 				return templ;

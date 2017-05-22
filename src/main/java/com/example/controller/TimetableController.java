@@ -55,8 +55,8 @@ public class TimetableController implements AccessController<TimeSlot>{
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, produces = {MediaType.APPLICATION_JSON_VALUE})
-	public TimeSlot update(@RequestBody TimeSlot element) {
-		return repository.save(element);
+	public ResponseEntity<Object> update(@RequestBody TimeSlot element) {
+		return ResponseEntity.status(HttpStatus.OK).body(repository.save(element));
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, produces = {MediaType.APPLICATION_JSON_VALUE})

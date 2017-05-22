@@ -59,7 +59,7 @@ public class AuthController implements Controllers<Account>{
     	else 
     		newAcc.setLecturer(lecRepository.save(new Lecturer(req.getFirstName() + " " + req.getLastName())));
     	repository.save(newAcc);
-    	return ResponseEntity.ok(newAcc);
+    	return ResponseEntity.status(HttpStatus.OK).body(repository.save(newAcc));
 
     }
     
@@ -74,8 +74,8 @@ public class AuthController implements Controllers<Account>{
     }
     
     @RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
-    public Account update(@RequestBody Account acc){
-    	return repository.save(acc);    	
+    public ResponseEntity<Object> update(@RequestBody Account acc){
+    	return ResponseEntity.status(HttpStatus.OK).body(repository.save(acc));    	
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.lang.annotation.ElementType;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,19 +39,18 @@ public class LecturerController implements Controllers<Lecturer> {
 	public ResponseEntity<Object> create(@RequestBody Lecturer element) {
 		if (repository.findByLecNameIgnoreCase(element.getLecName()) != null)
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("lecturer already existed");
-		for (int i = 0 ; i < element.getSubjects().size(); i++) {
-			Subject s = courseRepository.findByNameIgnoreCase(element.getSubjects().get(i));
-			if (s.getName() == null)
-				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("subject does not existed");
-		}
+		if (!this.courseExist(element))
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("subject does not existed");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(repository.save(element));
 	}
 
 	
 	@RequestMapping(method = RequestMethod.PUT)
-	public Lecturer update(@RequestBody Lecturer element) {
-		return repository.save(element);
+	public ResponseEntity<Object> update(@RequestBody Lecturer element) {
+		if (!this.courseExist(element))
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("subject does not existed");
+		return ResponseEntity.status(HttpStatus.OK).body(repository.save(element));
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE)
@@ -61,6 +61,15 @@ public class LecturerController implements Controllers<Lecturer> {
 	@RequestMapping(value = "/all", method = RequestMethod.DELETE)
 	public void deleteAll() {
 		repository.deleteAll();
+	}
+	
+	private boolean courseExist(Lecturer element) {
+		for (int i = 0 ; i < element.getSubjects().size(); i++) {
+			Subject s = courseRepository.findByNameIgnoreCase(element.getSubjects().get(i));
+			if (s.getName() == null)
+				return false;
+		}
+		return true;
 	}
 	
 	
