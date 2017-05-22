@@ -34,11 +34,7 @@ public class JWTLoginFilter extends AbstractAuthenticationProcessingFilter {
 			res.addHeader("Access-Control-Allow-Credentials",  "true");
 			res.addHeader("Access-Control-Allow-Headers", req.getHeader("Access-Control-Request-Headers"));
 		}
-		if (req.getMethod().equals("OPTIONS")){
-			res.getWriter().println("KUY");
-			res.getWriter().flush();
-
-		}
+		
 		AccountCredentials creds = new ObjectMapper()
 		.readValue(req.getInputStream(), AccountCredentials.class);
 		return getAuthenticationManager().authenticate(
