@@ -12,7 +12,6 @@ import org.springframework.web.cors.CorsUtils;
 
 import com.example.security.JWTAuthenticationFilter;
 import com.example.security.JWTLoginFilter;
-import com.example.security.WebSecurityCorsFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -40,9 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.addFilterBefore(new JWTLoginFilter("/auth/", authenticationManager()),
 			UsernamePasswordAuthenticationFilter.class)
 			.addFilterBefore(new JWTAuthenticationFilter(),
-			UsernamePasswordAuthenticationFilter.class)
-			.addFilterBefore(new WebSecurityCorsFilter(),
 			UsernamePasswordAuthenticationFilter.class);
+			
 			
 	}
 	

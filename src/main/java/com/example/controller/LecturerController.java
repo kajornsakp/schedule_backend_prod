@@ -65,6 +65,8 @@ public class LecturerController implements Controllers<Lecturer> {
 	
 	private boolean courseExist(Lecturer element) {
 		System.out.println("test course eixst 1 :" + element);
+		if (element.getSubjects() == null)
+			return true;
 		for (int i = 0 ; i < element.getSubjects().size(); i++) {
 			Subject s = courseRepository.findByNameIgnoreCase(element.getSubjects().get(i));
 			

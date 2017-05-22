@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,7 +22,8 @@ public class JWTAuthenticationFilter extends GenericFilterBean {
 		
 			
 		System.out.println("get authentication filter with request : " + request);
-		
+		HttpServletResponse res = (HttpServletResponse) response;
+	    res.setHeader("Access-Control-Allow-Origin", "*");
 		//just to print check
 		Enumeration params = request.getParameterNames(); 
 		while(params.hasMoreElements()){
