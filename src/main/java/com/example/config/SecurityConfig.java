@@ -13,6 +13,7 @@ import org.springframework.web.cors.CorsUtils;
 import com.example.security.JWTAuthenticationFilter;
 import com.example.security.JWTLoginFilter;
 
+
 @Configuration
 @EnableWebSecurity
 
@@ -25,7 +26,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public void configure(HttpSecurity httpSecurity) throws Exception {
 		
 		httpSecurity.csrf().disable().authorizeRequests()
-			
+			.requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+			.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+			.antMatchers(HttpMethod.OPTIONS,"/auth/**").permitAll()
 			.antMatchers(HttpMethod.POST,"/auth/*").permitAll()
 			.antMatchers(HttpMethod.PUT, "/auth/").permitAll()
 			.antMatchers(HttpMethod.GET, "/lec/").permitAll()
