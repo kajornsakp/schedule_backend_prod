@@ -22,7 +22,7 @@ public class GlobalWebConfig extends GlobalAuthenticationConfigurerAdapter{
 	public void init(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService());
 	}
-
+	
 	@Bean
 	UserDetailsService userDetailsService() {
 		// TODO Auto-generated method stub
