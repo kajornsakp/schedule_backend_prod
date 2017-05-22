@@ -2,9 +2,7 @@ package com.example.model;
 
 
 
-import java.util.ArrayList;
 import java.util.Random;
-import java.util.UUID;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -41,7 +39,7 @@ public class Room {
     	
     }
 
-    public Room(@JsonProperty("roomName") String name, @JsonProperty("capacity") int size, @JsonProperty("id") String id){
+    public Room(@JsonProperty("roomName") String name, @JsonProperty("capacity") int size){
         this.roomName = name;
         this.capacity = size;
         this.id = generateID(id);

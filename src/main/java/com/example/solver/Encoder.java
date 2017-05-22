@@ -183,9 +183,9 @@ public class Encoder {
             courseAndResourceConstraint += "\n";
             // '\n' = 'and'
             // exception set
-            
-            if (subj.getSetOn().equals(otherSubjectList.get(j).getSetOn()))
-            	exceptionSetConstraint += MAX_WEIGHT + " " + "-" + termMap.get(subjectFormat) + " -" + termMap.get(otherSubjFormat) + " 0\n";
+            if (subj.getSetOn() != null)
+            	if (subj.getSetOn().equals(otherSubjectList.get(j).getSetOn()))
+            		exceptionSetConstraint += MAX_WEIGHT + " " + "-" + termMap.get(subjectFormat) + " -" + termMap.get(otherSubjFormat) + " 0\n";
 
             clauseCount += 2;
         }
