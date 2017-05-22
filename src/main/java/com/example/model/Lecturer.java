@@ -13,7 +13,7 @@ public class Lecturer {
 
 	@Id
 	private String id;
-    private String name;
+    private String lecName;
     private String info;
     
     @Transient
@@ -22,24 +22,18 @@ public class Lecturer {
     public Lecturer(){
     	
     }
-
-    public Lecturer(@JsonProperty("id") String id){
-    	this.id = id;
-    	this.info = "";
-    }
     
     
-    public Lecturer(String name, String info){
-        this.name = name;
-        this.info = info;
+    public Lecturer(@JsonProperty String lecName) {
+    	this.lecName = lecName;
     }
 
-	public String getName() {
-		return name;
+	public String getLecName() {
+		return lecName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setLecName(String lecName) {
+		this.lecName = lecName;
 	}
 
 	public String getInfo() {
@@ -68,6 +62,11 @@ public class Lecturer {
 		if (lecturer.getId().equals(this.getId()))
 			return true;
 		return false;
+	}
+	
+	@Override
+	public String toString() {
+		return this.getLecName();
 	}
 	
 	

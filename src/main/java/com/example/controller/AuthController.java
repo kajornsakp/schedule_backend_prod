@@ -53,7 +53,7 @@ public class AuthController implements Controllers<Account>{
     	newAcc.setFirstName(req.getFirstName());
     	newAcc.setLastName(req.getLastName());
     	
-    	Lecturer lecturer = lecRepository.findByNameIgnoreCase(req.getFirstName() + " " + req.getLastName());
+    	Lecturer lecturer = lecRepository.findByLecNameIgnoreCase(req.getFirstName() + " " + req.getLastName());
     	if (lecturer != null)
     		newAcc.setLecturer(lecturer);
     	else 

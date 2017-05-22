@@ -1,6 +1,8 @@
 package com.example.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,33 +47,40 @@ public class ScheduleController implements AccessController<Subject>{
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = "application/json")
-	public ResponseEntity<Object> create(@RequestBody Subject s) {
-		if (repository.findByNameIgnoreCase(s.getName()) != null)
+	public ResponseEntity<Object> create(@RequestBody Subject subject) {
+	
+		
+		
+		if (repository.findByNameIgnoreCase(subject.getName()) != null)
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Course already existed!!!");
 		
-		s = (Subject) s.getLecturerList().stream().map( item -> { 
-			Lecturer l = lecRepository.findByNameIgnoreCase(item.getName());
-			if (l != null)
-				return l;
-			return lecRepository.save(new Lecturer(item.getName()));
-		} );
+		subject.setLecturerList((ArrayList<Lecturer>) subject.getLecturerList().stream().map( item -> { 
+			System.out.println("check lec name : " + item.getLecName());
+			Lecturer templ = lecRepository.findByLecNameIgnoreCase(item.getLecName());
+			System.out.println("check l : " + templ.getLecName());
+			if (templ != null)
+				return templ;
+			return lecRepository.save(new Lecturer(item.getLecName()));
+		} ).collect(Collectors.toList()));
+		System.out.println(subject.getLecturerList());
 		
-		ExceptionSet set = s.getSetOn();
+		ExceptionSet set = subject.getSetOn();
 		if (set != null) {
 			ExceptionSet find = exRepository.findBySetNameIgnoreCase(set.getSetName());
 			if (find != null)
-				s.setSetOn(find);
+				subject.setSetOn(find);
 			else {
 				ExceptionSet newSet = new ExceptionSet(set.getSetName());
-				s.setSetOn(newSet);
+				subject.setSetOn(newSet);
 				exRepository.save(newSet);
 			}
 				
 		}
-			
-			
-		repository.save(s);
-		return ResponseEntity.ok("course added");
+		
+		System.out.println("chekc lec list 2 : " + subject);
+		repository.save(subject);
+		
+		return ResponseEntity.ok("");
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT)

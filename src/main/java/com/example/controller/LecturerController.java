@@ -33,7 +33,7 @@ public class LecturerController implements Controllers<Lecturer> {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Object> create(@RequestBody Lecturer element) {
-		if (repository.findByNameIgnoreCase(element.getName()) != null)
+		if (repository.findByLecNameIgnoreCase(element.getLecName()) != null)
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("lecturer already existed");
 		element.getSubjects().forEach(subject -> {  } );
 		return ResponseEntity.ok(repository.save(element));

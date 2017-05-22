@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Subject {
     private String name;
     
-    @Transient
+    
     private ArrayList<Lecturer> lecturerList;
     private ArrayList<String> timePrefered;
     private int expectedStudent;
@@ -49,13 +49,12 @@ public class Subject {
     
     
     public Subject(@JsonProperty("id") String id, @JsonProperty("name") String name,@JsonProperty("priority") Priority priority, @JsonProperty("lecturerList") List<Lecturer> list,@JsonProperty("expectedStudent") int num
-    		,@JsonProperty("dayPrefer") String day, @JsonProperty("startTime")String startTime, @JsonProperty("endTime") String endTime){
+    		,@JsonProperty("timePrefered") ArrayList<String> timePrefered ){
     	this.name = name;
         this.lecturerList = (ArrayList<Lecturer>) list;
         this.id = this.generateID(id);
         this.priority = priority;
-        this.timePrefered = new ArrayList<String>();
-        this.addTimePrefer(DayName.valueOf(day), new Time(startTime, endTime));
+        this.timePrefered = timePrefered;
         this.expectedStudent = num;
     }
     
@@ -119,7 +118,7 @@ public class Subject {
             int a = (parts[1].charAt(count) + parts[2].charAt(count)) - 30;
             
             //result += (char) a;
-            if (Character.isAlphabetic((char) a) || Character.isDefined((char) a)){
+            if (Character.isAlphabetic((char) a) || Character.isDigit((char) a)){
             	result += (char) a;
             	count++;
             }
@@ -155,7 +154,7 @@ public class Subject {
     }
     
     public String toString(){
-    	return this.getId() + " : " + this.getName() ;
+    	return this.getId() + " : " + this.getName() + " : " + this.getLecturerList() ;
     }
     
     
