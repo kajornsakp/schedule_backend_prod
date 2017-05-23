@@ -49,8 +49,8 @@ public class ScheduleController implements AccessController<Subject>{
 	@RequestMapping(method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = "application/json")
 	public ResponseEntity<Object> create(@RequestBody Subject subject) {
 		if (repository.findByNameIgnoreCase(subject.getName()) != null)
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Course already existed!!!");	
-		
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Course already existed!!!");
+
 		subject.setLecturerList((ArrayList<Lecturer>) this.mapLecturer(subject));
 
 		if (subject.getSetOn() != null) {
@@ -84,8 +84,14 @@ public class ScheduleController implements AccessController<Subject>{
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE, consumes= "application/json")
-	public void delete(@RequestBody Subject s){
+	public void delete(@RequestBody Subject s) {
 		repository.delete(s.getId());
+		for (int i = 0; i < s.getLecturerList().size(); i++) {
+			Lecturer l = s.getLecturerList().get(i);
+			ArrayList<String> subjectList = l.getSubjects();
+			subjectList.remove(s.getName());
+			lecRepository.save(l);
+		}
 	}
 	
 	@RequestMapping(value = "/all", method = RequestMethod.DELETE, consumes= "application/json")
