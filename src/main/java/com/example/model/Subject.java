@@ -130,21 +130,6 @@ public class Subject {
         return result;
     }
 
-    public ArrayList<String> getOtherByID(){
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(MongoConfig.class);
-        MongoOperations mongoOperations = (MongoOperations) applicationContext.getBean("mongoTemplate");
-
-        ArrayList<String> result = new ArrayList<String>();
-        for (int i = 0 ; i < this.getLecturerList().size() ; i++){
-            ArrayList<String> subjectList = this.getLecturerList().get(i).getSubjects();
-            for (int j = 0 ; j < subjectList.size(); j++){
-                Subject s = mongoOperations.findOne(new Query(Criteria.where("name").is(subjectList.get(j))), Subject.class);
-                result.add(s.getId());
-            }
-        }
-        return result;
-    }
-
     
     public void addLecturer(Lecturer l){
         this.lecturerList.add(l);
