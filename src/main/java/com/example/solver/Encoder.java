@@ -21,6 +21,7 @@ import com.example.model.Slot;
 import com.example.model.Subject;
 import com.example.repository.RoomRepository;
 import com.example.repository.ScheduleRepository;
+import com.example.controller.ExternalDataHandler;
 import com.example.model.DayName;
 
 /**
@@ -154,6 +155,8 @@ public class Encoder {
         // clauseArr
         String courseAndResourceConstraint = "";
         String exceptionSetConstraint = "";
+        String sameLecturerConstraint = "";
+        Boolean hasLecturerConflict = Boolean.FALSE;
         String resultConstraint;
         // format 0ssssDtttt for subject
         // format 1ssssrrrr for subject in room
@@ -201,15 +204,44 @@ public class Encoder {
             	{
             		exceptionSetConstraint += MAX_WEIGHT + " " + "-" + termMap.get(subjectFormat) + " -" + termMap.get(otherSubjFormat) + " 0\n";
             		clauseCount++;
+            		
             	}
             		
             }
-            	
+            
             //clauseCount += 2;
         }
+        sameLecturerConstraint = encodeSameLecturerCourse(subj,subjectFormat,day,slot);
         resultConstraint = courseAndResourceConstraint + exceptionSetConstraint;
+        if(sameLecturerConstraint!="")
+        	resultConstraint += sameLecturerConstraint;
+       
 
         return resultConstraint;
+    }
+    // encode other subjects that lecturer has into constriant
+    // lecturer can not teach more than 1 subject at the same time
+    private String encodeSameLecturerCourse(Subject subject,String subjectFormat,String day,Slot slot)
+    {
+    	String result = "";
+    	ArrayList<String> ids = ExternalDataHandler.getOtherByID(subject);
+    	// the lecturer does not teach any other subject
+    	if(ids.isEmpty())
+    		return "";
+    	// loop through all other subjects that has taught by the same lecturer
+    	for(int i=0;i<ids.size();i++)
+    	{
+    		 String otherSubjFormat = "0" + ids.get(i) + day + slot.getStartTime().replaceAll("[^\\d.]", "")+ slot.getEndTime().replaceAll("[^\\d.]", "");
+             if (!termMap.containsKey(otherSubjFormat)) {
+                 varCount++;
+                 termMap.put(otherSubjFormat, varCount);
+                 reverseTermMap.put(varCount, otherSubjFormat);
+             }
+    		result+= MAX_WEIGHT + " " + "-" + termMap.get(subjectFormat) + " -" + termMap.get(otherSubjFormat) + " 0\n";
+    		clauseCount++;
+    	}
+    	
+    	return result;
     }
 
     private String encodeResource(Subject subj, Room room) {
