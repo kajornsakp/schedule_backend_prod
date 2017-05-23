@@ -78,7 +78,8 @@ public class Encoder {
         
         // loop generate all clauses for input for SAT solver
         for (int i = 0; i < subjects.size(); i++) {
-            possibleCourseCNF += subjects.get(i).getPriority() + " ";
+
+            possibleCourseCNF += subjects.get(i).getNumPriority() + " ";
             for (int j = 0; j < subjects.get(i).getTimePrefered().size(); j++) {
                 int maxFitWeight = findMaxFitWeight(subjects.get(i), rooms);
                 if (maxFitWeight != -1) // if there are some rooms that fit amount of student

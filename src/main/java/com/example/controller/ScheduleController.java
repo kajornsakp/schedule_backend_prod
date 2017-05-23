@@ -51,25 +51,26 @@ public class ScheduleController implements AccessController<Subject>{
 		if (repository.findByNameIgnoreCase(subject.getName()) != null)
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Course already existed!!!");	
 		
-		subject.setLecturerList((ArrayList<Lecturer>) this.mapLecturer(subject.getLecturerList(), subject));
+		subject.setLecturerList((ArrayList<Lecturer>) this.mapLecturer(subject));
+
 		if (subject.getSetOn() != null) {
 			ArrayList<ExceptionSet> sets = subject.getSetOn();
-			sets.forEach(set -> {
-				if (set != null) {
-					ExceptionSet find = exRepository.findBySetNameIgnoreCase(set.getSetName());
+			for (int i = 0 ; i < sets.size(); i++){
+				if (sets.get(i) != null) {
+					ExceptionSet find = exRepository.findBySetNameIgnoreCase(sets.get(i).getSetName());
 					if (find != null) {
-						ArrayList<ExceptionSet> seton = subject.getSetOn();
+						ArrayList<ExceptionSet> seton = sets;
 						seton.add(find);
 						subject.setSetOn(seton);
 					} else {
-						ExceptionSet newSet = new ExceptionSet(set.getSetName());
-						ArrayList<ExceptionSet> seton = subject.getSetOn();
+						ExceptionSet newSet = new ExceptionSet(sets.get(i).getSetName());
+						ArrayList<ExceptionSet> seton = sets;
 						seton.add(find);
 						subject.setSetOn(seton);
 						exRepository.save(newSet);
 					}
 				}
-			});
+			}
 		}
 
 		repository.save(subject);
@@ -92,7 +93,8 @@ public class ScheduleController implements AccessController<Subject>{
 		repository.deleteAll();
 	}
 	
-	private List<Lecturer> mapLecturer(ArrayList<Lecturer> lecturerList, Subject subject){
+	private List<Lecturer> mapLecturer(Subject subject){
+		ArrayList<Lecturer> lecturerList = subject.getLecturerList();
 		return lecturerList.stream().map( item -> { 
 			Lecturer templ = lecRepository.findByLecNameIgnoreCase(item.getLecName());
 			if (templ != null) {

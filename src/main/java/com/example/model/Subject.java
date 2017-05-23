@@ -6,11 +6,17 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import com.example.config.MongoConfig;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 @Document(collection = "Subject")
 public class Subject {
@@ -102,11 +108,14 @@ public class Subject {
 	}
 
 
-    public int getPriority(){
-    	return this.priority.getValue();
+    public Priority getPriority(){
+        return this.priority;
     }
-    
-    
+
+    public int getNumPriority(){
+
+        return this.priority.getValue();
+    }
     
     private String generateID(String id){
     	char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
@@ -118,6 +127,21 @@ public class Subject {
         for (int i = 0; i < 4; i++)
         	result += Character.toString(alphabet[rand.nextInt(25) + 0]);
         
+        return result;
+    }
+
+    public ArrayList<String> getOtherByID(){
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(MongoConfig.class);
+        MongoOperations mongoOperations = (MongoOperations) applicationContext.getBean("mongoTemplate");
+
+        ArrayList<String> result = new ArrayList<String>();
+        for (int i = 0 ; i < this.getLecturerList().size() ; i++){
+            ArrayList<String> subjectList = this.getLecturerList().get(i).getSubjects();
+            for (int j = 0 ; j < subjectList.size(); j++){
+                Subject s = mongoOperations.findOne(new Query(Criteria.where("name").is(subjectList.get(j))), Subject.class);
+                result.add(s.getId());
+            }
+        }
         return result;
     }
 
