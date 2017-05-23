@@ -30,9 +30,10 @@ public class Decoder{
     	
     	ApplicationContext applicationContext = new AnnotationConfigApplicationContext(MongoConfig.class);
     	MongoOperations mongoOperations = (MongoOperations) applicationContext.getBean("mongoTemplate");
-    	
+    	System.out.println("test string : " + str);
         String[] array = str.split(" "); // placeholder for literals
-        ArrayList<String> answerList = (ArrayList<String>) Arrays.asList(array).stream().map(item -> { return termMap.get(Integer.parseInt(item)); } ).collect(Collectors.toList());
+        System.out.println("test array : " + array[0]);
+        ArrayList<String> answerList = (ArrayList<String>) Arrays.asList(array).stream().filter(item -> item != "" ).map(item -> { return termMap.get(Integer.parseInt(item)); } ).collect(Collectors.toList());
         answerList = (ArrayList<String>) answerList.stream().filter(item -> item != null).collect(Collectors.toList());
         System.out.println("check answerList : " + answerList);
         ArrayList<TimeSlot> slots = new ArrayList<TimeSlot>(); 

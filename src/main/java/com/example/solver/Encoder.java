@@ -124,17 +124,24 @@ public class Encoder {
     }
 
     private int findMaxFitWeight(Subject subject, ArrayList<Room> rooms) {
-        int difference = 0;
+        //int difference = 0;
         boolean isAssigned = false;
+        int percentage;
+        int maxPercentage = 0;
         for (int i = 0; i < rooms.size(); i++) {
             // check whether room fits
             if (rooms.get(i).getCapacity() >= subject.getExpectedStudent()) {
-                difference = rooms.get(i).getCapacity() - subject.getExpectedStudent();
+//            	percentage is a population density in room , more density means room fit better
+            	percentage = (subject.getExpectedStudent()/rooms.get(i).getCapacity())*100;
+            	if(percentage > maxPercentage)
+            		maxPercentage = percentage;
+                //difference = rooms.get(i).getCapacity() - subject.getExpectedStudent();
                 isAssigned = true;
             }
         }
         if (isAssigned)
-            return 100 - difference;
+            //return 100 - difference;
+        	return maxPercentage;
         // if no rooms fits amount of student
         return -1;
 
