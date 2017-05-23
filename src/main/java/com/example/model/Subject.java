@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Subject {
     private String name;
     
-    
     private ArrayList<Lecturer> lecturerList;
     private ArrayList<String> timePrefered;
     private int expectedStudent;

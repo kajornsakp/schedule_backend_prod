@@ -15,10 +15,10 @@ import java.util.ArrayList;
  */
 public class ExternalDataHandler {
 
-    public static ArrayList<String> getOtherByID(Subject subject){
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(MongoConfig.class);
-        MongoOperations mongoOperations = (MongoOperations) applicationContext.getBean("mongoTemplate");
+    static ApplicationContext applicationContext = new AnnotationConfigApplicationContext(MongoConfig.class);
+    static MongoOperations mongoOperations = (MongoOperations) applicationContext.getBean("mongoTemplate");
 
+    public static ArrayList<String> getOtherByID(Subject subject){
         ArrayList<String> result = new ArrayList<String>();
         for (int i = 0 ; i < subject.getLecturerList().size() ; i++){
             ArrayList<String> subjectList = subject.getLecturerList().get(i).getSubjects();
