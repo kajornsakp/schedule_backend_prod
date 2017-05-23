@@ -43,7 +43,16 @@ public class ScheduleController implements AccessController<Subject>{
 	
 	@RequestMapping(method = RequestMethod.GET, produces = {MediaType.APPLICATION_JSON_VALUE})
 	public List<Subject> listFor(@RequestParam("id") String id) {
-		return repository.findAll().stream().filter(course -> course.getLecturerList().contains(id)).collect(Collectors.toList());
+		List<Subject> listSubject = repository.findAll();
+		List<Subject> answer = new ArrayList<Subject>();
+		for (int i = 0 ; i < listSubject.size(); i++){
+			ArrayList<Lecturer> lecList = listSubject.get(i).getLecturerList();
+			for (int j = 0 ; j < lecList.size(); j++){
+				if (lecList.get(j).getId().equals(id))
+					answer.add(listSubject.get(i));
+			}
+		}
+		return answer;
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes = "application/json")

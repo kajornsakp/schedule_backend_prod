@@ -57,8 +57,9 @@ public class Lecturer {
 
 	@Override
 	public boolean equals(Object obj) {
-		Lecturer lecturer = (Lecturer) obj; 
-		if (lecturer.getId().equals(this.getId()))
+		System.out.println("check contain");
+		String lecturer = (String) obj;
+		if (lecturer.equals(this.getId()))
 			return true;
 		return false;
 	}
