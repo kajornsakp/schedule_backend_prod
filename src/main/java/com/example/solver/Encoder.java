@@ -191,13 +191,20 @@ public class Encoder {
             // couse and resource , 'or' together
             courseAndResourceConstraint += MAX_WEIGHT + " " + "-" + termMap.get(subjectFormat) + " -" + termMap.get(roomFormat) + " -" + termMap.get(otherSubjFormat) + " -" + termMap.get(roomFormat2) + " 0";
             courseAndResourceConstraint += "\n";
+            clauseCount++;
             // '\n' = 'and'
             // exception set
             if (subj.getSetOn() != null)
+            {
             	if (subj.getSetOn().contains(otherSubjectList.get(j).getSetOn()))
+            	{
             		exceptionSetConstraint += MAX_WEIGHT + " " + "-" + termMap.get(subjectFormat) + " -" + termMap.get(otherSubjFormat) + " 0\n";
-
-            clauseCount += 2;
+            		clauseCount++;
+            	}
+            		
+            }
+            	
+            //clauseCount += 2;
         }
         resultConstraint = courseAndResourceConstraint + exceptionSetConstraint;
 

@@ -33,7 +33,7 @@ public class Decoder{
     	System.out.println("test string : " + str);
         String[] array = str.split(" "); // placeholder for literals
         System.out.println("test array : " + array[0]);
-        ArrayList<String> answerList = (ArrayList<String>) Arrays.asList(array).stream().filter(item -> item != "" ).map(item -> { return termMap.get(Integer.parseInt(item)); } ).collect(Collectors.toList());
+        ArrayList<String> answerList = (ArrayList<String>) Arrays.asList(array).stream().map(item -> { return termMap.get(Integer.parseInt(item)); } ).collect(Collectors.toList());
         answerList = (ArrayList<String>) answerList.stream().filter(item -> item != null).collect(Collectors.toList());
         System.out.println("check answerList : " + answerList);
         ArrayList<TimeSlot> slots = new ArrayList<TimeSlot>(); 
@@ -46,7 +46,7 @@ public class Decoder{
         	TimeSlot slot = new TimeSlot();
         	slot.setSubject(subject);
         	slot.setStartTime(item.substring(6, 10));
-        	slot.setDay(DayName.values()[Integer.parseInt(item.substring(5, 6))]);
+        	slot.setDay(DayName.values()[Integer.parseInt(item.substring(5, 6)) - 1]);
         	slot.setEndTime(item.substring(10, item.length()));
         	slots.add(slot);
         	//Subject s = DataHandler.getSubjectByID(item.substring(1,5));
@@ -54,9 +54,12 @@ public class Decoder{
         });
         
         //Assign room to that subject in slot
+        
         roomAssignment.forEach(item -> {
-        	TimeSlot subject = (TimeSlot) slots.stream().filter(element -> element.getId().equals(item.substring(1, 5)));
+        	System.out.println("check item : " + item);
+        	TimeSlot subject = ((List<TimeSlot>) slots.stream().filter(element -> element.getSubject().getId().equals(item.substring(1, 5))).collect(Collectors.toList())).get(0);
         	//Subject s = DataHandler.getSubjectByID(item.substring(1,5));
+        	
         	//Room r = DataHandler.getRoomByID( item.substring(5,item.length()) );
         	System.out.println("check room decoder id : " + (item.substring(5,item.length())));
         	subject.setRoom(mongoOperations.findById((item.substring(5,item.length())), Room.class));
