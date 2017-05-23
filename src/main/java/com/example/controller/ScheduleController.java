@@ -103,6 +103,7 @@ public class ScheduleController implements AccessController<Subject>{
 					subjects = templ.getSubjects();
 				subjects.add(subject.getName());
 				templ.setSubjects(subjects);
+				lecRepository.save(templ);
 				return templ;
 			}
 			Lecturer lecturer = new Lecturer(item.getLecName());
