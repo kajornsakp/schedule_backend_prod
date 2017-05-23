@@ -88,7 +88,7 @@ public class Encoder {
                 else // no room fits subject // weight = 100 , not assign to any room
                     resourceCNF+= 100 + " ";       
                 dateTime = subjects.get(i).getTimePrefered().get(j);
-                System.out.println("check datetime : " + dateTime);
+
                 
                 possibleCourseCNF += encodePossibleCourse(subjects.get(i), dateTime.substring(0, 1), new Slot(dateTime.substring(1, 3) + ":" + dateTime.substring(3, 5), dateTime.substring(5, 7) + ":" +dateTime.substring(7,dateTime.length()))) + " ";
                 for (int l = 0; l < rooms.size(); l++) {
@@ -224,7 +224,7 @@ public class Encoder {
     private String encodeSameLecturerCourse(Subject subject,String subjectFormat,String day,Slot slot)
     {
     	String result = "";
-    	ArrayList<String> ids = ExternalDataHandler.getOtherByID(subject);
+    	ArrayList<String> ids = ExternalDataHandler.getInstance().getOtherByID(subject);
     	// the lecturer does not teach any other subject
     	if(ids.isEmpty())
     		return "";
