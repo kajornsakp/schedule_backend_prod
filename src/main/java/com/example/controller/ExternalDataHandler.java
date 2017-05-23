@@ -30,6 +30,7 @@ public class ExternalDataHandler {
         ArrayList<String> result = new ArrayList<String>();
         for (int i = 0 ; i < subject.getLecturerList().size() ; i++){
             ArrayList<String> subjectList = subject.getLecturerList().get(i).getSubjects();
+            subjectList.remove(subject.getName());
             for (int j = 0 ; j < subjectList.size(); j++){
                 Subject s = mongoOperations.findOne(new Query(Criteria.where("name").is(subjectList.get(j))), Subject.class);
                 result.add(s.getId());
