@@ -194,7 +194,7 @@ public class Encoder {
             // '\n' = 'and'
             // exception set
             if (subj.getSetOn() != null)
-            	if (subj.getSetOn().equals(otherSubjectList.get(j).getSetOn()))
+            	if (subj.getSetOn().contains(otherSubjectList.get(j).getSetOn()))
             		exceptionSetConstraint += MAX_WEIGHT + " " + "-" + termMap.get(subjectFormat) + " -" + termMap.get(otherSubjFormat) + " 0\n";
 
             clauseCount += 2;

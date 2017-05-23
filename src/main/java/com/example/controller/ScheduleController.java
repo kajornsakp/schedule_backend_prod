@@ -52,17 +52,25 @@ public class ScheduleController implements AccessController<Subject>{
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Course already existed!!!");	
 		
 		subject.setLecturerList((ArrayList<Lecturer>) this.mapLecturer(subject.getLecturerList(), subject));	
-		ExceptionSet set = subject.getSetOn();
-		if (set != null) {
-			ExceptionSet find = exRepository.findBySetNameIgnoreCase(set.getSetName());
-			if (find != null)
-				subject.setSetOn(find);
-			else {
-				ExceptionSet newSet = new ExceptionSet(set.getSetName());
-				subject.setSetOn(newSet);
-				exRepository.save(newSet);
+		ArrayList<ExceptionSet> sets = subject.getSetOn();
+		sets.forEach( set -> {
+			if (set != null) {
+				ExceptionSet find = exRepository.findBySetNameIgnoreCase(set.getSetName());
+				if (find != null) {
+					ArrayList<ExceptionSet> seton = subject.getSetOn();
+					seton.add(find);
+					subject.setSetOn(seton);
+				}
+				else {
+					ExceptionSet newSet = new ExceptionSet(set.getSetName());
+					ArrayList<ExceptionSet> seton = subject.getSetOn();
+					seton.add(find);
+					subject.setSetOn(seton);
+					exRepository.save(newSet);
+				}
 			}
-		}
+		});
+
 		repository.save(subject);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(subject);

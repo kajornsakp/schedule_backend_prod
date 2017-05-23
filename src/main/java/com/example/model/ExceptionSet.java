@@ -31,5 +31,10 @@ public class ExceptionSet {
 	public void setId(String id) {
 		this.id = id;
 	}
-	
+
+	@Override
+	public boolean equals(Object obj) {
+		ExceptionSet setB = (ExceptionSet) obj;
+		return this.setName.equals(setB.getSetName());
+	}
 }

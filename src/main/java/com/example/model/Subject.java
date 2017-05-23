@@ -22,7 +22,7 @@ public class Subject {
     private int expectedStudent;
     private Priority priority;
     
-    private ExceptionSet setOn;
+    private ArrayList<ExceptionSet> setOn;
     
     @Id
     private String id;
@@ -59,11 +59,11 @@ public class Subject {
         this.expectedStudent = num;
     }
     
-	public ExceptionSet getSetOn() {
+	public ArrayList<ExceptionSet> getSetOn() {
 		return setOn;
 	}
 
-	public void setSetOn(ExceptionSet setOn) {
+	public void setSetOn(ArrayList<ExceptionSet> setOn) {
 		this.setOn = setOn;
 	}
 

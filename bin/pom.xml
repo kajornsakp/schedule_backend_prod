@@ -25,6 +25,24 @@
 	</properties>
 
 	<dependencies>
+
+        <dependency>
+            <groupId>org.sat4j</groupId>
+            <artifactId>org.sat4j.core</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.sat4j</groupId>
+            <artifactId>org.sat4j.pb</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.sat4j</groupId>
+            <artifactId>org.sat4j.maxsat</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
@@ -62,6 +80,18 @@
 			<artifactId>spring-restdocs-mockmvc</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+		    <groupId>io.jsonwebtoken</groupId>
+		    <artifactId>jjwt</artifactId>
+		    <version>0.7.0</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+			<version>1.5.2.RELEASE</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -72,6 +102,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	
 
 </project>
