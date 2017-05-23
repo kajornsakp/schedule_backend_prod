@@ -53,6 +53,7 @@ public class Decoder{
         	//t.addSubjectOn(s, DayName.values()[Integer.parseInt(item.substring(5, 6))], item.substring(6, 10), item.substring(10, item.length()));
         });
         
+        
         //Assign room to that subject in slot
         
         roomAssignment.forEach(item -> {

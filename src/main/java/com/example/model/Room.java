@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Room {
     private String roomName;
     private int capacity;
+    private boolean isLabRoom;
 
 //    @GeneratedValue(strategy = GenerationType.AUTO)
 //    private long id;
@@ -43,10 +44,22 @@ public class Room {
         this.roomName = name;
         this.capacity = size;
         this.id = generateID(id);
+        this.isLabRoom = false;
        
+        
     }
+    
+    
 
-    public String getRoomName(){
+    public boolean isLabRoom() {
+		return isLabRoom;
+	}
+
+	public void setLabRoom(boolean isLabRoom) {
+		this.isLabRoom = isLabRoom;
+	}
+
+	public String getRoomName(){
         return this.roomName;
     }
     
