@@ -76,7 +76,9 @@ public class Encoder {
         // term is the input for SAT solver
         String finalTerm = "p wcnf";
         String dateTime;
-        
+        // temp variable
+        Boolean isLabRoom;
+        Boolean isLabSubject;
         // loop generate all clauses for input for SAT solver
         for (int i = 0; i < subjects.size(); i++) {
 
@@ -93,7 +95,14 @@ public class Encoder {
                 possibleCourseCNF += encodePossibleCourse(subjects.get(i), dateTime.substring(0, 1), new Slot(dateTime.substring(1, 3) + ":" + dateTime.substring(3, 5), dateTime.substring(5, 7) + ":" +dateTime.substring(7,dateTime.length()))) + " ";
                 for (int l = 0; l < rooms.size(); l++) {
                     // encode course and exceptionset
-                    if(rooms.get(l).getCapacity() >= subjects.get(i).getExpectedStudent()) {
+//                    if(rooms.get(l).getCapacity() >= subjects.get(i).getExpectedStudent()) 
+                	Boolean validSize = rooms.get(l).getCapacity() >= subjects.get(i).getExpectedStudent();
+                	isLabRoom = rooms.get(l).isLabRoom() == Boolean.TRUE;
+                	isLabSubject = subjects.get(i).isLabSubject() == Boolean.TRUE;
+                	// same room type
+                	Boolean validType = isLabRoom == isLabSubject;
+                	if(validSize && validType) 
+                    {
                         courseCNF += encodeCourse(subjects, rooms.get(l), dateTime.substring(0, 1),  new Slot(dateTime.substring(1, 3) + ":" + dateTime.substring(3, 5), dateTime.substring(5, 7) + ":" +dateTime.substring(7,dateTime.length())), subjects.get(i));
                         resourceCNF += encodeResource(subjects.get(i), rooms.get(l)) + " ";
                     }
@@ -130,9 +139,19 @@ public class Encoder {
         boolean isAssigned = false;
         int percentage;
         int maxPercentage = 0;
+        // temp variable
+        Boolean isLabRoom;
+        Boolean isLabSubject;
         for (int i = 0; i < rooms.size(); i++) {
             // check whether room fits
-            if (rooms.get(i).getCapacity() >= subject.getExpectedStudent()) {
+        	Boolean validSize = rooms.get(i).getCapacity() >= subject.getExpectedStudent();
+        	isLabRoom = rooms.get(i).isLabRoom() == Boolean.TRUE;
+        	isLabSubject = subject.isLabSubject() == Boolean.TRUE;
+        	// same room type
+        	Boolean validType = isLabRoom == isLabSubject;
+        	if(validSize && validType) 
+            //if (rooms.get(i).getCapacity() >= subject.getExpectedStudent()) 
+            {
 //            	percentage is a population density in room , more density means room fit better
             	percentage = (subject.getExpectedStudent()/rooms.get(i).getCapacity())*100;
             	if(percentage > maxPercentage)
