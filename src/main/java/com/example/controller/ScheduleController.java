@@ -107,7 +107,8 @@ public class ScheduleController implements AccessController<Subject>{
 					subjects = new ArrayList<String>();
 				else
 					subjects = templ.getSubjects();
-				subjects.add(subject.getName());
+				if (!subjects.contains(subject.getName()))
+					subjects.add(subject.getName());
 				templ.setSubjects(subjects);
 				lecRepository.save(templ);
 				return templ;
