@@ -4,24 +4,14 @@ package com.example.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
-
-import com.example.config.MongoConfig;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
-import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
+
 
 @Document(collection = "Subject")
 public class Subject {
     private String name;
-    
     
     private ArrayList<Lecturer> lecturerList;
     private ArrayList<String> timePrefered;
@@ -160,9 +150,6 @@ public class Subject {
     public String toString(){
     	return this.getId() + " : " + this.getName() + " : " + this.getLecturerList() ;
     }
-    
-    
-    
 
 
 }
