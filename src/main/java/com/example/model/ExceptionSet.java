@@ -10,6 +10,7 @@ public class ExceptionSet {
 	
 	@Id
 	private String id;
+
 	private String setName;
 
 	public ExceptionSet(@JsonProperty("setName") String setName){

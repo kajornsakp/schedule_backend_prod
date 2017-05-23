@@ -19,8 +19,7 @@ public class RoomController implements Controllers<Room> {
 	
 	@Autowired
 	private RoomRepository repository;
-	
-	
+
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public List<Room> listAll(){
 		return repository.findAll();
@@ -47,7 +46,5 @@ public class RoomController implements Controllers<Room> {
 	public void deleteAll(){
 		repository.deleteAll();
 	}
-
-
 	
 }

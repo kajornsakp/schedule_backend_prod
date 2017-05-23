@@ -64,10 +64,8 @@ public class ScheduleController implements AccessController<Subject>{
 						sets.set(i, find);
 					} else {
 						ExceptionSet newSet = new ExceptionSet(sets.get(i).getSetName());
-						ArrayList<ExceptionSet> seton = sets;
-						seton.add(find);
-						subject.setSetOn(seton);
 						exRepository.save(newSet);
+						sets.set(i, newSet);
 					}
 				}
 			}
