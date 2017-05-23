@@ -58,14 +58,16 @@ public class Subject {
     
     
     public Subject(@JsonProperty("id") String id, @JsonProperty("name") String name,@JsonProperty("priority") Priority priority, @JsonProperty("lecturerList") List<Lecturer> list,@JsonProperty("expectedStudent") int num
-    		,@JsonProperty("timePrefered") ArrayList<String> timePrefered ){
+    		,@JsonProperty("timePrefered") ArrayList<String> timePrefered
+    		,@JsonProperty("isLabSubject") boolean isLabSubject){
     	this.name = name;
         this.lecturerList = (ArrayList<Lecturer>) list;
         this.id = this.generateID(id);
         this.priority = priority;
         this.timePrefered = timePrefered;
         this.expectedStudent = num;
-        this.isLabSubject = false;
+        this.isLabSubject = isLabSubject;
+        
     }
     
     

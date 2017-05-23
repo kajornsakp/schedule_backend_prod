@@ -40,11 +40,12 @@ public class Room {
     	
     }
 
-    public Room(@JsonProperty("roomName") String name, @JsonProperty("capacity") int size){
+    public Room(@JsonProperty("roomName") String name, @JsonProperty("capacity") int size
+    		,@JsonProperty("isLabRoom") boolean isLabRoom){
         this.roomName = name;
         this.capacity = size;
         this.id = generateID(id);
-        this.isLabRoom = false;
+        this.isLabRoom = isLabRoom;
        
         
     }
