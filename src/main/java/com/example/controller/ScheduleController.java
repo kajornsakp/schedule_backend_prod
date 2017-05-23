@@ -59,9 +59,9 @@ public class ScheduleController implements AccessController<Subject>{
 				if (sets.get(i) != null) {
 					ExceptionSet find = exRepository.findBySetNameIgnoreCase(sets.get(i).getSetName());
 					if (find != null) {
+
 						ArrayList<ExceptionSet> seton = sets;
-						seton.add(find);
-						subject.setSetOn(seton);
+						sets.set(i, find);
 					} else {
 						ExceptionSet newSet = new ExceptionSet(sets.get(i).getSetName());
 						ArrayList<ExceptionSet> seton = sets;
