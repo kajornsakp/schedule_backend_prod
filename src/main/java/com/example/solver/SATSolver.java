@@ -52,7 +52,11 @@ public class SATSolver implements Solver{
 
     public ArrayList<TimeSlot> solve() {
         this.encoder.encode();
+<<<<<<< Updated upstream
         System.out.println("check termmap : " + encoder.getReverseTermMap());
+=======
+        System.out.println("Check term map : " + encoder.getReverseTermMap());
+>>>>>>> Stashed changes
         this.decoder = new Decoder(encoder.getReverseTermMap());
 
         ////////////////////////  SAT4J  /////////////////////////////////////

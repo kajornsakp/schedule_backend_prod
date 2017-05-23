@@ -19,8 +19,6 @@ public class Account {
     String firstName;
     String lastName;
     String email;
-    
-
     Lecturer lecturer;
 
     public Account() {

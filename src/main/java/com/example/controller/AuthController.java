@@ -46,8 +46,10 @@ public class AuthController implements Controllers<Account>{
     @RequestMapping(value = "/register", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE}, consumes="application/json")
     public ResponseEntity<Object> create(@RequestBody Account req) {
     	Account account = repository.findByUsername(req.getUsername());
-    	if (account != null || req.getLecturer() == null)
+    	if (account != null)
     		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("this username has already existed!!!");
+    	if (req.getFirstName() == null)
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("please assign lecturer name!!!");
     	
     	Account newAcc = new Account(req.getUsername(), req.getPassword(), "USER");
     	newAcc.setFirstName(req.getFirstName());
