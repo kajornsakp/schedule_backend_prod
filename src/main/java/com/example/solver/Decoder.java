@@ -75,6 +75,7 @@ public class Decoder{
         });
 
         List<Subject> subjects = mongoOperations.findAll(Subject.class);
+
         subjects.forEach(subject -> { if (!slots.contains(subject)) slots.add(new TimeSlot(subject)); });
         return slots;
     }

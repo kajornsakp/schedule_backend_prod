@@ -60,5 +60,10 @@ public class TimeSlot {
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
 	}
-	
+
+	@Override
+	public boolean equals(Object obj) {
+		Subject s= (Subject) obj;
+		return this.subject.getId().equals(s.getId());
+	}
 }
