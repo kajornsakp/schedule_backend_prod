@@ -91,12 +91,11 @@ public class ScheduleController implements AccessController<Subject>{
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE, consumes= "application/json")
-	public void delete(@RequestBody Subject s) {
-
+	public void delete(@RequestBody Subject subject) {
+		Subject s = repository.findOne(subject.getId());
 		for (int i = 0; i < s.getLecturerList().size(); i++) {
 			Lecturer l = s.getLecturerList().get(i);
-			ArrayList<String> subjectList = l.getSubjects();
-			subjectList.remove(s.getName());
+			l.getSubjects().remove(s.getName());
 			lecRepository.save(l);
 		}
 		repository.delete(s.getId());

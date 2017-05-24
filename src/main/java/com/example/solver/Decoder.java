@@ -26,9 +26,9 @@ public class Decoder{
     }
 
     public ArrayList<TimeSlot> decode(String str) {
-    	
-    	
-    	ApplicationContext applicationContext = new AnnotationConfigApplicationContext(MongoConfig.class);
+        System.out.println(str);
+        str = str.substring(0, str.length()-2);
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(MongoConfig.class);
     	MongoOperations mongoOperations = (MongoOperations) applicationContext.getBean("mongoTemplate");
         String[] array = str.split(" "); // placeholder for literals
 
