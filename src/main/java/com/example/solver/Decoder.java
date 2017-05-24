@@ -74,9 +74,18 @@ public class Decoder{
         	//t.addRoomOnSubject(s, r);
         });
 
-        List<Subject> subjects = mongoOperations.findAll(Subject.class);
+//        List<Subject> subjects = mongoOperations.findAll(Subject.class);
+//        for (int i = 0 ; i <  subjects.size(); i++){
+//            boolean contain = false;
+//            for (int j = 0 ; j < slots.size(); j++){
+//                if (slots.get(j).getSubject().getId().equals(subjects.get(i).getId()))
+//                    contain = true;
+//
+//            }
+//            if (contain)
+//                slots.add(new TimeSlot(subjects.get(i)));
+//        }
 
-        subjects.forEach(subject -> { if (!slots.contains(subject)) slots.add(new TimeSlot(subject)); });
         return slots;
     }
 
