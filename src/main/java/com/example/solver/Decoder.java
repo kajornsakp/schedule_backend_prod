@@ -33,8 +33,16 @@ public class Decoder{
     	System.out.println("test string : " + str);
         String[] array = str.split(" "); // placeholder for literals
         System.out.println("test array : " + array[0]);
-        ArrayList<String> answerList = (ArrayList<String>) Arrays.asList(array).stream().map(item -> { return termMap.get(Integer.parseInt(item)); } ).collect(Collectors.toList());
-        answerList = (ArrayList<String>) answerList.stream().filter(item -> item != null).collect(Collectors.toList());
+        
+        ArrayList<String> answerList = (ArrayList<String>) Arrays.asList(array)
+        		.stream()
+        		.map(item -> { 
+        			if(Integer.parseInt(item) > 0){
+        	// the statement is true
+        			return termMap.get(Math.abs(Integer.parseInt(item)));
+        			}else{ return "";} }).collect(Collectors.toList());
+        
+        answerList = (ArrayList<String>) answerList.stream().filter(item -> (item != null && item!="" )).collect(Collectors.toList());
         System.out.println("check answerList : " + answerList);
         ArrayList<TimeSlot> slots = new ArrayList<TimeSlot>(); 
         ArrayList<String> datetimeAssignment =  (ArrayList<String>) answerList.stream().filter(item -> item.substring(0, 1).equals("0")).collect(Collectors.toList());

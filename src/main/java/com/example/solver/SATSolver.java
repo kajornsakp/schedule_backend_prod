@@ -52,6 +52,7 @@ public class SATSolver implements Solver{
 
     public ArrayList<TimeSlot> solve() {
         this.encoder.encode();
+        System.out.println("encoded");
         this.decoder = new Decoder(encoder.getReverseTermMap());
 
         ////////////////////////  SAT4J  /////////////////////////////////////
@@ -66,6 +67,7 @@ public class SATSolver implements Solver{
         try {
             IProblem problem = reader.parseInstance("cnfInput.txt");
             if (problem.isSatisfiable()) {
+            	System.out.println("Satisfiable!");
                 ans = reader.decode(problem.findModel());
                 //Ploy's note: just ignore '-null' or 'null' (bug)
                 //& current solution : satisfy max clauses then max literals
