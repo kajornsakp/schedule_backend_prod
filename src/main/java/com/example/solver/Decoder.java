@@ -39,7 +39,7 @@ public class Decoder{
         		.map(item -> { 
         			if(Integer.parseInt(item) > 0){
         	// the statement is true
-        			return termMap.get(Math.abs(Integer.parseInt(item)));
+        			return termMap.get(Integer.parseInt(item));
         			}else{ return "";} }).collect(Collectors.toList());
         
         answerList = (ArrayList<String>) answerList.stream().filter(item -> (item != null && item!="" )).collect(Collectors.toList());
