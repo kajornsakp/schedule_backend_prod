@@ -43,7 +43,7 @@ public class Encoder {
     private final String WEIGHT = "1";
 
     public Encoder(List<Room> room, List<Subject> subject) {
-    	System.out.println("check room : " + room);
+    	//System.out.println("check room : " + room);
         initDayMapper();
         termMap = new HashMap<>();
         reverseTermMap = new HashMap<>();
@@ -129,7 +129,7 @@ public class Encoder {
         }
         
         long endTime = System.nanoTime();
-        System.out.println("encoder takes time : " + (endTime - startTime) / 1000000);
+        //System.out.println("encoder takes time : " + (endTime - startTime) / 1000000);
 
 
     }
