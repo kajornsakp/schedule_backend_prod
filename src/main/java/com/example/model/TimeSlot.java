@@ -19,6 +19,10 @@ public class TimeSlot {
 	public TimeSlot() {
 		
 	}
+
+	public TimeSlot(Subject subject){
+		this.subject = subject;
+	}
 	
 	public DayName getDay() {
 		return day;

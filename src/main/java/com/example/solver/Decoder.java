@@ -30,9 +30,8 @@ public class Decoder{
     	
     	ApplicationContext applicationContext = new AnnotationConfigApplicationContext(MongoConfig.class);
     	MongoOperations mongoOperations = (MongoOperations) applicationContext.getBean("mongoTemplate");
-    	//System.out.println("test string : " + str);
         String[] array = str.split(" "); // placeholder for literals
-        //System.out.println("test array : " + array[0]);
+
         
         ArrayList<String> answerList = (ArrayList<String>) Arrays.asList(array)
         		.stream()
@@ -43,11 +42,11 @@ public class Decoder{
         			}else{ return "";} }).collect(Collectors.toList());
         
         answerList = (ArrayList<String>) answerList.stream().filter(item -> (item != null && item!="" )).collect(Collectors.toList());
-        //System.out.println("check answerList : " + answerList);
+
         ArrayList<TimeSlot> slots = new ArrayList<TimeSlot>(); 
         ArrayList<String> datetimeAssignment =  (ArrayList<String>) answerList.stream().filter(item -> item.substring(0, 1).equals("0")).collect(Collectors.toList());
         ArrayList<String> roomAssignment = (ArrayList<String>) answerList.stream().filter(item -> item.substring(0, 1).equals("1")).collect(Collectors.toList());
-        //System.out.println("check room Assignment : " + roomAssignment);
+
         //Assign date time for subject first
         datetimeAssignment.forEach(item -> {
         	Subject subject = mongoOperations.findById((item.substring(1,5)),Subject.class);
@@ -74,6 +73,9 @@ public class Decoder{
         	subject.setRoom(mongoOperations.findById((item.substring(5,item.length())), Room.class));
         	//t.addRoomOnSubject(s, r);
         });
+
+        List<Subject> subjects = mongoOperations.findAll(Subject.class);
+        subjects.forEach(subject -> { if (!slots.contains(subject)) slots.add(new TimeSlot(subject)); });
         return slots;
     }
 
