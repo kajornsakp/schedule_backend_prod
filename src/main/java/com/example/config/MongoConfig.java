@@ -21,7 +21,7 @@ public class MongoConfig{
     MongoDbFactory mongoDbFactory() throws Exception {
 //        return new SimpleMongoDbFactory(new MongoClient(), "ICSpark");
         MongoCredential credential = MongoCredential.createCredential("schedule","schedule","schedule".toCharArray());
-        ServerAddress serverAddress = new ServerAddress("188.166.187.184",27017);
+        ServerAddress serverAddress = new ServerAddress("128.199.109.129",27017);
 
         MongoClient mongoClient = new MongoClient(serverAddress, Arrays.asList(credential));
         SimpleMongoDbFactory simpleMongoDbFactory = new SimpleMongoDbFactory(mongoClient,"schedule");
@@ -45,4 +45,3 @@ public class MongoConfig{
     }
 }
 
- 

@@ -25,25 +25,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private static final String ADMIN = "ADMIN";
 	public void configure(HttpSecurity httpSecurity) throws Exception {
 		
-		httpSecurity.csrf().disable().authorizeRequests()
-			.requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-			.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-			.antMatchers(HttpMethod.OPTIONS,"/auth/**").permitAll()
-			.antMatchers(HttpMethod.POST,"/auth/**").permitAll()
-			.antMatchers(HttpMethod.PUT, "/auth/").permitAll()
-			.antMatchers(HttpMethod.GET, "/lec/").permitAll()
-			.antMatchers(HttpMethod.PUT,"/lec/").permitAll()
-			.antMatchers(HttpMethod.GET, "/scheduleAct/").permitAll()
-			.antMatchers(HttpMethod.PUT, "/scheduleAct/").permitAll()
-			.antMatchers(HttpMethod.GET, "/timetable/").permitAll()
-			.antMatchers(HttpMethod.GET, "/timetable/all").permitAll()	
-			.anyRequest().authenticated()
-			.and()
-			.addFilterBefore(new JWTLoginFilter("/auth/", authenticationManager()),
-			UsernamePasswordAuthenticationFilter.class)
-			.addFilterBefore(new JWTAuthenticationFilter(),
-			UsernamePasswordAuthenticationFilter.class);
-			
+//		httpSecurity.csrf().disable().authorizeRequests()
+//			.requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+//			.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+//			.antMatchers(HttpMethod.OPTIONS,"/auth/**").permitAll()
+//			.antMatchers(HttpMethod.POST,"/auth/**").permitAll()
+//			.antMatchers(HttpMethod.PUT, "/auth/").permitAll()
+//			.antMatchers(HttpMethod.GET, "/lec/").permitAll()
+//			.antMatchers(HttpMethod.PUT,"/lec/").permitAll()
+//			.antMatchers(HttpMethod.GET, "/scheduleAct/").permitAll()
+//			.antMatchers(HttpMethod.PUT, "/scheduleAct/").permitAll()
+//			.antMatchers(HttpMethod.GET, "/timetable/").permitAll()
+//			.antMatchers(HttpMethod.GET, "/timetable/all").permitAll()
+//			.anyRequest().authenticated()
+//			.and()
+//			.addFilterBefore(new JWTLoginFilter("/auth/", authenticationManager()),
+//			UsernamePasswordAuthenticationFilter.class)
+//			.addFilterBefore(new JWTAuthenticationFilter(),
+//			UsernamePasswordAuthenticationFilter.class);
+//
 			
 	}
 	
